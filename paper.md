@@ -5,7 +5,7 @@ tags:
   - Django
   - Tensorflow
 authors:
-  - name: Maged Helmy^[first author,corresponding author] # note this makes a footnote saying 'co-first author'
+  - name: Maged Helmy^[first author,corresponding author]
     affiliation: 1 
 
   - name: Paulo Ferreira
@@ -33,8 +33,7 @@ bibliography: paper.bib
 
 # Related Work
 
-
-# Statement of need
+## Statement of need
 
 `Gala` is an Astropy-affiliated Python package for galactic dynamics. Python
 enables wrapping low-level languages (e.g., C) for speed without losing
@@ -62,15 +61,15 @@ scientific explorations of forthcoming data releases from the *Gaia* mission
 
 # Implementation
 
-# Installation instructions
+## Installation instructions
 
-# Example usage
+## Example usage
 
-# Functionality documentation
+## Functionality documentation
 
-# Performance
+## Performance
 
-# Automated tests
+## Automated tests
 
 
 # Evaluation  and Discussion
