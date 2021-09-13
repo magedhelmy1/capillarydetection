@@ -1,27 +1,28 @@
 ---
-title: 'Gala: A Python package for galactic dynamics'
+title: 'CapillaryWeb: A System for Image Analysis using Deep Learning'
 tags:
   - Python
-  - astronomy
-  - dynamics
-  - galactic dynamics
-  - milky way
+  - Django
+  - Tensorflow
 authors:
-  - name: Adrian M. Price-Whelan^[co-first author] # note this makes a footnote saying 'co-first author'
-    orcid: 0000-0003-0872-7098
-    affiliation: "1, 2" # (Multiple affiliations must be quoted)
-  - name: Author Without ORCID^[co-first author] # note this makes a footnote saying 'co-first author'
+  - name: Maged Helmy^[first author,corresponding author] # note this makes a footnote saying 'co-first author'
+    affiliation: 1 
+
+  - name: Author
+    affiliation: 1
+
+  - name: Author
+    affiliation: 1
+  - 
+  - name: Author
     affiliation: 2
-  - name: Author with no affiliation^[corresponding author]
-    affiliation: 3
 affiliations:
- - name: Lyman Spitzer, Jr. Fellow, Princeton University
-   index: 1
- - name: Institution Name
-   index: 2
- - name: Independent Researcher
-   index: 3
-date: 13 August 2017
+  - name: Department of Informatics - University of Oslo
+    index: 1
+  - name: Department of Mathematics - University of Oslo
+    index: 2
+
+date: 1 October 2021
 bibliography: paper.bib
 
 # Optional fields if submitting to a AAS journal too, see this blog post:
