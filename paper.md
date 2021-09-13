@@ -1,5 +1,5 @@
 ---
-title: 'CapillaryWeb: A System for Image Analysis using Deep Learning'
+title: 'CapillaryWeb: An Automated System for Image Capillary Analysis using Deep Learning'
 tags:
   - Python
   - Django
@@ -41,25 +41,40 @@ This is a test sentence
 
 # 3. System
 
+This is a test sentence
+
 
 # 4. Implementation
 
+This is a test sentence
+
 ## 4.1 Installation instructions
+
+This is a test sentence
 
 ## 4.2 Example usage
 
+This is a test sentence
+
 ## 4.3 Functionality documentation
+
+This is a test sentence
 
 ## 4.4 Performance
 
+This is a test sentence
+
 ## 4.5 Automated tests
 
+This is a test sentence
 
 # 5. Evaluation and Discussion
 
+This is a test sentence
 
 # 6. Summary
 
+This is a test sentence
 
 # Acknowledgements
 
