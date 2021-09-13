@@ -1,5 +1,5 @@
 ---
-title: 'CapillaryWeb: An Automated System for Image Capillary Analysis using Deep Learning'
+title: 'CapillaryWeb: An Automated System for Image Capillary Analysis using Deep Learning and Azure'
 tags:
   - Python
   - Django
