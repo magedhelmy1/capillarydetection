@@ -8,14 +8,15 @@ authors:
   - name: Maged Helmy^[first author,corresponding author] # note this makes a footnote saying 'co-first author'
     affiliation: 1 
 
-  - name: Author
+  - name: Paulo Ferreira
     affiliation: 1
 
-  - name: Author
+  - name: Eric Jul
     affiliation: 1
   - 
-  - name: Author
+  - name: Trung Tuyen Truong
     affiliation: 2
+  - 
 affiliations:
   - name: Department of Informatics - University of Oslo
     index: 1
@@ -25,11 +26,7 @@ affiliations:
 date: 1 October 2021
 bibliography: paper.bib
 
-# Optional fields if submitting to a AAS journal too, see this blog post:
-# https://blog.joss.theoj.org/2018/12/a-new-collaboration-with-aas-publishing
-aas-doi: 10.3847/xxxxx <- update this with the DOI from AAS once you know it.
-aas-journal: Astrophysical Journal <- The name of the AAS journal.
----
+
 
 # Summary
 
