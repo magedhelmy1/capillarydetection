@@ -6,17 +6,13 @@ tags:
   - Tensorflow
 authors:
   - name: Maged Helmy^[first author,corresponding author]
-    affiliation: 1 
-
+    affiliation: 1
   - name: Paulo Ferreira
     affiliation: 1
-
   - name: Eric Jul
     affiliation: 1
-  - 
   - name: Trung Tuyen Truong
     affiliation: 2
-  - 
 affiliations:
   - name: Department of Informatics - University of Oslo
     index: 1
@@ -25,8 +21,6 @@ affiliations:
 
 date: 1 October 2021
 bibliography: paper.bib
-
-
 ---
 
 # 1. Introduction
