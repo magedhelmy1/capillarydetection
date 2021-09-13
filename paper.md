@@ -60,15 +60,19 @@ This is a test sentence
 
 This is a test sentence
 
-## 4.4 Performance
-
-This is a test sentence
-
-## 4.5 Automated tests
-
-This is a test sentence
-
 # 5. Evaluation and Discussion
+
+This is a test sentence
+
+## 5.1 Performance
+
+This is a test sentence
+
+## 5.2 Automated tests
+
+This is a test sentence
+
+## 5.3 System Implications
 
 This is a test sentence
 
