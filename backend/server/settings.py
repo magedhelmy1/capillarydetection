@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # my apps
+    'apps.image_classifier',
+    # third party
+    'rest_framework',
+    #'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -112,10 +117,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-
-
-# Load the VGG model
-VGG_MODEL = vgg16.VGG16(weights="imagenet")
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
