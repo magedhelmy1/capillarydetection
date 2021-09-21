@@ -13,14 +13,27 @@ class Classifier extends Component {
         recentImage: null,
     }
 
-    handleClick = () => {
+    handleClick = (e) => {
         // you can now use this value to load your images
+        const FILES = {
+            "image_1": [{
+                name: "image_1",
+                size: "100",
+                image: require("../../static_media/1.png").default
+            }],
+            "image_2": [{
+                name: "image_2",
+                size: "200",
+                image: require("../../static_media/2.png").default
+            }],
+        }
+        const prefix = e.target.dataset.prefix; // 1
         this.setState({
             files: [],
             isLoading: true,
             recentImage: null
         })
-        this.loadImage([image_1])
+        this.loadImage(FILES[`image_${prefix}`])
     }
 
     onDrop = (files) => {
