@@ -20,22 +20,26 @@ class Classifier extends Component {
     handleClick = (e) => {
 
 
-
         const FILES = {
             "image_1": [{
                 name: "image_1",
                 size: "100",
-                image: image_1
+                image: image_1,
+                backend_address : 1
             }],
             "image_2": [{
                 name: "image_2",
                 size: "200",
-                image: image_2
+                image: image_2,
+                backend_address : 2
+
             }],
             "image_3": [{
                 name: "image_3",
                 size: "300",
-                image: image_2
+                image: image_2,
+                backend_address : 3
+
             }],
         }
 
@@ -56,7 +60,8 @@ class Classifier extends Component {
             files: [],
             isLoading: true,
             dropzone: true,
-            sample: null
+            sample: null,
+            recentImage: null
         })
         this.loadImage(files)
     }
@@ -83,10 +88,30 @@ class Classifier extends Component {
         this.setState({isLoading: false})
     }
 
-    sendImage = () => {
+    sendImage_dropzone = () => {
         this.activateSpinner()
         let formData = new FormData()
         formData.append('picture', this.state.files[0])
+        axios.post('http://127.0.0.1:8000/api/images/', formData, {
+            headers: {
+                'accept': 'application/json',
+                'content-type': 'multipart/form-data'
+            }
+        })
+            .then(resp => {
+                this.getImageClass(resp)
+                console.log(resp.data.id)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+
+    sendImage_sample = () => {
+        this.activateSpinner()
+        let formData = new FormData()
+        formData.append('backend_address', this.state.files[0].backend_address)
         axios.post('http://127.0.0.1:8000/api/images/', formData, {
             headers: {
                 'accept': 'application/json',
@@ -196,7 +221,7 @@ class Classifier extends Component {
                         </aside>
 
                         <div className="img-fluid">
-                            {this.state.files.length > 0 &&  this.state.dropzone != null &&
+                            {this.state.files.length > 0 && this.state.dropzone != null &&
                             <Image
                                 src={URL.createObjectURL(this.state.files[0])}
                                 height='400' rounded/>
@@ -204,7 +229,7 @@ class Classifier extends Component {
                         </div>
 
                         <div className="img-fluid">
-                            {this.state.files.length > 0 &&  this.state.sample != null &&
+                            {this.state.files.length > 0 && this.state.sample != null &&
                             <Image
                                 src={this.state.files[0].image}
                                 height='400' rounded/>
@@ -228,10 +253,13 @@ class Classifier extends Component {
 
                 <Row>
                     <Col>
-                        {this.state.files.length > 0  &&
-                        <Button variant='info' size='lg' className='mt-3' onClick={this.sendImage}>Analyze
-                            Image </Button>
-                        }
+                        {this.state.files.length > 0 && this.state.dropzone != null &&
+                        <Button variant='info' size='lg' className='mt-3' onClick={this.sendImage_dropzone}>Analyze
+                            Image </Button>}
+
+                        {this.state.files.length > 0 && this.state.sample != null &&
+                        <Button variant='info' size='lg' className='mt-3' onClick={this.sendImage_sample}>Analyze Sample
+                            Image </Button>}
 
                         {
                             this.state.recentImage &&

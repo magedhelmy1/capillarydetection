@@ -7,7 +7,8 @@ from io import BytesIO
 
 # Create your models here.
 class Image(models.Model):
-    picture = models.ImageField(upload_to="microcirculation_images")
+    picture = models.ImageField(upload_to="microcirculation_images", blank=True)
+    backend_address = models.IntegerField(blank=True,  null=True)
     classified = models.CharField(max_length=200, blank=True)
     uploaded = models.DateTimeField(auto_now_add=True)
     analyzed_picture = models.ImageField(blank=True)
@@ -18,6 +19,17 @@ class Image(models.Model):
         return f"Image classfied at {self.uploaded.strftime('%Y-%m-%d %H:%M')}"
 
     def save(self, *args, **kwargs):
+
+        print(f"the value is {self.backend_address}")
+
+        if self.backend_address != None:
+
+            if self.backend_address == 1:
+                self.picture = "sample_images/1.png"
+            elif self.backend_address == 2:
+                self.picture = "sample_images/2.png"
+            elif self.backend_address == 3:
+                self.picture = "sample_images/3.png"
 
         try:
 
