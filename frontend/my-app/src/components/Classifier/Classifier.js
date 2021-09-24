@@ -12,28 +12,30 @@ class Classifier extends Component {
         files: [],
         isLoading: false,
         recentImage: null,
+        dropzone: null,
+        sample: null
     }
 
 
     handleClick = (e) => {
 
-        const ImageData = [image_1, image_2]
+
 
         const FILES = {
             "image_1": [{
                 name: "image_1",
                 size: "100",
-                image: ImageData[0]
+                image: image_1
             }],
             "image_2": [{
                 name: "image_2",
                 size: "200",
-                image: ImageData[1]
+                image: image_2
             }],
             "image_3": [{
                 name: "image_3",
                 size: "300",
-                image: ImageData[1]
+                image: image_2
             }],
         }
 
@@ -42,7 +44,9 @@ class Classifier extends Component {
         this.setState({
             files: [],
             isLoading: true,
-            recentImage: null
+            recentImage: null,
+            dropzone: null,
+            sample: true
         })
         this.loadImage(FILES[`image_${prefix}`])
     }
@@ -51,7 +55,8 @@ class Classifier extends Component {
         this.setState({
             files: [],
             isLoading: true,
-            recentImage: null
+            dropzone: true,
+            sample: null
         })
         this.loadImage(files)
     }
@@ -191,12 +196,21 @@ class Classifier extends Component {
                         </aside>
 
                         <div className="img-fluid">
-                            {this.state.files.length > 0 &&
+                            {this.state.files.length > 0 &&  this.state.dropzone != null &&
                             <Image
                                 src={URL.createObjectURL(this.state.files[0])}
                                 height='400' rounded/>
                             }
                         </div>
+
+                        <div className="img-fluid">
+                            {this.state.files.length > 0 &&  this.state.sample != null &&
+                            <Image
+                                src={this.state.files[0].image}
+                                height='400' rounded/>
+                            }
+                        </div>
+
 
                         {this.state.recentImage &&
                         <React.Fragment>
@@ -214,7 +228,7 @@ class Classifier extends Component {
 
                 <Row>
                     <Col>
-                        {this.state.files.length > 0 &&
+                        {this.state.files.length > 0  &&
                         <Button variant='info' size='lg' className='mt-3' onClick={this.sendImage}>Analyze
                             Image </Button>
                         }
