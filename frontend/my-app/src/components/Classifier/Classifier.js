@@ -3,6 +3,9 @@ import Dropzone from 'react-dropzone';
 import './Classifier.css'
 import {Spinner, Button, Alert, Image, Container, Row, Col} from 'react-bootstrap'
 import axios from 'axios'
+import image_1 from "../../static_media/1.png"
+import image_2 from "../../static_media/2.png"
+
 
 class Classifier extends Component {
     state = {
@@ -14,16 +17,23 @@ class Classifier extends Component {
 
     handleClick = (e) => {
 
+        const ImageData = [image_1, image_2]
+
         const FILES = {
             "image_1": [{
                 name: "image_1",
                 size: "100",
-                image: require("../../static_media/1.png").default
+                image: ImageData[0]
             }],
             "image_2": [{
                 name: "image_2",
                 size: "200",
-                image: require("../../static_media/2.png").default
+                image: ImageData[1]
+            }],
+            "image_3": [{
+                name: "image_3",
+                size: "300",
+                image: ImageData[1]
             }],
         }
 
@@ -34,7 +44,7 @@ class Classifier extends Component {
             isLoading: true,
             recentImage: null
         })
-        this.loadImage(FILES["image_1"])
+        this.loadImage(FILES[`image_${prefix}`])
     }
 
     onDrop = (files) => {
@@ -138,7 +148,7 @@ class Classifier extends Component {
                                 <div className="col-sm-4">
                                     <button
                                         data-prefix="1"
-                                        onClick={this.handleClick}
+                                        onClick={(e) => this.handleClick(e)}
                                         className="btn btn-primary">
                                         Sample 1
                                     </button>
@@ -146,7 +156,7 @@ class Classifier extends Component {
                                 <div className="col-sm-4">
                                     <button
                                         data-prefix="2"
-                                        onClick={this.handleClick}
+                                        onClick={(e) => this.handleClick(e)}
                                         className="btn btn-primary">
                                         Sample 2
                                     </button>
@@ -154,7 +164,7 @@ class Classifier extends Component {
                                 <div className="col-sm-4">
                                     <button
                                         data-prefix="3"
-                                        onClick={this.handleClick}
+                                        onClick={(e) => this.handleClick(e)}
                                         className="btn btn-primary">
                                         Sample 3
                                     </button>

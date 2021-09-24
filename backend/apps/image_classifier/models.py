@@ -20,6 +20,7 @@ class Image(models.Model):
     def save(self, *args, **kwargs):
 
         try:
+
             time_taken, analyzed = classify_image(self.picture)
             self.classified = time_taken
 
