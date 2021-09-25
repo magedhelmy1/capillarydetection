@@ -23,16 +23,88 @@ class Image(models.Model):
         if self.backend_address != None:
 
             if self.backend_address == 1:
-                self.picture = "sample_images/1.png"
-                temp_name = "1.png"
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
 
             elif self.backend_address == 2:
-                self.picture = "sample_images/2.png"
-                temp_name = "2.png"
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
 
             elif self.backend_address == 3:
-                self.picture = "sample_images/3.png"
-                temp_name = "3.png"
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
+
+            elif self.backend_address == 4:
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
+
+            elif self.backend_address == 5:
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
+
+            elif self.backend_address == 6:
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
+
+            elif self.backend_address == 7:
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
+
+            elif self.backend_address == 8:
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
+
+            elif self.backend_address == 9:
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
+
+            elif self.backend_address == 10:
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
+
+            elif self.backend_address == 11:
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
+
+            elif self.backend_address == 12:
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
+
+            elif self.backend_address == 13:
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
+
+            elif self.backend_address == 14:
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
+
+            elif self.backend_address == 15:
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
+
+            elif self.backend_address == 16:
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
+
+            elif self.backend_address == 17:
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
+
+            elif self.backend_address == 18:
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
+
+            elif self.backend_address == 19:
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
+
+            elif self.backend_address == 20:
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
+
+            elif self.backend_address == 21:
+                self.picture = f"sample_images/{str(self.backend_address)}.png"
+                temp_name = f"{str(self.backend_address)}.png"
 
             else:
                 print(f"No Valid Backend Address Detected: {self.backend_address}")

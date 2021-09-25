@@ -3,8 +3,6 @@ import Dropzone from 'react-dropzone';
 import './Classifier.css'
 import {Spinner, Button, Alert, Image, Container, Row, Col} from 'react-bootstrap'
 import axios from 'axios'
-import image_1 from "../../static_media/1.png"
-import image_2 from "../../static_media/2.png"
 
 
 class Classifier extends Component {
@@ -18,32 +16,138 @@ class Classifier extends Component {
 
     handleClick = (e) => {
 
+        const prefix = e.target.dataset.prefix;
 
         const FILES = {
             "image_1": [{
-                name: "image_1",
-                size: "100",
-                image: image_1,
-                backend_address: 1
+                name: "Sample 1",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
             }],
             "image_2": [{
-                name: "image_2",
-                size: "200",
-                image: image_2,
-                backend_address: 2
+                name: "Sample 2",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
 
             }],
             "image_3": [{
-                name: "image_3",
-                size: "300",
-                image: image_2,
-                backend_address: 3
+                name: "Sample 3",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
+
+            }],
+            "image_4": [{
+                name: "Sample 4",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
+
+            }],
+            "image_5": [{
+                name: "Sample 5",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
+
+            }],
+            "image_6": [{
+                name: "Sample 6",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
+
+            }],
+            "image_7": [{
+                name: "Sample 7",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
+
+            }],
+            "image_8": [{
+                name: "Sample 8",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
+
+            }],
+            "image_9": [{
+                name: "Sample 9",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
+
+            }],
+            "image_10": [{
+                name: "Sample 10",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
+
+            }],
+            "image_11": [{
+                name: "Sample 11",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
+
+            }],
+            "image_12": [{
+                name: "Sample 12",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
+
+            }],
+            "image_13": [{
+                name: "Sample 13",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
+
+            }],
+            "image_14": [{
+                name: "Sample 14",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
+
+            }],
+
+            "image_15": [{
+                name: "Sample 15",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
+
+            }],
+            "image_16": [{
+                name: "Sample 16",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
+
+            }],
+            "image_17": [{
+                name: "Sample 17",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
+
+            }],
+            "image_18": [{
+                name: "Sample 18",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
+
+            }],
+            "image_19": [{
+                name: "Sample 19",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
+
+            }],
+            "image_20": [{
+                name: "Sample 20",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
+
+            }],
+            "image_21": [{
+                name: "Sample 21",
+                image: require(`../../static_media/${prefix}.png`).default,
+                backend_address: `${prefix}`
 
             }],
         }
 
         // you can now use this value to load your images
-        const prefix = e.target.dataset.prefix; // 1
         this.setState({
             files: [],
             isLoading: true,
@@ -145,7 +249,7 @@ class Classifier extends Component {
     render() {
         const files = this.state.files.map(file => (
             <li key={file.name}>
-                {file.name} - {file.size} bytes
+                {file.name}
             </li>
         ));
         return (
@@ -178,34 +282,50 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="1"
+                            data-prefix="2"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
-                            Sample 1
+                            Sample 2
                         </button>
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="1"
+                            data-prefix="3"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
-                            Sample 1
+                            Sample 3
                         </button>
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="1"
+                            data-prefix="4"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
-                            Sample 1
+                            Sample 4
                         </button>
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="1"
+                            data-prefix="5"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
-                            Sample 1
+                            Sample 5
+                        </button>
+                    </Col>
+                    <Col sm>
+                        <button
+                            data-prefix="6"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 6
+                        </button>
+                    </Col>
+                    <Col sm>
+                        <button
+                            data-prefix="7"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 7
                         </button>
                     </Col>
                 </Row>
@@ -213,48 +333,123 @@ class Classifier extends Component {
                 <Row className='mt-1'>
                     <Col sm>
                         <button
-                            data-prefix="1"
+                            data-prefix="8"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
-                            Sample 1
+                            Sample 8
                         </button>
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="1"
+                            data-prefix="9"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
-                            Sample 1
+                            Sample 9
                         </button>
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="1"
+                            data-prefix="10"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
-                            Sample 1
+                            Sample 10
                         </button>
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="1"
+                            data-prefix="11"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
-                            Sample 1
+                            Sample 11
                         </button>
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="1"
+                            data-prefix="12"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
-                            Sample 1
+                            Sample 12
+                        </button>
+                    </Col>
+                    <Col sm>
+                        <button
+                            data-prefix="13"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 13
+                        </button>
+                    </Col>
+                    <Col sm>
+                        <button
+                            data-prefix="14"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 14
+                        </button>
+                    </Col>
+                </Row>
+
+                <Row className='mt-1'>
+                    <Col sm>
+                        <button
+                            data-prefix="15"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 15
+                        </button>
+                    </Col>
+                    <Col sm>
+                        <button
+                            data-prefix="16"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 16
+                        </button>
+                    </Col>
+                    <Col sm>
+                        <button
+                            data-prefix="17"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 17
+                        </button>
+                    </Col>
+                    <Col sm>
+                        <button
+                            data-prefix="18"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 18
+                        </button>
+                    </Col>
+                    <Col sm>
+                        <button
+                            data-prefix="19"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 19
+                        </button>
+                    </Col>
+                    <Col sm>
+                        <button
+                            data-prefix="20"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 20
+                        </button>
+                    </Col>
+                    <Col sm>
+                        <button
+                            data-prefix="21"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 21
                         </button>
                     </Col>
                 </Row>
 
                 <Row>
-                    <Col sm={12}>
+                    <Col sm>
                         <div className="mt-2">
                             {
                                 this.state.isLoading &&
