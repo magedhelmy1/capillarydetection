@@ -16,7 +16,6 @@ class Classifier extends Component {
         sample: null
     }
 
-
     handleClick = (e) => {
 
 
@@ -25,20 +24,20 @@ class Classifier extends Component {
                 name: "image_1",
                 size: "100",
                 image: image_1,
-                backend_address : 1
+                backend_address: 1
             }],
             "image_2": [{
                 name: "image_2",
                 size: "200",
                 image: image_2,
-                backend_address : 2
+                backend_address: 2
 
             }],
             "image_3": [{
                 name: "image_3",
                 size: "300",
                 image: image_2,
-                backend_address : 3
+                backend_address: 3
 
             }],
         }
@@ -107,7 +106,6 @@ class Classifier extends Component {
             })
     }
 
-
     sendImage_sample = () => {
         this.activateSpinner()
         let formData = new FormData()
@@ -152,74 +150,130 @@ class Classifier extends Component {
         ));
         return (
 
+
             <Container>
 
                 <Row>
-                    <Col>
+                    <Col sm={12}>
                         <Dropzone onDrop={this.onDrop} accept='image/png, image/jpeg'>
                             {({isDragActive, getRootProps, getInputProps}) => (
-                                <section className="container">
-                                    <div {...getRootProps({className: 'dropzone back'})}>
-                                        <input {...getInputProps()} />
-                                        <i className="far fa-image mb-2 text-muted" style={{fontSize: 100}}></i>
-                                        <p className='text-muted'>{isDragActive ? "Drop some images " : "Drag 'n' drop some files here, or click to select files"}</p>
-                                    </div>
-                                </section>
+                                <div {...getRootProps({className: 'dropzone back'})}>
+                                    <input {...getInputProps()} />
+                                    <i className="far fa-image mb-2 text-muted" style={{fontSize: 100}}></i>
+                                    <p className='text-muted'>{isDragActive ? "Drop some images " : "Drag 'n' drop some files here, or click to select files"}</p>
+                                </div>
                             )}
                         </Dropzone>
                     </Col>
                 </Row>
 
-
                 <Row>
-                    <Col>
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-sm-4">
-                                    <button
-                                        data-prefix="1"
-                                        onClick={(e) => this.handleClick(e)}
-                                        className="btn btn-primary">
-                                        Sample 1
-                                    </button>
-                                </div>
-                                <div className="col-sm-4">
-                                    <button
-                                        data-prefix="2"
-                                        onClick={(e) => this.handleClick(e)}
-                                        className="btn btn-primary">
-                                        Sample 2
-                                    </button>
-                                </div>
-                                <div className="col-sm-4">
-                                    <button
-                                        data-prefix="3"
-                                        onClick={(e) => this.handleClick(e)}
-                                        className="btn btn-primary">
-                                        Sample 3
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                    <Col sm>
+                        <button
+                            data-prefix="1"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 1
+                        </button>
+                    </Col>
+                    <Col sm>
+                        <button
+                            data-prefix="1"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 1
+                        </button>
+                    </Col>
+                    <Col sm>
+                        <button
+                            data-prefix="1"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 1
+                        </button>
+                    </Col>
+                    <Col sm>
+                        <button
+                            data-prefix="1"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 1
+                        </button>
+                    </Col>
+                    <Col sm>
+                        <button
+                            data-prefix="1"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 1
+                        </button>
                     </Col>
                 </Row>
 
+                <Row className='mt-1'>
+                    <Col sm>
+                        <button
+                            data-prefix="1"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 1
+                        </button>
+                    </Col>
+                    <Col sm>
+                        <button
+                            data-prefix="1"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 1
+                        </button>
+                    </Col>
+                    <Col sm>
+                        <button
+                            data-prefix="1"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 1
+                        </button>
+                    </Col>
+                    <Col sm>
+                        <button
+                            data-prefix="1"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 1
+                        </button>
+                    </Col>
+                    <Col sm>
+                        <button
+                            data-prefix="1"
+                            onClick={(e) => this.handleClick(e)}
+                            className="btn btn-primary">
+                            Sample 1
+                        </button>
+                    </Col>
+                </Row>
 
                 <Row>
-                    <Col>
-
-
+                    <Col sm={12}>
                         <div className="mt-2">
                             {
                                 this.state.isLoading &&
                                 <Spinner animation="border" role="status"></Spinner>
                             }
                         </div>
+                    </Col>
+                </Row>
 
+                <Row>
+                    <Col sm>
                         <aside>
                             {files}
                         </aside>
+                    </Col>
+                </Row>
 
+                <Row>
+                    <Col sm>
                         <div className="img-fluid">
                             {this.state.files.length > 0 && this.state.dropzone != null &&
                             <Image
@@ -227,7 +281,11 @@ class Classifier extends Component {
                                 height='400' rounded/>
                             }
                         </div>
+                    </Col>
+                </Row>
 
+                <Row>
+                    <Col sm>
                         <div className="img-fluid">
                             {this.state.files.length > 0 && this.state.sample != null &&
                             <Image
@@ -235,7 +293,11 @@ class Classifier extends Component {
                                 height='400' rounded/>
                             }
                         </div>
+                    </Col>
+                </Row>
 
+                <Row>
+                    <Col sm>
 
                         {this.state.recentImage &&
                         <React.Fragment>
@@ -244,15 +306,11 @@ class Classifier extends Component {
                                    height='400' rounded/>
                         </React.Fragment>
                         }
-
-
                     </Col>
-
                 </Row>
 
-
                 <Row>
-                    <Col>
+                    <Col sm>
                         {this.state.files.length > 0 && this.state.dropzone != null &&
                         <Button variant='info' size='lg' className='mt-3' onClick={this.sendImage_dropzone}>Analyze
                             Image </Button>}
@@ -273,9 +331,7 @@ class Classifier extends Component {
                             </div>
                         }
                     </Col>
-
                 </Row>
-
 
             </Container>
 
