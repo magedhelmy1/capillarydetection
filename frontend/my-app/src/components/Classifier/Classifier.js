@@ -11,7 +11,18 @@ class Classifier extends Component {
         isLoading: false,
         recentImage: null,
         dropzone: null,
-        sample: null
+        sample: null,
+        showAnalyzed: true,
+    }
+
+    show_original = () => {
+
+        this.setState({showAnalyzed: false});
+    }
+
+    show_analyzed = () => {
+
+        this.setState({showAnalyzed: true});
     }
 
     handleClick = (e) => {
@@ -237,6 +248,8 @@ class Classifier extends Component {
         })
             .then(resp => {
                 this.setState({recentImage: resp})
+                this.downloadImage(resp)
+                console.log("Get image class response is:")
                 console.log(resp)
             })
             .catch(err => {
@@ -245,6 +258,25 @@ class Classifier extends Component {
         this.deactivateSpinner()
 
     }
+
+
+    downloadImage = (resp) => {
+        axios({
+            url: resp.data.picture,
+            method: 'GET',
+            responseType: 'blob', // important
+        }).then((response) => {
+            console.log("Here is the output")
+            console.log(resp.data.picture)
+            const url = window.URL.createObjectURL(new Blob([resp.data.picture]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'file.png'); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+        });
+    }
+
 
     render() {
         const files = this.state.files.map(file => (
@@ -469,6 +501,31 @@ class Classifier extends Component {
 
                 <Row>
                     <Col sm>
+                        {
+                            this.state.recentImage &&
+                            <button
+                                data-prefix="15"
+                                onClick={this.show_original}
+                                className="btn btn-success">
+                                Original Image
+                            </button>
+                        }
+                    </Col>
+                    <Col sm>
+                        {
+                            this.state.recentImage &&
+                            <button
+                                data-prefix="15"
+                                onClick={this.show_analyzed}
+                                className="btn btn-success">
+                                Analyzed Image
+                            </button>
+                        }
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col sm>
                         <div className="img-fluid">
                             {this.state.files.length > 0 && this.state.dropzone != null &&
                             <Image
@@ -493,14 +550,21 @@ class Classifier extends Component {
 
                 <Row>
                     <Col sm>
+                        {this.state.recentImage && this.state.showAnalyzed &&
+                        <Image className='justify-content-center'
+                               src={this.state.recentImage.data.analyzed_picture}
+                               height='400' rounded/>
 
-                        {this.state.recentImage &&
-                        <React.Fragment>
-                            <Image className='justify-content-center'
-                                   src={this.state.recentImage.data.analyzed_picture}
-                                   height='400' rounded/>
-                        </React.Fragment>
                         }
+
+                        {this.state.recentImage && !this.state.showAnalyzed &&
+                        <Image className='justify-content-center'
+                               src={this.state.recentImage.data.picture}
+                               height='400' rounded/>
+
+                        }
+
+
                     </Col>
                 </Row>
 
@@ -511,7 +575,8 @@ class Classifier extends Component {
                             Image </Button>}
 
                         {this.state.files.length > 0 && this.state.sample != null &&
-                        <Button variant='info' size='lg' className='mt-3' onClick={this.sendImage_sample}>Analyze Sample
+                        <Button variant='info' size='lg' className='mt-3' onClick={this.sendImage_sample}>Analyze
+                            Sample
                             Image </Button>}
 
                         {
