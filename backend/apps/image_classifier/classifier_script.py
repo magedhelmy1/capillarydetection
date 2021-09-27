@@ -199,7 +199,7 @@ def get_countours_apply_to_image(res_img, image_to_write_on, input_shape=(50, 50
         if TFX:
             prediction = make_prediction(reshaped_array)
 
-            if prediction[0][0] > accepted_accuracy:
+            if prediction[0][0] < accepted_accuracy:
                 capillary_count += 1
                 # true_coords.append([startX, startY, endX, endY])
                 cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 255, 0), 2)
@@ -220,8 +220,8 @@ def get_countours_apply_to_image(res_img, image_to_write_on, input_shape=(50, 50
                 # false_coords.append([startX, startY, endX, endY])
                 cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 0, 255), 2)
 
-        else:
-            cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        # else:
+        #     cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
     return image_to_write_on, capillary_count
 
