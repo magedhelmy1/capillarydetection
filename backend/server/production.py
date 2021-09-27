@@ -3,6 +3,7 @@ from .settings import *
 
 
 # psql --host=capillarywebdatabase.postgres.database.azure.com --port=5432 --username=magedCapillaryWeb@capillarywebdatabase --dbname=postgres
+# https://docs.microsoft.com/en-us/azure/developer/python/tutorial-python-postgresql-app-portal?pivots=postgres-single-server
 # Configure the domain name using the environment variable
 # that Azure automatically creates for us.
 ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
