@@ -4,7 +4,6 @@ import traceback
 from django.core.files.base import ContentFile
 from io import BytesIO
 
-
 # Create your models here.
 class Image(models.Model):
     picture = models.ImageField(upload_to="microcirculation_images", blank=True)
@@ -12,7 +11,8 @@ class Image(models.Model):
     classified = models.CharField(max_length=200, blank=True)
     uploaded = models.DateTimeField(auto_now_add=True)
     analyzed_picture = models.ImageField(upload_to="analyzed_picture", blank=True)
-    capillary_density = models.CharField(max_length=200, blank=True)
+    segmented_image = models.ImageField(upload_to="segmented_image", blank=True)
+    capillary_area = models.CharField(max_length=200, blank=True)
     number_of_capillaries = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
@@ -114,8 +114,10 @@ class Image(models.Model):
 
         try:
 
-            time_taken, analyzed = classify_image(self.picture)
+            time_taken, analyzed, number_capillaries, area_of_capillaries, segmented_image_clean = classify_image(self.picture)
             self.classified = time_taken
+            self.number_of_capillaries = number_capillaries
+            self.capillary_area = area_of_capillaries
 
             new_image_io = BytesIO()
             analyzed.save(new_image_io, format='JPEG')
@@ -123,6 +125,15 @@ class Image(models.Model):
             self.analyzed_picture.save(
                 temp_name,
                 content=ContentFile(new_image_io.getvalue()),
+                save=False
+            )
+
+            new_image_io_segmented = BytesIO()
+            segmented_image_clean.save(new_image_io_segmented, format='JPEG')
+
+            self.segmented_image.save(
+                temp_name,
+                content=ContentFile(new_image_io_segmented.getvalue()),
                 save=False
             )
 

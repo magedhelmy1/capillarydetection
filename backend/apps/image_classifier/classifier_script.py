@@ -1,3 +1,4 @@
+import time
 import cv2
 from PIL import ImageEnhance
 import imutils
@@ -6,6 +7,31 @@ from skimage.exposure import histogram
 from skimage import color
 from PIL import Image
 import timeit
+from time import sleep
+import json
+import requests
+import tensorflow as tf
+from tensorflow.python.ops.numpy_ops import np_config
+from numpy import asarray
+
+np_config.enable_numpy_behavior()
+
+# Start docker
+# docker run -p 8501:8501 --name tfserving_classifier --mount type=bind,source=C:\Users\maged\Desktop\Projects\PyCharm_Projects\21_Django_ML\backend\algorithms\capillaryNet\,target=/models/img_classifier -e MODEL_NAME=img_classifier -t tensorflow/serving
+#https://neptune.ai/blog/how-to-serve-machine-learning-models-with-tensorflow-serving-and-docker
+
+# server URL
+url = 'http://localhost:8501/v1/models/img_classifier:predict'
+
+# model_test = tf.keras.models.load_model("algorithms/SSIM_Model/1")
+
+
+def make_prediction(instances):
+    data = json.dumps({"signature_name": "serving_default", "instances": instances.tolist()})
+    headers = {"content-type": "application/json"}
+    json_response = requests.post(url, data=data, headers=headers)
+    predictions = json.loads(json_response.text)['predictions']
+    return predictions
 
 
 class ImageEnhancement(object):
@@ -101,6 +127,7 @@ def extract_frame_from_video(video_dir, frame_number):
 
 def return_channel(frame_multi):
     b, g, r = cv2.split(frame_multi)
+    #COLOR_RGB2BGR
 
     return g
 
@@ -111,7 +138,7 @@ def denoise_frame(noisy_frame):
 
 def segment_background(img_unseg, frame_to_blend_with):
     thresh1 = cv2.adaptiveThreshold(img_unseg, 255, cv2.ADAPTIVE_THRESH_MEAN_C,
-                                    cv2.THRESH_BINARY_INV, 199, 10)
+                                    cv2.THRESH_BINARY_INV, 199, 5)
     original_masked = cv2.bitwise_and(frame_to_blend_with, frame_to_blend_with, mask=thresh1)
 
     return original_masked
@@ -121,21 +148,19 @@ def remove_high_green_pixels(masked_image):
     masked_image_copy = masked_image.copy()
 
     green_value = masked_image_copy[:, :, 1]
-    red_value = masked_image_copy[:, :, 2]
+    red_value = masked_image_copy[:, :, 0]
     q = green_value > red_value
 
     masked_image_copy[q] = [0, 0, 0]
-    #
-    # hsv = cv2.cvtColor(masked_image_copy, cv2.COLOR_BGR2HSV)
-    # q = hsv[..., 1] < 90
-    # masked_image_copy[q] = [0, 0, 0]
 
-    # masked_image_copy = cv2.cvtColor(masked_image_copy, cv2.COLOR_HSV2BGR)
+    area = capillary_density(masked_image_copy)
 
-    return masked_image_copy
+    return masked_image_copy, area
 
 
-def get_countours_apply_to_image(res_img, image_to_write_on):
+def get_countours_apply_to_image(res_img, image_to_write_on, input_shape=(50, 50), accepted_accuracy=0.8):
+    capillary_count = 0
+
     res_gray = cv2.cvtColor(res_img, cv2.COLOR_BGR2GRAY)
     cnts = cv2.findContours(res_gray.copy(), cv2.RETR_EXTERNAL,
                             cv2.CHAIN_APPROX_SIMPLE)
@@ -144,7 +169,7 @@ def get_countours_apply_to_image(res_img, image_to_write_on):
     for i, c in enumerate(cnts):
         (x, y, w, h) = cv2.boundingRect(c)
 
-        if cv2.contourArea(c) < 100 or cv2.contourArea(c) > 30000:
+        if cv2.contourArea(c) < 300 or cv2.contourArea(c) > 30000:
             continue
 
         startX = x - 20
@@ -164,37 +189,84 @@ def get_countours_apply_to_image(res_img, image_to_write_on):
         if endY > 1080:
             endY = 1080
 
-        cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        # Make prediction using deep learning
+        temp_image = cv2.resize(image_to_write_on[startY:endY, startX:endX], input_shape)
 
-    return image_to_write_on
+        reshaped_array = tf.expand_dims(temp_image, 0)
+
+        # for performance comparison (Django / TFX restpoint / TFX gRC / Ray)
+        TFX = True
+        if TFX:
+            prediction = make_prediction(reshaped_array)
+
+            if prediction[0][0] > accepted_accuracy:
+                capillary_count += 1
+                # true_coords.append([startX, startY, endX, endY])
+                cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+            else:
+                # false_coords.append([startX, startY, endX, endY])
+                cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 0, 255), 2)
+
+        elif TFX == "off":
+            prediction = model_test.predict(reshaped_array)
+
+            if prediction.tolist()[0][0] > accepted_accuracy:
+                capillary_count += 1
+                # true_coords.append([startX, startY, endX, endY])
+                cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+            else:
+                # false_coords.append([startX, startY, endX, endY])
+                cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 0, 255), 2)
+
+        else:
+            cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+    return image_to_write_on, capillary_count
+
+
+def capillary_density(image_to_calculate_density_from):
+    temp_gray = cv2.cvtColor(image_to_calculate_density_from, cv2.COLOR_BGR2GRAY)
+    height = temp_gray.shape[0]
+    width = temp_gray.shape[1]
+    density_count = cv2.countNonZero(temp_gray)
+
+    area = density_count * 2.2 * 2.2 / (width * height)
+    area = str(round(area, 2)) + " capillary/µm"
+
+    return area
 
 
 def classify_image(frame):
-    img_temp = Image.open(frame)
-    frame_ready = cv2.cvtColor(np.array(img_temp), cv2.COLOR_RGB2BGR)
+    print("Starting analysis")
+    img_temp = asarray(Image.open(frame))
 
     start_time = timeit.default_timer()
 
     image_enhancement = ImageEnhancement(modify_color=False)
-    org_enhanced = image_enhancement(frame_ready)
+    org_enhanced = image_enhancement(img_temp)
 
     # load channel
+    frame_ready = cv2.cvtColor(img_temp, cv2.COLOR_RGB2BGR)
     g = return_channel(frame_ready)
 
     # denoise frame
     denoised_img = denoise_frame(g)
 
-    # apply contours to image
     segmented_bg = segment_background(denoised_img, org_enhanced)
 
-    cleaned_img = remove_high_green_pixels(segmented_bg)
+    segmented_image_clean, area_count = remove_high_green_pixels(segmented_bg)
 
-    img = get_countours_apply_to_image(cleaned_img, org_enhanced)
-    im_pil = Image.fromarray(img)
+    img, capillary_count = get_countours_apply_to_image(segmented_image_clean, org_enhanced)
 
-    time_taken = timeit.default_timer() - start_time
 
-    return time_taken, im_pil
+    analyzed_im = Image.fromarray(img)
+    segmented_im = Image.fromarray(segmented_bg)
+
+    time_taken = str(round(timeit.default_timer() - start_time, 2)) + " seconds"
+
+    return time_taken, analyzed_im, capillary_count, area_count, segmented_im
 
 
 if __name__ == "__main__":

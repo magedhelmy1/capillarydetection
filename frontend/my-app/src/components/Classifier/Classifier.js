@@ -13,18 +13,37 @@ class Classifier extends Component {
         dropzone: null,
         sample: null,
         showAnalyzed: true,
+        showSegmented: false,
+        showOriginal: false,
+
     }
 
     show_original = () => {
 
-        this.setState({showAnalyzed: false});
+        this.setState({
+            showOriginal: true,
+            showAnalyzed: false,
+            showSegmented: false
+        });
     }
 
     show_analyzed = () => {
 
-        this.setState({showAnalyzed: true});
+        this.setState({
+            showOriginal: false,
+            showAnalyzed: true,
+            showSegmented: false
+        });
     }
 
+    show_segmented = () => {
+
+        this.setState({
+            showOriginal: false,
+            showAnalyzed: false,
+            showSegmented: true
+        });
+    }
     handleClick = (e) => {
 
         const prefix = e.target.dataset.prefix;
@@ -260,22 +279,22 @@ class Classifier extends Component {
     }
 
 
-    downloadImage = (resp) => {
-        axios({
-            url: resp.data.picture,
-            method: 'GET',
-            responseType: 'blob', // important
-        }).then((response) => {
-            console.log("Here is the output")
-            console.log(resp.data.picture)
-            const url = window.URL.createObjectURL(new Blob([resp.data.picture]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', 'file.png'); //or any other extension
-            document.body.appendChild(link);
-            link.click();
-        });
-    }
+    // downloadImage = (resp) => {
+    //     axios({
+    //         url: resp.data.picture,
+    //         method: 'GET',
+    //         responseType: 'blob', // important
+    //     }).then((response) => {
+    //         console.log("Here is the output")
+    //         console.log(resp.data.picture)
+    //         const url = window.URL.createObjectURL(new Blob([resp.data.picture]));
+    //         const link = document.createElement('a');
+    //         link.href = url;
+    //         link.setAttribute('download', 'file.png'); //or any other extension
+    //         document.body.appendChild(link);
+    //         link.click();
+    //     });
+    // }
 
 
     render() {
@@ -504,7 +523,6 @@ class Classifier extends Component {
                         {
                             this.state.recentImage &&
                             <button
-                                data-prefix="15"
                                 onClick={this.show_original}
                                 className="btn btn-success">
                                 Original Image
@@ -515,18 +533,28 @@ class Classifier extends Component {
                         {
                             this.state.recentImage &&
                             <button
-                                data-prefix="15"
                                 onClick={this.show_analyzed}
                                 className="btn btn-success">
                                 Analyzed Image
                             </button>
                         }
                     </Col>
+                    <Col sm>
+                        {
+                            this.state.recentImage &&
+                            <button
+                                onClick={this.show_segmented}
+                                className="btn btn-success">
+                                Segmented Image
+                            </button>
+                        }
+                    </Col>
+
                 </Row>
 
                 <Row>
                     <Col sm>
-                        <div className="img-fluid">
+                        <div className="img-fluid mt-2">
                             {this.state.files.length > 0 && this.state.dropzone != null &&
                             <Image
                                 src={URL.createObjectURL(this.state.files[0])}
@@ -557,9 +585,16 @@ class Classifier extends Component {
 
                         }
 
-                        {this.state.recentImage && !this.state.showAnalyzed &&
+                        {this.state.recentImage && this.state.showOriginal &&
                         <Image className='justify-content-center'
                                src={this.state.recentImage.data.picture}
+                               height='400' rounded/>
+
+                        }
+
+                        {this.state.recentImage && this.state.showSegmented &&
+                        <Image className='justify-content-center'
+                               src={this.state.recentImage.data.segmented_image}
                                height='400' rounded/>
 
                         }
@@ -584,8 +619,9 @@ class Classifier extends Component {
                             <div className="mt-2">
                                 <Alert variant='primary'>
                                     <p> Time Taken: {this.state.recentImage.data.classified} </p>
-                                    <p> Capillary Density: {this.state.recentImage.data.classified} </p>
-                                    <p> Number of Capillaries: {this.state.recentImage.data.classified} </p>
+                                    <p> Number of Capillaries: {this.state.recentImage.data.number_of_capillaries} </p>
+                                    <p> Capillary Density : {this.state.recentImage.data.capillary_area} (1 pixel =
+                                        2.2µm) </p>
 
                                 </Alert>
                             </div>
