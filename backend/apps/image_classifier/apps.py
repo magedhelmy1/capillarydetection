@@ -2,4 +2,5 @@ from django.apps import AppConfig
 
 
 class ImageClassifierConfig(AppConfig):
-    name = 'Image'
+    name = 'api.Image'
+    default = False

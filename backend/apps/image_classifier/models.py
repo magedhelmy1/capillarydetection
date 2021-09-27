@@ -4,6 +4,7 @@ import traceback
 from django.core.files.base import ContentFile
 from io import BytesIO
 
+
 # Create your models here.
 class Image(models.Model):
     picture = models.ImageField(upload_to="microcirculation_images", blank=True)
@@ -114,7 +115,8 @@ class Image(models.Model):
 
         try:
 
-            time_taken, analyzed, number_capillaries, area_of_capillaries, segmented_image_clean = classify_image(self.picture)
+            time_taken, analyzed, number_capillaries, area_of_capillaries, segmented_image_clean = classify_image(
+                self.picture)
             self.classified = time_taken
             self.number_of_capillaries = number_capillaries
             self.capillary_area = area_of_capillaries
