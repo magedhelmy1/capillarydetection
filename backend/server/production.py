@@ -1,5 +1,4 @@
-from .settings import *
-
+from .local_dev import *
 
 
 # psql --host=capillarywebdatabase.postgres.database.azure.com --port=5432 --username=magedCapillaryWeb@capillarywebdatabase --dbname=postgres
@@ -20,7 +19,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
- 
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
@@ -38,3 +37,25 @@ DATABASES = {
         'PASSWORD': os.environ['DBPASS']
     }
 }
+
+# Added for security questions
+
+# security.W018
+DEBUG = False
+
+# security.W016
+CSRF_COOKIE_SECURE = True
+
+# security.W012
+SESSION_COOKIE_SECURE = True
+
+# security.W008
+SECURE_SSL_REDIRECT = True
+
+# security.W004
+SECURE_HSTS_SECONDS = 31536000 # One year in seconds
+
+# Another security settings
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
