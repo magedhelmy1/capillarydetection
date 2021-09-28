@@ -1,5 +1,5 @@
 from .local_dev import *
-
+import os
 
 # psql --host=capillarywebdatabase.postgres.database.azure.com --port=5432 --username=magedCapillaryWeb@capillarywebdatabase --dbname=postgres
 # https://docs.microsoft.com/en-us/azure/developer/python/tutorial-python-postgresql-app-portal?pivots=postgres-single-server

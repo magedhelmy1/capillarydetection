@@ -1,4 +1,4 @@
-import time
+
 import cv2
 from PIL import ImageEnhance
 import imutils
@@ -7,12 +7,13 @@ from skimage.exposure import histogram
 from skimage import color
 from PIL import Image
 import timeit
-from time import sleep
 import json
 import requests
+from numpy import asarray
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 import tensorflow as tf
 from tensorflow.python.ops.numpy_ops import np_config
-from numpy import asarray
 
 np_config.enable_numpy_behavior()
 
