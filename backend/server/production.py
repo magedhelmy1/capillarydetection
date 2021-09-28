@@ -1,4 +1,4 @@
-from .local_dev import *
+from .settings import *
 import os
 
 # psql --host=capillarywebdatabase.postgres.database.azure.com --port=5432 --username=magedCapillaryWeb@capillarywebdatabase --dbname=postgres
