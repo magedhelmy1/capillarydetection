@@ -1,6 +1,7 @@
 absl-py==0.14.0
 asgiref==3.4.1
 astunparse==1.6.3
+cached-property==1.5.2
 cachetools==4.2.2
 certifi==2021.5.30
 charset-normalizer==2.0.6
@@ -10,16 +11,17 @@ Django==3.2.7
 django-cleanup==5.2.0
 django-cors-headers==3.8.0
 django-filter==21.1
+django-webpack-loader==1.4.0
 djangorestframework==3.12.4
 flatbuffers==1.12
 gast==0.4.0
 google-auth==1.35.0
 google-auth-oauthlib==0.4.6
 google-pasta==0.2.0
-grpcio==1.40.0
 h5py==3.1.0
 idna==3.2
 imageio==2.9.0
+importlib-metadata==4.8.1
 imutils==0.5.4
 keras==2.6.0
 Keras-Preprocessing==1.1.2
@@ -33,6 +35,7 @@ opencv-python==4.5.3.56
 opt-einsum==3.3.0
 Pillow==8.3.2
 protobuf==3.18.0
+psycopg2==2.9.1
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pyparsing==2.4.7
@@ -57,3 +60,4 @@ typing-extensions==3.7.4.3
 urllib3==1.26.7
 Werkzeug==2.0.1
 wrapt==1.12.1
+zipp==3.5.1

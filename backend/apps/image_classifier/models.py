@@ -117,6 +117,7 @@ class Image(models.Model):
 
             time_taken, analyzed, number_capillaries, area_of_capillaries, segmented_image_clean = classify_image(
                 self.picture)
+
             self.classified = time_taken
             self.number_of_capillaries = number_capillaries
             self.capillary_area = area_of_capillaries

@@ -1,4 +1,3 @@
-
 import cv2
 from PIL import ImageEnhance
 import imutils
@@ -11,6 +10,7 @@ import json
 import requests
 from numpy import asarray
 import os
+
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 import tensorflow as tf
 from tensorflow.python.ops.numpy_ops import np_config
@@ -18,11 +18,12 @@ from tensorflow.python.ops.numpy_ops import np_config
 np_config.enable_numpy_behavior()
 
 # Start docker
-# docker run -p 8501:8501 --name tfserving_classifier --mount type=bind,source=C:\Users\maged\Desktop\Projects\PyCharm_Projects\21_Django_ML\backend\algorithms\capillaryNet\,target=/models/img_classifier -e MODEL_NAME=img_classifier -t tensorflow/serving
-#https://neptune.ai/blog/how-to-serve-machine-learning-models-with-tensorflow-serving-and-docker
+# docker run -p 8501:8501 --name tfserving_classifier --mount type=bind,source=C:\Users\maged\Desktop\Projects\PyCharm_Projects\21_Django_ML\backend\algorithms\SSIM_Model\,target=/models/img_classifier -e MODEL_NAME=SSIM_Model -t tensorflow/serving
+# https://neptune.ai/blog/how-to-serve-machine-learning-models-with-tensorflow-serving-and-docker
 
 # server URL
 url = 'http://localhost:8501/v1/models/img_classifier:predict'
+
 
 # model_test = tf.keras.models.load_model("algorithms/SSIM_Model/1")
 
@@ -128,7 +129,7 @@ def extract_frame_from_video(video_dir, frame_number):
 
 def return_channel(frame_multi):
     b, g, r = cv2.split(frame_multi)
-    #COLOR_RGB2BGR
+    # COLOR_RGB2BGR
 
     return g
 
@@ -261,7 +262,6 @@ def classify_image(frame):
 
     img, capillary_count = get_countours_apply_to_image(segmented_image_clean, org_enhanced)
 
-
     analyzed_im = Image.fromarray(img)
     segmented_im = Image.fromarray(segmented_bg)
 
@@ -272,4 +272,3 @@ def classify_image(frame):
 
 if __name__ == "__main__":
     pass
-
