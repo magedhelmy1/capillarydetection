@@ -22,6 +22,4 @@ EXPOSE 8000
 
 WORKDIR /usr/src/app/backend
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-
 
