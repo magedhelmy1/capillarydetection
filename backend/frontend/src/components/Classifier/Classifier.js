@@ -44,6 +44,7 @@ class Classifier extends Component {
             showSegmented: true
         });
     }
+
     handleClick = (e) => {
 
         const prefix = e.target.dataset.prefix;
