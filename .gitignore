@@ -734,3 +734,5 @@ Temporary Items
 [Ss]cripts
 pyvenv.cfg
 pip-selfcheck.json
+
+.env

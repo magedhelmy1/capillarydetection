@@ -12,15 +12,26 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+import environ
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+# False if not in os.environ because of casting above
+DEBUG = env('DEBUG')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -83,16 +94,13 @@ WSGI_APPLICATION = 'server.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD'),
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+    # read os.environ['DATABASE_URL'] and raises
+    # ImproperlyConfigured exception if not found
+    #
+    # The db() method is an alias for db_url().
+    'default': env.db(),
 
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -133,9 +141,9 @@ MEDIA_URL = '/media/'
 
 WEBPACK_LOADER = {
     'DEFAULT': {
-            'BUNDLE_DIR_NAME': 'bundles/',
-            'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.dev.json'),
-        }
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.dev.json'),
+    }
 }
 
 REST_FRAMEWORK = {
