@@ -23,7 +23,7 @@ env = environ.Env(
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Take environment variables from .env file
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+environ.Env.read_env(os.path.join(BASE_DIR, '../.env'))
 
 # False if not in os.environ because of casting above
 DEBUG = env('DEBUG')
@@ -94,13 +94,16 @@ WSGI_APPLICATION = 'server.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    # read os.environ['DATABASE_URL'] and raises
-    # ImproperlyConfigured exception if not found
-    #
-    # The db() method is an alias for db_url().
-    'default': env.db(),
-
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'POSTGRES_NAME': 'postgres',
+        'POSTGRES_USER': 'postgres',
+        'POSTGRES_PASSWORD': env('POSTGRES_PASSWORD'),
+        'POSTGRES_HOST': 'localhost',
+        'POSTGRES_PORT': '5432',
+    }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
