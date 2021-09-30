@@ -20,10 +20,10 @@ env = environ.Env(
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Take environment variables from .env file
-environ.Env.read_env(os.path.join(BASE_DIR, '../.env'))
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # False if not in os.environ because of casting above
 DEBUG = env('DEBUG')
@@ -31,7 +31,7 @@ DEBUG = env('DEBUG')
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY =  env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -94,16 +94,10 @@ WSGI_APPLICATION = 'server.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'POSTGRES_NAME': 'postgres',
-        'POSTGRES_USER': 'postgres',
-        'POSTGRES_PASSWORD': env('POSTGRES_PASSWORD'),
-        'POSTGRES_HOST': 'localhost',
-        'POSTGRES_PORT': '5432',
-    }
-}
 
+    'default': env.db(),
+
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

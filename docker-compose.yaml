@@ -1,9 +1,15 @@
-version: "3.8"
+version: "3.9"
 
 services:
+  db:
+    container_name: database
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+
   web:
-    build: .
-    container_name: django
+    container_name: website
+    build: ./backend
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/usr/src/app
@@ -11,20 +17,3 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    environment:
-      DATABASE_URL: postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_NAME
-    env_file:
-      - .env
-
-  db:
-    image: postgres
-    container_name: pgdb
-    ports:
-      - "5432"
-    env_file:
-      - .env
-    environment:
-      POSTGRES_USER: $POSTGRES_USER
-      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
-      POSTGRES_NAME: $POSTGRES_NAME
-
