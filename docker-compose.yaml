@@ -17,3 +17,15 @@ services:
       - "8000:8000"
     depends_on:
       - db
+
+  tensorflow-servings:
+    container_name: tfserving_classifier
+    build: ./algorithms
+    ports:
+      - 8501:8501
+    depends_on:
+      - web
+
+
+
+

@@ -21,11 +21,10 @@ np_config.enable_numpy_behavior()
 # docker run -p 8501:8501 --name tfserving_classifier --mount type=bind,source=C:\Users\maged\Desktop\Projects\PyCharm_Projects\21_Django_ML\backend\algorithms\SSIM_Model\,target=/models/img_classifier -e MODEL_NAME=SSIM_Model -t tensorflow/serving
 # https://neptune.ai/blog/how-to-serve-machine-learning-models-with-tensorflow-serving-and-docker
 
-# server URL
-url = 'http://localhost:8501/v1/models/img_classifier:predict'
-
-
 # model_test = tf.keras.models.load_model("algorithms/SSIM_Model/1")
+
+# server URL
+url = 'http://tensorflow-servings:8501/v1/models/model:predict'
 
 
 def make_prediction(instances):
