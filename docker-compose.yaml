@@ -5,16 +5,23 @@ services:
     container_name: database
     image: postgres
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=hello_django
+      - POSTGRES_PASSWORD=hello_django
+      - POSTGRES_DB=hello_django_dev
 
   web:
     container_name: website
     build: ./backend
     command: python manage.py runserver 0.0.0.0:8000
+
     volumes:
-      - .:/usr/src/app
+      - ./backend/:/usr/src/app/
     ports:
       - "8000:8000"
+    env_file:
+      - ./.env.dev
     depends_on:
       - db
 
@@ -26,6 +33,7 @@ services:
     depends_on:
       - web
 
-
+volumes:
+  postgres_data:
 
 
