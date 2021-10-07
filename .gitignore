@@ -1006,3 +1006,29 @@ fabric.properties
 data/**
 
 # End of https://www.toptal.com/developers/gitignore/api/django,database,pycharm
+
+*.pyc
+__pycache__
+.DS_Store
+db.sqlite3
+staticfiles
+mediafiles
+.env
+.idea
+
+.idea/**
+
+### Database ###
+*.accdb
+*.db
+*.dbf
+*.mdb
+*.pdb
+*.sqlite3
+**/migrations/**
+# End of https://www.toptal.com/developers/gitignore/api/django,pycharm
+
+jq.exe
+.env.prod
+.env.dev
+.env
