@@ -32,7 +32,10 @@ services:
 
   tensorflow-servings:
     image: "${TENSORFLOW_SERVING}"
-    build: ./algorithms
+    build:
+      context: ./algorithms
+      cache_from:
+        - "${TENSORFLOW_SERVING}"
     ports:
       - 8501:8501
     depends_on:
