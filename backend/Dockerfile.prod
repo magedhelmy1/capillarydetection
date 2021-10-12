@@ -26,5 +26,5 @@ COPY . /usr/src/app/
 
 
 # run entrypoint.prod.sh
-ENTRYPOINT ["/usr/src/app/entrypoint.prod.sh"]
+ENTRYPOINT ["sh", "/usr/src/app/entrypoint.prod.sh"]
 
