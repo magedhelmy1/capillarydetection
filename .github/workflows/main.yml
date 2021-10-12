@@ -85,9 +85,12 @@ jobs:
           ssh-add - <<< "${{ secrets.PRIVATE_KEY }}"
 
       - name: Set environment variables
+        env:
+          NAMESPACE: ${{ secrets.NAMESPACE }}
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-          echo "NAMESPACE=$(echo ${{env.NAMESPACE}} )" >> $GITHUB_ENV
-          echo "PERSONAL_ACCESS_TOKEN=$(echo ${{env.PERSONAL_ACCESS_TOKEN}} )" >> $GITHUB_ENV
+          echo "echo ${{env.NAMESPACE}}"
+          echo "echo ${{env.PERSONAL_ACCESS_TOKEN}}"
 
       - name: Build and deploy images on DigitalOcean
         env:
