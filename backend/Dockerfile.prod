@@ -15,13 +15,11 @@ RUN apt install -y netcat
 COPY /requirements.txt /usr/src/app
 RUN pip install -r requirements.txt
 
-# copy entrypoint-prod.sh
-COPY ./entrypoint.prod.sh /usr/src/app/entrypoint.prod.sh
-RUN sed -i 's/\r$//g' /usr/src/app/entrypoint.prod.sh
-RUN chmod +x /usr/src/app/entrypoint.prod.sh
+# copy entrypoint.sh
+COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
+
 # copy project
-COPY . .
+COPY . /usr/src/app/
 
-# run entrypoint.prod.sh
-ENTRYPOINT ["/usr/src/app/entrypoint.prod.sh"]
-
+# run entrypoint.sh
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
