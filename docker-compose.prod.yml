@@ -23,7 +23,6 @@ services:
 
   tensorflow-servings:
     image: "${TENSORFLOW_IMAGE}"
-    build: ./algorithms
     ports:
       - 8501:8501
     depends_on:
