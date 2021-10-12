@@ -44,3 +44,5 @@ services:
 volumes:
   static_volume:
   media_volume:
+
+docker login ghcr.io -u ${{env.NAMESPACE} -p ${{env.PERSONAL_ACCESS_TOKEN}
