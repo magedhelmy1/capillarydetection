@@ -34,14 +34,13 @@ jobs:
           echo "WEB_IMAGE=$(echo ${{env.WEB_IMAGE}} )" >> $GITHUB_ENV
           echo "NGINX_IMAGE=$(echo ${{env.NGINX_IMAGE}} )" >> $GITHUB_ENV
           echo "TENSORFLOW_IMAGE=$(echo ${{env.TENSORFLOW_IMAGE}} )" >> $GITHUB_ENV
-
-#      - name: Log in to GitHub Packages
-#        run: echo ${PERSONAL_ACCESS_TOKEN} | docker login ghcr.io -u ${{ secrets.NAMESPACE }} --password-stdin
-#        env:
-#          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       - name: Build images
         run: |
           docker-compose -f docker-compose.ci.yml build
+      - name: Log in to GitHub Packages
+        run: echo ${PERSONAL_ACCESS_TOKEN} | docker login ghcr.io -u ${{ secrets.NAMESPACE }} --password-stdin
+        env:
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       - name: Push images
         run: |
           docker tag ${{ env.WEB_IMAGE }}  ${{ env.WEB_IMAGE_BASE }}:latest
