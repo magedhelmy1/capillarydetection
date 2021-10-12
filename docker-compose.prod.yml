@@ -22,7 +22,7 @@ services:
       - web
 
   tensorflow-servings:
-    image: "${TENSORFLOW_SERVING}"
+    image: "${TENSORFLOW_IMAGE}"
     build: ./algorithms
     ports:
       - 8501:8501

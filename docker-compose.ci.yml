@@ -31,11 +31,11 @@ services:
       - web
 
   tensorflow-servings:
-    image: "${TENSORFLOW_SERVING}"
+    image: "${TENSORFLOW_IMAGE}"
     build:
       context: ./algorithms
       cache_from:
-        - "${TENSORFLOW_SERVING}"
+        - "${TENSORFLOW_IMAGE}"
     ports:
       - 8501:8501
     depends_on:
