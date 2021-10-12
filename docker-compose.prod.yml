@@ -10,6 +10,7 @@ services:
     ports:
       - 8000:8000
     env_file: .env
+
   nginx:
     image: "${NGINX_IMAGE}"
     volumes:
@@ -17,6 +18,14 @@ services:
       - media_volume:/usr/src/app/mediafiles
     ports:
       - 80:80
+    depends_on:
+      - web
+
+  tensorflow-servings:
+    image: "${TENSORFLOW_SERVING}"
+    build: ./algorithms
+    ports:
+      - 8501:8501
     depends_on:
       - web
 
