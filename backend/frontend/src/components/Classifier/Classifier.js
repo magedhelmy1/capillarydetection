@@ -245,7 +245,7 @@ class Classifier extends Component {
         this.activateSpinner()
         let formData = new FormData()
         formData.append('backend_address', this.state.files[0].backend_address)
-        axios.post('http://127.0.0.1:8000/api/images/', formData, {
+        axios.post('api/images/', formData, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'multipart/form-data'
@@ -261,7 +261,7 @@ class Classifier extends Component {
     }
 
     getImageClass = (obj) => {
-        axios.get(`http://127.0.0.1:8000/api/images/${obj.data.id}/`, {
+        axios.get(`api/images/${obj.data.id}/`, {
             headers: {
                 'accept': 'application/json',
             }
