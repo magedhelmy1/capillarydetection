@@ -4,6 +4,7 @@ import './Classifier.css'
 import {Spinner, Button, Alert, Image, Container, Row, Col} from 'react-bootstrap'
 import axios from 'axios'
 
+/*did it work*/
 
 class Classifier extends Component {
     state = {
@@ -223,10 +224,11 @@ class Classifier extends Component {
     }
 
     sendImage_dropzone = () => {
+
         this.activateSpinner()
         let formData = new FormData()
         formData.append('picture', this.state.files[0])
-        axios.post('/api/images/', formData, {
+        axios.post("/api/images/", formData, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'multipart/form-data'
@@ -242,10 +244,13 @@ class Classifier extends Component {
     }
 
     sendImage_sample = () => {
+
+        console.log("what is up man?")
+
         this.activateSpinner()
         let formData = new FormData()
         formData.append('backend_address', this.state.files[0].backend_address)
-        axios.post('api/images/', formData, {
+        axios.post("/api/images/", formData, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'multipart/form-data'
@@ -261,11 +266,15 @@ class Classifier extends Component {
     }
 
     getImageClass = (obj) => {
-        axios.get(`api/images/${obj.data.id}/`, {
-            headers: {
-                'accept': 'application/json',
+
+
+        axios.get(`/api/images/${obj.data.id}/`, {
+                headers: {
+                    'accept':
+                        'application/json',
+                }
             }
-        })
+        )
             .then(resp => {
                 this.setState({recentImage: resp})
                 this.downloadImage(resp)
@@ -280,25 +289,9 @@ class Classifier extends Component {
     }
 
 
-    // downloadImage = (resp) => {
-    //     axios({
-    //         url: resp.data.picture,
-    //         method: 'GET',
-    //         responseType: 'blob', // important
-    //     }).then((response) => {
-    //         console.log("Here is the output")
-    //         console.log(resp.data.picture)
-    //         const url = window.URL.createObjectURL(new Blob([resp.data.picture]));
-    //         const link = document.createElement('a');
-    //         link.href = url;
-    //         link.setAttribute('download', 'file.png'); //or any other extension
-    //         document.body.appendChild(link);
-    //         link.click();
-    //     });
-    // }
-
-
     render() {
+
+
         const files = this.state.files.map(file => (
             <li key={file.name}>
                 {file.name}
