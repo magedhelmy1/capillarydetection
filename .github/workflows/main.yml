@@ -76,6 +76,8 @@ jobs:
           echo TENSORFLOW_IMAGE=${{ env.TENSORFLOW_IMAGE }} >> .env
           echo NAMESPACE=${{ secrets.NAMESPACE }} >> .env
           echo PERSONAL_ACCESS_TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }} >> .env
+          echo ALLOWED_HOSTS=${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} >> .env
+
       - name: Add the private SSH key to the ssh-agent
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
