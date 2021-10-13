@@ -1012,7 +1012,9 @@ __pycache__
 .DS_Store
 db.sqlite3
 staticfiles
-mediafiles
+**/mediafiles/analyzed_picture/**
+**/mediafiles/microcirculation_images/**
+**/mediafiles/segmented_image/**
 .env
 .idea
 

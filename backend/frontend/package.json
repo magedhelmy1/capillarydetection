@@ -1,7 +1,6 @@
 {
   "name": "frontend",
   "version": "1.0.0",
-  "proxy": "http://localhost:8000",
   "description": "",
   "main": "index.js",
   "scripts": {
