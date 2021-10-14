@@ -245,7 +245,8 @@ class Classifier extends Component {
 
     sendImage_sample = () => {
 
-        console.log("what is up man?")
+        console.log(axios.get(process.env.REACT_APP_AXIOS_URL))
+
 
         this.activateSpinner()
         let formData = new FormData()
