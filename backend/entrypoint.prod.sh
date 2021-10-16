@@ -10,5 +10,10 @@ if [ "$DATABASE" = "postgres" ]; then
   echo "PostgreSQL started"
 fi
 
-(cd frontend/src && npm run prod)
+# shellcheck disable=SC2164
+cd frontend
+npm install
+# shellcheck disable=SC2164
+cd src
+npm run prod
 exec "$@"
