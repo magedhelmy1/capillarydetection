@@ -19,8 +19,6 @@ services:
   nginx:
     build:
       context: ./nginx
-      cache_from:
-        - "${NGINX_IMAGE}"
     image: "${NGINX_IMAGE}"
     volumes:
       - static_volume:/usr/src/app/staticfiles
@@ -34,8 +32,6 @@ services:
     image: "${TENSORFLOW_IMAGE}"
     build:
       context: ./algorithms
-      cache_from:
-        - "${TENSORFLOW_IMAGE}"
     ports:
       - 8501:8501
     depends_on:
