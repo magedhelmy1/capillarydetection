@@ -4,6 +4,8 @@ import Classifier from './components/Classifier/Classifier';
 import ImageLIst from './components/ImageList/ImageList';
 import Navigation from './components/Navigation/Navigation';
 import {Route, BrowserRouter, Switch} from 'react-router-dom'
+import axios from "axios";
+
 
 function App() {
   return (

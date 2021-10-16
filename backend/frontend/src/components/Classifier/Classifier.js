@@ -225,12 +225,13 @@ class Classifier extends Component {
     sendImage_dropzone = () => {
 
         const API_URL = process.env.REACT_APP_AXIOS_URL
-        console.log(`${process.env.REACT_APP_AXIOS_URL}/api/images/`)
+        console.log(`${process.env.REACT_APP_AXIOS_URL}/`)
+        console.log(API_URL)
 
         this.activateSpinner()
         let formData = new FormData()
         formData.append('picture', this.state.files[0])
-        axios.post(`http://${process.env.REACT_APP_AXIOS_URL}/api/images/`, formData, {
+        axios.post(`${process.env.REACT_APP_AXIOS_URL}/api/images/`, formData, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'multipart/form-data'
@@ -249,10 +250,13 @@ class Classifier extends Component {
 
         const API_URL = process.env.REACT_APP_AXIOS_URL
 
+        console.log(`${process.env.REACT_APP_AXIOS_URL}/`)
+        console.log(API_URL)
+
         this.activateSpinner()
         let formData = new FormData()
         formData.append('backend_address', this.state.files[0].backend_address)
-        axios.post(`http://${process.env.REACT_APP_AXIOS_URL}/api/images/`, formData, {
+        axios.post(`${process.env.REACT_APP_AXIOS_URL}/api/images/`, formData, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'multipart/form-data'
@@ -271,12 +275,13 @@ class Classifier extends Component {
 
         const API_URL = process.env.REACT_APP_AXIOS_URL
 
-        axios.get(`http://${process.env.REACT_APP_AXIOS_URL}/api/images/${obj.data.id}/`, {
+        axios.get(`${process.env.REACT_APP_AXIOS_URL}/api/images/${obj.data.id}/`,
+            {
                 headers: {
                     'accept':
                         'application/json',
                 }
-            }
+            },
         )
             .then(resp => {
                 this.setState({recentImage: resp})
