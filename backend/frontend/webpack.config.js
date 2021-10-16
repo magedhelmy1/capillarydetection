@@ -20,9 +20,7 @@ module.exports = {
 
     // webpack.config.js
     plugins: [
-        new Dotenv({
-            REACT_APP_AXIOS_URL: JSON.stringify(process.env.REACT_APP_AXIOS_URL),
-        })
+        new Dotenv()
     ],
 
     module: {
