@@ -11,7 +11,7 @@ if [ "$DATABASE" = "postgres" ]; then
 fi
 
 # shellcheck disable=SC2164
-(cd frontend && npm install && cd src && npm run prod)
+(cd frontend/src/ && npm run prod)
 # shellcheck disable=SC2164
 
 
