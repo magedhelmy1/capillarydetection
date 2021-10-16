@@ -225,8 +225,10 @@ class Classifier extends Component {
     sendImage_dropzone = () => {
 
         const API_URL = process.env.REACT_APP_AXIOS_URL
+        console.log("The URL Is")
         console.log(`${process.env.REACT_APP_AXIOS_URL}/`)
         console.log(API_URL)
+        console.log("End of the URL Is")
 
         this.activateSpinner()
         let formData = new FormData()
@@ -249,9 +251,11 @@ class Classifier extends Component {
     sendImage_sample = () => {
 
         const API_URL = process.env.REACT_APP_AXIOS_URL
-
+        console.log("The URL Is")
         console.log(`${process.env.REACT_APP_AXIOS_URL}/`)
         console.log(API_URL)
+        console.log("End of the URL Is")
+
 
         this.activateSpinner()
         let formData = new FormData()
@@ -274,6 +278,10 @@ class Classifier extends Component {
     getImageClass = (obj) => {
 
         const API_URL = process.env.REACT_APP_AXIOS_URL
+        console.log("The URL Is")
+        console.log(`${process.env.REACT_APP_AXIOS_URL}/`)
+        console.log(API_URL)
+        console.log("End of the URL Is")
 
         axios.get(`${process.env.REACT_APP_AXIOS_URL}/api/images/${obj.data.id}/`,
             {
