@@ -16,4 +16,3 @@ python manage.py migrate
 (cd frontend/src && npm run dev)
 
 exec "$@"
-

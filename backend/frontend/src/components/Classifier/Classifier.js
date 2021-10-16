@@ -4,7 +4,6 @@ import './Classifier.css'
 import {Spinner, Button, Alert, Image, Container, Row, Col} from 'react-bootstrap'
 import axios from 'axios'
 
-/*did it work*/
 
 class Classifier extends Component {
     state = {
@@ -225,10 +224,13 @@ class Classifier extends Component {
 
     sendImage_dropzone = () => {
 
+        const API_URL = process.env.REACT_APP_AXIOS_URL
+        console.log(`${process.env.REACT_APP_AXIOS_URL}/api/images/`)
+
         this.activateSpinner()
         let formData = new FormData()
         formData.append('picture', this.state.files[0])
-        axios.post("/api/images/", formData, {
+        axios.post(`http://${process.env.REACT_APP_AXIOS_URL}/api/images/`, formData, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'multipart/form-data'
@@ -245,13 +247,12 @@ class Classifier extends Component {
 
     sendImage_sample = () => {
 
-        console.log(axios.get(process.env.REACT_APP_AXIOS_URL))
-
+        const API_URL = process.env.REACT_APP_AXIOS_URL
 
         this.activateSpinner()
         let formData = new FormData()
         formData.append('backend_address', this.state.files[0].backend_address)
-        axios.post("/api/images/", formData, {
+        axios.post(`http://${process.env.REACT_APP_AXIOS_URL}/api/images/`, formData, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'multipart/form-data'
@@ -268,8 +269,9 @@ class Classifier extends Component {
 
     getImageClass = (obj) => {
 
+        const API_URL = process.env.REACT_APP_AXIOS_URL
 
-        axios.get(`/api/images/${obj.data.id}/`, {
+        axios.get(`http://${process.env.REACT_APP_AXIOS_URL}/api/images/${obj.data.id}/`, {
                 headers: {
                     'accept':
                         'application/json',
@@ -278,7 +280,6 @@ class Classifier extends Component {
         )
             .then(resp => {
                 this.setState({recentImage: resp})
-                this.downloadImage(resp)
                 console.log("Get image class response is:")
                 console.log(resp)
             })

@@ -19,7 +19,7 @@ RUN apt-get update \
     && curl --silent --location https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get install -y nodejs \
     && npm install --silent\
-    && npm install react-scripts@3.4.1 -g --silent
+    && npm install react-scripts@4.0.3 -g --silent
 
 RUN apt install -y netcat
 COPY /requirements.txt /usr/src/app

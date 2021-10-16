@@ -1,15 +1,6 @@
 version: "3.9"
 
 services:
-  db:
-    container_name: database
-    image: postgres
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_USER=hello_django
-      - POSTGRES_PASSWORD=hello_django
-      - POSTGRES_DB=hello_django_dev
 
   web:
     container_name: website
@@ -24,6 +15,16 @@ services:
       - ./.env.dev
     depends_on:
       - db
+
+  db:
+    container_name: database
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=hello_django
+      - POSTGRES_PASSWORD=hello_django
+      - POSTGRES_DB=hello_django_dev
 
   tensorflow-servings:
     container_name: tfserving_classifier

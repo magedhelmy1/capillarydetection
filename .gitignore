@@ -1034,3 +1034,5 @@ jq.exe
 .env.prod
 .env.dev
 .env
+backend/frontend/.env.development
+backend/frontend/.env.production

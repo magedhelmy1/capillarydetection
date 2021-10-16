@@ -30,6 +30,8 @@ jobs:
           echo SQL_HOST=${{ secrets.SQL_HOST }} >> .env
           echo SQL_PORT=${{ secrets.SQL_PORT }} >> .env
           echo ALLOWED_HOSTS=${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} >> .env
+          echo REACT_APP_AXIOS_URL_DEV=${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} >> .env
+
       - name: Set environment variables
         run: |
           echo "WEB_IMAGE=$(echo ${{env.WEB_IMAGE}} )" >> $GITHUB_ENV
@@ -77,6 +79,7 @@ jobs:
           echo NAMESPACE=${{ secrets.NAMESPACE }} >> .env
           echo PERSONAL_ACCESS_TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }} >> .env
           echo ALLOWED_HOSTS=${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} >> .env
+          echo REACT_APP_AXIOS_URL_DEV=${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} >> .env
 
       - name: Add the private SSH key to the ssh-agent
         env:
