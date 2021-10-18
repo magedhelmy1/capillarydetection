@@ -10,9 +10,9 @@ if [ "$DATABASE" = "postgres" ]; then
   echo "PostgreSQL started"
 fi
 
-# shellcheck disable=SC2164
-(cd frontend && npm install && cd src && npm run prod)
-# shellcheck disable=SC2164
-
+python manage.py makemigrations
+python manage.py flush --no-input
+python manage.py migrate
+(cd frontend/src && npm run dev)
 
 exec "$@"

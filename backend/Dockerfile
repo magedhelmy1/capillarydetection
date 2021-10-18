@@ -21,7 +21,6 @@ RUN apt-get update \
     && apt-get install -y nodejs \
     && npm install --silent
 
-
 RUN pip install -r requirements.txt
 
 # copy entrypoint.sh
