@@ -11,6 +11,6 @@ if [ "$DATABASE" = "postgres" ]; then
 fi
 
 (cd frontend && npm install && npm run prod)
-python manage.py collectstatic
+python manage.py collectstatic --noinput
 
 exec "$@"
