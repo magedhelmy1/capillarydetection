@@ -10,9 +10,7 @@ if [ "$DATABASE" = "postgres" ]; then
   echo "PostgreSQL started"
 fi
 
-(cd frontend && npm install && npm run prod)
-touch .env
-echo "REACT_APP_AXIOS_URL=http://"$REACT_APP_AXIOS_URL"" > .env
+(cd frontend && touch .env && echo "REACT_APP_AXIOS_URL=http://"$REACT_APP_AXIOS_URL"" > .env && npm install && npm run prod)
 python manage.py collectstatic --noinput
 
 exec "$@"
