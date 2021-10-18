@@ -22,14 +22,6 @@ RUN apt-get update \
 
 RUN pip install -r requirements.txt
 
-# set work directory
-WORKDIR /usr/src/app/frontend
-RUN npm install
-RUN npm run prod
-
-# set work directory
-WORKDIR /usr/src/app
-
 # copy entrypoint.sh
 RUN sed -i 's/\r$//g' /usr/src/app/entrypoint.prod.sh
 RUN chmod +x /usr/src/app/entrypoint.prod.sh
