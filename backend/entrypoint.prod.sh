@@ -10,6 +10,7 @@ if [ "$DATABASE" = "postgres" ]; then
   echo "PostgreSQL started"
 fi
 
+python manage.py collectstatic
 (cd frontend && npm install && npm run prod)
 
 exec "$@"
