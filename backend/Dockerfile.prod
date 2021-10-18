@@ -28,7 +28,7 @@ RUN sed -i 's/\r$//g' /usr/src/app/entrypoint.prod.sh
 RUN chmod +x /usr/src/app/entrypoint.prod.sh
 
 # set work directory
-WORKDIR /usr/src/app/frontend/src
+WORKDIR /usr/src/app/frontend
 RUN npm run prod
 
 # run entrypoint.sh
