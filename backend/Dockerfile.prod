@@ -31,5 +31,7 @@ WORKDIR /usr/src/app/frontend
 RUN npm install --silent
 RUN npm run prod
 
+WORKDIR /usr/src/app
+
 # run entrypoint.sh
 ENTRYPOINT ["/usr/src/app/entrypoint.prod.sh"]
