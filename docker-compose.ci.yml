@@ -5,8 +5,6 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
-      cache_from:
-        - "${WEB_IMAGE}"
     image: "${WEB_IMAGE}"
     command: gunicorn server.wsgi:application --bind 0.0.0.0:8000
     volumes:
@@ -19,8 +17,6 @@ services:
   nginx:
     build:
       context: ./nginx
-      cache_from:
-        - "${NGINX_IMAGE}"
     image: "${NGINX_IMAGE}"
     volumes:
       - static_volume:/usr/src/app/staticfiles
@@ -34,8 +30,6 @@ services:
     image: "${TENSORFLOW_IMAGE}"
     build:
       context: ./algorithms
-      cache_from:
-        - "${TENSORFLOW_IMAGE}"
     ports:
       - 8501:8501
     depends_on:
