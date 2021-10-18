@@ -5,7 +5,7 @@ import {Spinner, Button, Alert, Image, Container, Row, Col} from 'react-bootstra
 import axios from 'axios'
 
 const API_URL = process.env.REACT_APP_AXIOS_URL
-console.log("ALO: 1300")
+console.log("ALO: 1301")
 console.log("The URL Is")
 console.log(`${process.env.REACT_APP_AXIOS_URL}/`)
 console.log(API_URL)
