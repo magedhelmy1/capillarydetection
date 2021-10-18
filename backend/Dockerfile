@@ -17,7 +17,7 @@ RUN apt-get update \
     && apt-get install ffmpeg libsm6 libxext6  -y \
     && apt-get install -y netcat \
     && apt-get install -y curl \
-    && curl --silent --location https://deb.nodesource.com/setup_12.x | bash - \
+    && curl --location https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get install -y nodejs
 
 RUN pip install -r requirements.txt
