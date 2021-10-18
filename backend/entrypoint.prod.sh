@@ -10,6 +10,6 @@ if [ "$DATABASE" = "postgres" ]; then
   echo "PostgreSQL started"
 fi
 
-(cd frontend/src && npm run prod)
+(cd frontend && npm install && npm run prod)
 
 exec "$@"
