@@ -1,4 +1,4 @@
-// const Dotenv = require('dotenv-webpack');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
 
@@ -19,9 +19,9 @@ module.exports = {
     // },
 
     // webpack.config.js
-    // plugins: [
-    //     new Dotenv()
-    // ],
+    plugins: [
+        new Dotenv()
+    ],
 
     module: {
 
