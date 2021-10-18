@@ -21,7 +21,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = int(os.environ.get('DEBUG', default=0))
 
-ALLOWED_HOSTS = ['143.198.150.33', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['64.227.106.224', 'localhost', '127.0.0.1']
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -43,17 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'frontend'
 ]
-CORS_ORIGIN_ALLOW_ALL = False
-
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-    'http://localhost:8000',
-    'http://143.198.150.33:8000',
-    'http://143.198.150.33',
-    'https://143.198.150.33',
-    'http://127.0.0.1',
-    'http://0.0.0.0'
-]
+CORS_ORIGIN_ALLOW_ALL = True
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
