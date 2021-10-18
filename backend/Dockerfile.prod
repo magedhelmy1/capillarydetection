@@ -18,7 +18,8 @@ RUN apt-get update \
     && apt-get install -y netcat \
     && apt-get install -y curl \
     && curl --silent --location https://deb.nodesource.com/setup_12.x | bash - \
-    && apt-get install -y nodejs
+    && apt-get install -y nodejs \
+    && npm install --silent
 
 RUN pip install -r requirements.txt
 
@@ -26,12 +27,6 @@ RUN pip install -r requirements.txt
 RUN sed -i 's/\r$//g' /usr/src/app/entrypoint.prod.sh
 RUN chmod +x /usr/src/app/entrypoint.prod.sh
 
-# set work directory
-WORKDIR /usr/src/app/frontend
-RUN npm install --silent
-RUN npm run prod
-
-WORKDIR /usr/src/app
 
 # run entrypoint.sh
 ENTRYPOINT ["/usr/src/app/entrypoint.prod.sh"]
