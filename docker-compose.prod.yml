@@ -1,9 +1,8 @@
-version: "3.9"
+version: "3.8"
 
 services:
   web:
     image: "${WEB_IMAGE}"
-    container_name: website
     command: gunicorn server.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/usr/src/app/staticfiles
@@ -11,10 +10,8 @@ services:
     ports:
       - 8000:8000
     env_file: .env
-
   nginx:
     image: "${NGINX_IMAGE}"
-    container_name: nginx
     volumes:
       - static_volume:/usr/src/app/staticfiles
       - media_volume:/usr/src/app/mediafiles
@@ -22,7 +19,6 @@ services:
       - 80:80
     depends_on:
       - web
-
   tensorflow-servings:
     image: "${TENSORFLOW_IMAGE}"
     container_name: tensorflow_serving
@@ -34,5 +30,6 @@ services:
 volumes:
   static_volume:
   media_volume:
+
 
 
