@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Checkout master
         uses: actions/checkout@v2
-      - name: Add environment variables to .env
+      - name: Add environment variables
         run: |
           echo DEBUG=0 >> .env
           echo SQL_ENGINE=django.db.backends.postgresql >> .env
@@ -32,7 +32,7 @@ jobs:
           echo ALLOWED_HOSTS=${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} >> .env
           echo REACT_APP_AXIOS_URL_DEV=${{ secrets.REACT_APP_AXIOS_URL }} >> .env
 
-      - name: Set environment variables
+      - name: Prepare images
         run: |
           echo "WEB_IMAGE=$(echo ${{env.WEB_IMAGE}} )" >> $GITHUB_ENV
           echo "NGINX_IMAGE=$(echo ${{env.NGINX_IMAGE}} )" >> $GITHUB_ENV
@@ -81,7 +81,7 @@ jobs:
           echo ALLOWED_HOSTS=${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} >> .env
           echo REACT_APP_AXIOS_URL=${{ secrets.REACT_APP_AXIOS_URL }} >> .env
 
-      - name: Add the private SSH key to the ssh-agent
+      - name: SSH key to ssh-agent
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
@@ -90,7 +90,7 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           ssh-add - <<< "${{ secrets.PRIVATE_KEY }}"
 
-      - name: Build and deploy images on DigitalOcean
+      - name: Build and deploy
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
