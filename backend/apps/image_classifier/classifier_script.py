@@ -36,22 +36,24 @@ def make_prediction(instances):
 
 
 class ImageEnhancement(object):
-    def __init__(self, modify_color=True):
-        self.modify_color = modify_color
+    def __init__(self):
+        pass
 
     def __call__(self, image):
         init_dtype = image.dtype
+        print(f"The dtype is {init_dtype}")
 
         if np.max(image) <= 1.0:
+            print(f"My np.max is low")
             image = (image * 255.0).astype(np.uint8)
-        enhanced_image = self.enhance_image(image, modify_color=self.modify_color)
+        enhanced_image = self.enhance_image(image)
 
         if init_dtype == np.uint8:
             enhanced_image = (enhanced_image * 255.0).astype(np.uint8)
 
         return enhanced_image
 
-    def enhance_image(self, image, modify_color: bool, verbose=False):
+    def enhance_image(self, image):
         # Calculate intensity histogram
         hist, hist_centers = histogram(image)
 
@@ -71,25 +73,9 @@ class ImageEnhancement(object):
                 max_intensity = hist_centers[i]
                 break
 
-        if verbose:
-            print('min/max intensity:', min_intensity, max_intensity)
-
         image = image.astype(np.float32)
         image = np.clip(image, min_intensity, max_intensity)
         image = (image - min_intensity) / (max_intensity - min_intensity)
-
-        if modify_color:
-            image = color.rgb2hsv(image)
-
-            # Boost reds
-            selection = np.any([image[:, :, 0] < 0.05, image[:, :, 0] > 0.95], axis=0)
-            image[selection, 1] = np.power(image[selection, 1], 0.9)
-
-            # Reduce other
-            selection = np.all([image[:, :, 0] > 0.1, image[:, :, 0] < 0.8], axis=0)
-            image[selection, 1] = np.power(image[selection, 1], 1.2)
-
-            image = color.hsv2rgb(image)
 
         return image
 
@@ -245,7 +231,7 @@ def classify_image(frame):
 
     start_time = timeit.default_timer()
 
-    image_enhancement = ImageEnhancement(modify_color=False)
+    image_enhancement = ImageEnhancement()
     org_enhanced = image_enhancement(img_temp)
 
     # load channel

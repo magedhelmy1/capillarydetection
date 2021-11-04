@@ -9,7 +9,7 @@ from io import BytesIO
 class Image(models.Model):
     picture = models.ImageField(upload_to="microcirculation_images", blank=True)
     backend_address = models.IntegerField(blank=True, null=True)
-    classified = models.CharField(max_length=200, blank=True)
+    time_to_classify = models.CharField(max_length=200, blank=True)
     uploaded = models.DateTimeField(auto_now_add=True)
     analyzed_picture = models.ImageField(upload_to="analyzed_picture", blank=True)
     segmented_image = models.ImageField(upload_to="segmented_image", blank=True)
@@ -118,7 +118,7 @@ class Image(models.Model):
             time_taken, analyzed, number_capillaries, area_of_capillaries, segmented_image_clean = classify_image(
                 self.picture)
 
-            self.classified = time_taken
+            self.time_to_classify = time_taken
             self.number_of_capillaries = number_capillaries
             self.capillary_area = area_of_capillaries
 
@@ -139,8 +139,6 @@ class Image(models.Model):
                 content=ContentFile(new_image_io_segmented.getvalue()),
                 save=False
             )
-
-            print(f'success: {self.classified}')
 
         except Exception as e:
             print("classification failed: ", traceback.format_exc())
