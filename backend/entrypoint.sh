@@ -11,7 +11,6 @@ if [ "$DATABASE" = "postgres" ]; then
 fi
 
 python manage.py makemigrations
-python manage.py flush --no-input
 python manage.py migrate
 (cd frontend && npm install && npm run dev)
 
