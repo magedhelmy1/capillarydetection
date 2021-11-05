@@ -257,10 +257,6 @@ class Classifier extends Component {
     sendImage_sample = () => {
 
         const API_URL = process.env.REACT_APP_AXIOS_URL
-        console.log("The URL Is")
-        console.log(`${process.env.REACT_APP_AXIOS_URL}/`)
-        console.log(API_URL)
-        console.log("End of the URL Is")
 
 
         this.activateSpinner()
