@@ -25,6 +25,8 @@ services:
       - POSTGRES_USER=hello_django
       - POSTGRES_PASSWORD=hello_django
       - POSTGRES_DB=hello_django_dev
+      - POSTGRES_HOST_AUTH_METHOD=trust
+
   tensorflow-servings:
     container_name: tfserving_classifier
     build: ./algorithms
