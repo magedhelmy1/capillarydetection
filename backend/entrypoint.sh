@@ -10,7 +10,7 @@ if [ "$DATABASE" = "postgres" ]; then
   echo "PostgreSQL started"
 fi
 
-python manage.py makemigrations
+python manage.py makemigrations --no-input
 python manage.py migrate
 (cd frontend && npm install && npm run dev)
 

@@ -10,5 +10,6 @@ if [ "$DATABASE" = "postgres" ]; then
   echo "PostgreSQL started"
 fi
 
-(python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && cd frontend && touch .env && echo "REACT_APP_AXIOS_URL=http://"$REACT_APP_AXIOS_URL"" > .env && npm install && npm run prod)
+(python manage.py makemigrations --no-input && python manage.py migrate && python manage.py collectstatic --noinput && cd frontend && npm install && npm run prod && touch .env && echo "REACT_APP_AXIOS_URL=http://"$REACT_APP_AXIOS_URL"" >.env && echo "command done")
+
 exec "$@"

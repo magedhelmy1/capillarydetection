@@ -1036,3 +1036,4 @@ jq.exe
 .env
 backend/frontend/.env.development
 backend/frontend/.env.production
+backend/frontend/static/main.js
