@@ -5,7 +5,7 @@ import {Spinner, Button, Alert, Image, Container, Row, Col} from 'react-bootstra
 import axios from 'axios'
 
 const API_URL = process.env.REACT_APP_AXIOS_URL
-console.log("ALO: 051121-1537")
+console.log("ALO: 081121-0711")
 console.log("The URL Is")
 console.log(`${process.env.REACT_APP_AXIOS_URL}/`)
 console.log(API_URL)
@@ -629,7 +629,7 @@ class Classifier extends Component {
                             this.state.recentImage &&
                             <div className="mt-2">
                                 <Alert variant='primary'>
-                                    <p> Time Taken: {this.state.recentImage.data.classified} </p>
+                                    <p> Time Taken: {this.state.recentImage.data.time_to_classify} </p>
                                     <p> Number of Capillaries: {this.state.recentImage.data.number_of_capillaries} </p>
                                     <p> Capillary Density : {this.state.recentImage.data.capillary_area} (1 pixel =
                                         2.2µm) </p>
