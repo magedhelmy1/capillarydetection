@@ -24,12 +24,13 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=hello_django
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=hello_django
-      - POSTGRES_DB=hello_django_dev
-      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=app
     networks:
       - djangonetwork
+    ports:
+      - "6543:5432"
 
   tensorflow-servings:
     container_name: tfserving_classifier
