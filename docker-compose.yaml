@@ -27,6 +27,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=hello_django
       - POSTGRES_DB=app
+      - POSTGRES_HOST_AUTH_METHOD=trust
     networks:
       - djangonetwork
     ports:
