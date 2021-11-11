@@ -15,7 +15,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     queryset = Image.objects.all().order_by('-uploaded')
     serializer_class = ImageSerializer
 
-    # @shared_task(name="get values")
+    @shared_task(name="get values")
     def create(self, request, *args, **kwargs):
 
         serializer = ImageSerializer(data=self.request.POST)
