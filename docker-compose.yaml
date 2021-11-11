@@ -3,7 +3,7 @@ version: "3.9"
 services:
 
   web:
-    container_name: website
+    container_name: web
     build: ./backend
     command: python manage.py runserver 0.0.0.0:8000
 
@@ -15,10 +15,10 @@ services:
       - ./.env.dev
     depends_on:
       - db
-  #      - redis
+      - redis
 
   db:
-    container_name: database
+    container_name: db
     image: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data/
@@ -38,12 +38,12 @@ services:
       - web
 
   redis:
-    image: redis:6-alpine
+    image: "redis:alpine"
 
   celery:
     build:
       context: ./backend
-    command: celery worker --app=server --loglevel=info
+    command: celery -A server worker -l INFO
     volumes:
       - ./backend/:/usr/src/app/
     env_file:
@@ -55,11 +55,13 @@ services:
 
   dashboard:
     build: ./backend
-    command: flower -A server --port=5555 --broker=redis://redis:6379/0
+    command: celery flower worker -l INFO
     ports:
-      - 5555:5555
-    env_file:
-      - ./.env.dev
+      - 5556:5555
+    environment:
+      - FLASK_DEBUG=1
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
     depends_on:
       - web
       - redis
@@ -67,4 +69,3 @@ services:
 
 volumes:
   postgres_data:
-
