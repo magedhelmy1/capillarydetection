@@ -1038,3 +1038,4 @@ backend/frontend/.env.development
 backend/frontend/.env.production
 backend/frontend/.env
 backend/frontend/static/main.js
+backend/profiles/**

@@ -14,5 +14,6 @@ python manage.py makemigrations --no-input
 python manage.py flush --no-input
 python manage.py migrate
 (cd frontend && npm install && npm run dev)
+python manage.py collectstatic --no-input
 
 exec "$@"

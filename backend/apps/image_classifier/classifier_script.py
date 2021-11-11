@@ -181,6 +181,8 @@ def get_countours_apply_to_image(res_img, image_to_write_on, input_shape=(50, 50
 
         reshaped_array = tf.expand_dims(temp_image, 0)
 
+        capillary_count = 0
+
         # for performance comparison (Django / TFX restpoint / TFX gRC / Ray)
         TFX = True
         if TFX:
@@ -194,21 +196,6 @@ def get_countours_apply_to_image(res_img, image_to_write_on, input_shape=(50, 50
             else:
                 # false_coords.append([startX, startY, endX, endY])
                 cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 0, 255), 2)
-
-        elif TFX == "off":
-            prediction = model_test.predict(reshaped_array)
-
-            if prediction.tolist()[0][0] > accepted_accuracy:
-                capillary_count += 1
-                # true_coords.append([startX, startY, endX, endY])
-                cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 255, 0), 2)
-
-            else:
-                # false_coords.append([startX, startY, endX, endY])
-                cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 0, 255), 2)
-
-        # else:
-        #     cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
     return image_to_write_on, capillary_count
 
@@ -253,6 +240,8 @@ def classify_image(frame):
     time_taken = str(round(timeit.default_timer() - start_time, 2)) + " seconds"
 
     return time_taken, analyzed_im, capillary_count, area_count, segmented_im
+
+    #return time_taken, img, capillary_count, area_count, segmented_bg
 
 
 if __name__ == "__main__":

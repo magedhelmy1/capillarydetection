@@ -15,21 +15,17 @@ services:
       - ./.env.dev
     depends_on:
       - db
-    networks:
-      - djangonetwork
+#      - redis
 
   db:
     container_name: database
     image: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.dev
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=hello_django
-      - POSTGRES_DB=app
       - POSTGRES_HOST_AUTH_METHOD=trust
-    networks:
-      - djangonetwork
     ports:
       - "6543:5432"
 
@@ -40,13 +36,35 @@ services:
       - 8501:8501
     depends_on:
       - web
-    networks:
-      - djangonetwork
+
+#  redis:
+#    image: redis:6-alpine
+#
+#  celery:
+#    build:
+#      context: ./backend
+#    command: celery worker --app=server --loglevel=info
+#    volumes:
+#      - ./backend/:/usr/src/app/
+#    env_file:
+#      - ./.env.dev
+#    depends_on:
+#      - db
+#      - redis
+#      - web
+#
+#  dashboard:
+#    build: ./backend
+#    command: flower -A server --port=5555 --broker=redis://redis:6379/0
+#    ports:
+#      - 5555:5555
+#    env_file:
+#      - ./.env.dev
+#    depends_on:
+#      - web
+#      - redis
+#      - celery
 
 volumes:
   postgres_data:
-
-networks:
-    djangonetwork:
-        driver: bridge
 
