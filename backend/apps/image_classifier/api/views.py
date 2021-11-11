@@ -14,7 +14,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     queryset = Image.objects.all().order_by('-uploaded')
     serializer_class = ImageSerializer
 
-    def create(self, request):
+    def create(self, request, *args, **kwargs):
         serializer = ImageSerializer(data=request.data)
 
         if serializer.is_valid():
