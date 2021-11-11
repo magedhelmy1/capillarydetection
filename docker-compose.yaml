@@ -15,7 +15,7 @@ services:
       - ./.env.dev
     depends_on:
       - db
-#      - redis
+  #      - redis
 
   db:
     container_name: database
@@ -37,33 +37,33 @@ services:
     depends_on:
       - web
 
-#  redis:
-#    image: redis:6-alpine
-#
-#  celery:
-#    build:
-#      context: ./backend
-#    command: celery worker --app=server --loglevel=info
-#    volumes:
-#      - ./backend/:/usr/src/app/
-#    env_file:
-#      - ./.env.dev
-#    depends_on:
-#      - db
-#      - redis
-#      - web
-#
-#  dashboard:
-#    build: ./backend
-#    command: flower -A server --port=5555 --broker=redis://redis:6379/0
-#    ports:
-#      - 5555:5555
-#    env_file:
-#      - ./.env.dev
-#    depends_on:
-#      - web
-#      - redis
-#      - celery
+  redis:
+    image: redis:6-alpine
+
+  celery:
+    build:
+      context: ./backend
+    command: celery worker --app=server --loglevel=info
+    volumes:
+      - ./backend/:/usr/src/app/
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+      - redis
+      - web
+
+  dashboard:
+    build: ./backend
+    command: flower -A server --port=5555 --broker=redis://redis:6379/0
+    ports:
+      - 5555:5555
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - web
+      - redis
+      - celery
 
 volumes:
   postgres_data:

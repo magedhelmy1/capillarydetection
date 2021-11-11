@@ -1,12 +1,13 @@
 from locust import HttpUser, task, constant
 import json
 
+
 class Request1(HttpUser):
     host = "http://127.0.0.1:8000/"
 
     @task
     def get_users(self):
-        self.client.post("api/images/", data=
+        self.client.post("api/analyze_im/", data=
         {
             "backend_address": 1
         })
