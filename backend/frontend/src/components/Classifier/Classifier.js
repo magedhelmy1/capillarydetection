@@ -5,11 +5,8 @@ import {Spinner, Button, Alert, Image, Container, Row, Col} from 'react-bootstra
 import axios from 'axios'
 
 const API_URL = process.env.REACT_APP_AXIOS_URL
-console.log("ALO: 081121-0711")
-console.log("The URL Is")
-console.log(`${process.env.REACT_APP_AXIOS_URL}/`)
-console.log(API_URL)
-console.log("End of the URL Is")
+console.log("ALO: 111121-1006")
+
 
 class Classifier extends Component {
     state = {
@@ -230,16 +227,11 @@ class Classifier extends Component {
 
     sendImage_dropzone = () => {
 
-        const API_URL = process.env.REACT_APP_AXIOS_URL
-        console.log("The URL Is")
-        console.log(`${process.env.REACT_APP_AXIOS_URL}/`)
-        console.log(API_URL)
-        console.log("End of the URL Is")
 
         this.activateSpinner()
         let formData = new FormData()
         formData.append('picture', this.state.files[0])
-        axios.post(`${process.env.REACT_APP_AXIOS_URL}/api/images/`, formData, {
+        axios.post(`${process.env.REACT_APP_AXIOS_URL}/api/analyze_im/`, formData, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'multipart/form-data'
@@ -247,7 +239,7 @@ class Classifier extends Component {
         })
             .then(resp => {
                 this.getImageClass(resp)
-                console.log(resp.data.id)
+                console.log(resp.data)
             })
             .catch(err => {
                 console.log(err)
@@ -262,7 +254,7 @@ class Classifier extends Component {
         this.activateSpinner()
         let formData = new FormData()
         formData.append('backend_address', this.state.files[0].backend_address)
-        axios.post(`${process.env.REACT_APP_AXIOS_URL}/api/images/`, formData, {
+        axios.post(`${process.env.REACT_APP_AXIOS_URL}/api/analyze_im/`, formData, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'multipart/form-data'
@@ -279,13 +271,8 @@ class Classifier extends Component {
 
     getImageClass = (obj) => {
 
-        const API_URL = process.env.REACT_APP_AXIOS_URL
-        console.log("The URL Is")
-        console.log(`${process.env.REACT_APP_AXIOS_URL}/`)
-        console.log(API_URL)
-        console.log("End of the URL Is")
 
-        axios.get(`${process.env.REACT_APP_AXIOS_URL}/api/images/${obj.data.id}/`,
+        axios.get(`${process.env.REACT_APP_AXIOS_URL}/api/analyze_im/${obj.data.id}/`,
             {
                 headers: {
                     'accept':
