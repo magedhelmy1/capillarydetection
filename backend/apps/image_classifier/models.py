@@ -1,9 +1,4 @@
 from django.db import models
-from .classifier_script import classify_image
-import traceback
-from django.core.files.base import ContentFile
-from io import BytesIO
-from celery import shared_task
 
 
 # Create your models here.
