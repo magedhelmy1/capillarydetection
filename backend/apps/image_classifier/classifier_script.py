@@ -241,7 +241,7 @@ def classify_image(frame):
 
     return time_taken, analyzed_im, capillary_count, area_count, segmented_im
 
-    #return time_taken, img, capillary_count, area_count, segmented_bg
+    # return time_taken, img, capillary_count, area_count, segmented_bg
 
 
 if __name__ == "__main__":
