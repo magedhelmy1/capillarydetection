@@ -15,7 +15,6 @@ services:
       - ./.env.dev
     depends_on:
       - db
-      - redis
 
   db:
     container_name: db
@@ -38,9 +37,11 @@ services:
       - web
 
   redis:
+    container_name: redis
     image: "redis:alpine"
 
   celery:
+    container_name: celery
     build:
       context: ./backend
     command: celery -A server worker -l INFO
@@ -49,11 +50,12 @@ services:
     env_file:
       - ./.env.dev
     depends_on:
-      - db
       - redis
+      - db
       - web
 
-  dashboard:
+  flower:
+    container_name: flower
     build: ./backend
     command: celery flower worker -l INFO
     ports:
@@ -63,7 +65,6 @@ services:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
     depends_on:
-      - web
       - redis
       - celery
 

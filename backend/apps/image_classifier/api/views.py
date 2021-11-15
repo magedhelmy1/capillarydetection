@@ -9,49 +9,52 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.core.files import File
 from celery import shared_task
+import json, numpy as np
+import base64
+import json
+import pickle
 
 
 class ImageViewSet(viewsets.ModelViewSet):
     queryset = Image.objects.all().order_by('-uploaded')
     serializer_class = ImageSerializer
 
-    @shared_task(name="get values")
     def create(self, request, *args, **kwargs):
+        serializer = ImageSerializer(data=request.data)
 
-        serializer = ImageSerializer(data=self.request.POST)
-
-        if serializer.is_valid() and serializer.validated_data['backend_address'] is not None:
+        if serializer.is_valid():
             image_uploaded = "mediafiles/sample_images/1.png"
-            file_name = str(image_uploaded)
+            json_data = base64.b64encode(np.array(image_uploaded)).decode('ascii')
+            result = algorithm_image.delay(json_data)
+            result_unpacked = ImageSerializer(Image.objects.get(pk=result.get()))
+
+            return Response(result_unpacked.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-        else:
-            image_uploaded = serializer.validated_data['picture']
-            file_name = str(image_uploaded)
+@shared_task(name="values")
+def algorithm_image(serializer):
+    file_name = str(serializer)
+    pictures = serializer
 
-        try:
-            time_taken, analyzed, number_capillaries, area_of_capillaries, segmented_image_clean = \
-                classify_image(image_uploaded)
+    time_taken, analyzed, number_capillaries, area_of_capillaries, segmented_image_clean = \
+        classify_image(pictures)
 
-            new_image_io = BytesIO()
-            analyzed.save(new_image_io, format='PNG')
-            analyzed_file_object = File(new_image_io, name=file_name)
+    new_image_io = BytesIO()
+    analyzed.save(new_image_io, format='PNG')
+    analyzed_file_object = File(new_image_io, name=file_name)
 
-            new_image_io_segmented = BytesIO()
-            segmented_image_clean.save(new_image_io_segmented, format='PNG')
-            segmented_file_object = File(new_image_io_segmented, name=file_name)
+    new_image_io_segmented = BytesIO()
+    segmented_image_clean.save(new_image_io_segmented, format='PNG')
+    segmented_file_object = File(new_image_io_segmented, name=file_name)
 
-            serializer.save(time_to_classify=time_taken,
-                            number_of_capillaries=number_capillaries,
-                            capillary_area=area_of_capillaries,
-                            analyzed_picture=analyzed_file_object,
-                            segmented_image=segmented_file_object)
+    model_instance = Image.objects.create()
+    model_instance.picture = pictures
+    model_instance.time_to_classify = time_taken
+    model_instance.number_of_capillaries = number_capillaries
+    model_instance.capillary_area = area_of_capillaries
+    model_instance.analyzed_picture = analyzed_file_object
+    model_instance.segmented_image = segmented_file_object
+    model_instance.save()
 
-            print("Classification success")
-
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        except Exception as e:
-
-            print("classification failed: ", traceback.format_exc())
-            return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+    return model_instance.id

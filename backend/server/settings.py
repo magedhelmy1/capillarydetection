@@ -198,5 +198,6 @@ if os.environ.get('DEBUG') == 0:
 PYINSTRUMENT_PROFILE_DIR = 'profiles'
 
 # Redis and Celery Conf
+CELERY_IMPORTS = ['apps.image_classifier.api']
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER")
