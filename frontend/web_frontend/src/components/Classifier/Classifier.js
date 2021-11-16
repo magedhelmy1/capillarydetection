@@ -40,6 +40,7 @@ class Classifier extends Component {
         showAnalyzed: true,
         showSegmented: false,
         showOriginal: false,
+        showUploaded: true,
 
     }
 
@@ -252,13 +253,14 @@ class Classifier extends Component {
 
     activateSpinner = () => {
         this.setState({
-            files: [],
             isLoading: true,
         })
     }
 
     deactivateSpinner = () => {
-        this.setState({isLoading: false})
+        this.setState({
+            isLoading: false,
+        })
     }
 
 
@@ -275,6 +277,7 @@ class Classifier extends Component {
             }
         })
             .then(resp => {
+                console.log(resp)
                 this.getStatus(resp)
             })
             .catch(err => {
@@ -291,17 +294,23 @@ class Classifier extends Component {
                 }
             },
         ).then(resp => {
-            (obj.data.task_status === 'PENDING') ? this.getStatus(obj) : this.getImageClass(obj)
+            (resp.data.task_status === 'PENDING') ? this.getStatus(resp) : this.getImageClass(resp)
+            console.log(resp.data.task_status)
 
         })
             .catch(err => {
                 console.log(err.response)
             })
-        this.deactivateSpinner()
 
     }
 
     getImageClass = (obj) => {
+
+        this.setState({
+            showUploaded: false,
+            isLoading: false,
+        })
+
 
         axios.get(`${process.env.REACT_APP_AXIOS_URL}/api/analyze_im/${obj.data.id}/`,
             {
@@ -313,8 +322,6 @@ class Classifier extends Component {
         )
             .then(resp => {
                 this.setState({recentImage: resp})
-                console.log("From getImageClass:")
-                console.log(resp)
             })
             .catch(err => {
                 console.log(err.response.data)
@@ -324,7 +331,6 @@ class Classifier extends Component {
 
 
     render() {
-
 
         const files = this.state.files.map(file => (
             <li key={file.name}>
@@ -583,7 +589,8 @@ class Classifier extends Component {
                 <Row>
                     <Col sm>
                         <div className="img-fluid mt-2">
-                            {this.state.files.length > 0 && this.state.dropzone != null &&
+                            {this.state.files.length > 0 && this.state.dropzone != null && this.state.showUploaded === true &&
+
                             <Image
                                 src={this.state.files[0].image}
                                 height='400' rounded/>
@@ -595,7 +602,7 @@ class Classifier extends Component {
                 <Row>
                     <Col sm>
                         <div className="img-fluid">
-                            {this.state.files.length > 0 && this.state.sample != null &&
+                            {this.state.files.length > 0 && this.state.sample != null && this.state.showUploaded === true &&
                             <Image
                                 src={this.state.files[0].image}
                                 height='400' rounded/>
@@ -615,7 +622,7 @@ class Classifier extends Component {
 
                         {this.state.recentImage && this.state.showOriginal &&
                         <Image className='justify-content-center'
-                               src={this.state.recentImage.data.picture}
+                               src={this.state.files[0].image}
                                height='400' rounded/>
 
                         }

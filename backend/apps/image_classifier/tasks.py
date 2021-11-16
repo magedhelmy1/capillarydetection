@@ -12,7 +12,7 @@ from numpy import asarray
 from . import models
 from io import BytesIO
 from django.core.files import File
-from celery import shared_task, current_app
+from celery import shared_task
 import os
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
@@ -250,11 +250,16 @@ def classify_image(frame):
 
 @shared_task
 def algorithm_image(serializer):
-    pictures = serializer
+
+    # uncomment below for performance testing
+    uploaded_pictures = "mediafiles/sample_images/0.png"
+
+    # uncomment below for live testing
+    # uploaded_pictures = serializer
     file_name = "test.png"
 
     time_taken, analyzed, number_capillaries, area_of_capillaries, segmented_image_clean = \
-        classify_image(pictures)
+        classify_image(uploaded_pictures)
 
     new_image_io = BytesIO()
     analyzed.save(new_image_io, format='PNG')
@@ -265,6 +270,7 @@ def algorithm_image(serializer):
     segmented_file_object = File(new_image_io_segmented, name=file_name)
 
     model_instance = models.Image.objects.create()
+    model_instance.picture = uploaded_pictures
     model_instance.time_to_classify = time_taken
     model_instance.number_of_capillaries = number_capillaries
     model_instance.capillary_area = area_of_capillaries
