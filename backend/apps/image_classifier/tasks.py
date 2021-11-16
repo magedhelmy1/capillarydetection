@@ -9,6 +9,10 @@ import timeit
 import json
 import requests
 from numpy import asarray
+from . import models
+from io import BytesIO
+from django.core.files import File
+from celery import shared_task
 import os
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
@@ -242,6 +246,39 @@ def classify_image(frame):
     return time_taken, analyzed_im, capillary_count, area_count, segmented_im
 
     # return time_taken, img, capillary_count, area_count, segmented_bg
+
+
+@shared_task
+def algorithm_image(serializer):
+
+    # uncomment below for performance testing
+    uploaded_pictures = "mediafiles/sample_images/0.png"
+
+    # uncomment below for live testing
+    # uploaded_pictures = serializer
+    file_name = "test.png"
+
+    time_taken, analyzed, number_capillaries, area_of_capillaries, segmented_image_clean = \
+        classify_image(uploaded_pictures)
+
+    new_image_io = BytesIO()
+    analyzed.save(new_image_io, format='PNG')
+    analyzed_file_object = File(new_image_io, name=file_name)
+
+    new_image_io_segmented = BytesIO()
+    segmented_image_clean.save(new_image_io_segmented, format='PNG')
+    segmented_file_object = File(new_image_io_segmented, name=file_name)
+
+    model_instance = models.Image.objects.create()
+    model_instance.picture = uploaded_pictures
+    model_instance.time_to_classify = time_taken
+    model_instance.number_of_capillaries = number_capillaries
+    model_instance.capillary_area = area_of_capillaries
+    model_instance.analyzed_picture = analyzed_file_object
+    model_instance.segmented_image = segmented_file_object
+    model_instance.save()
+
+    return model_instance.id
 
 
 if __name__ == "__main__":
