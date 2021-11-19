@@ -1,20 +1,33 @@
 version: "3.9"
 
 services:
-
   web:
     container_name: web
     build: ./backend
-    command: python manage.py runserver 0.0.0.0:8000
-
+    command: gunicorn server.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - ./backend/:/usr/src/app/
+      - django_static_volume/:/usr/src/app/static
     ports:
       - "8000:8000"
     env_file:
       - ./.env.dev
     depends_on:
       - db
+
+  react:
+    container_name: react
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - react_static_volume:/usr/src/app/build/static
+    expose:
+      - 3000
+    env_file:
+      - ./.env.dev
+    command: serve -s build -l 3000
+    depends_on:
+      - web
 
   db:
     container_name: db
@@ -68,5 +81,20 @@ services:
       - redis
       - celery
 
+  nginx:
+    container_name: nginx
+    restart: always
+    build: ./nginx
+    volumes:
+      - django_static_volume:/usr/src/app/django_files/static
+      - react_static_volume:/usr/src/app/web_frontend/static
+    ports:
+      - 80:80
+    depends_on:
+      - react
+
+
 volumes:
   postgres_data:
+  react_static_volume:
+  django_static_volume:
