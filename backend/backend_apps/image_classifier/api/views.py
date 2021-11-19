@@ -19,8 +19,17 @@ class ImageViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = ImageSerializer(data=request.data)
 
-        live_deploy = True
-        if serializer.is_valid() and live_deploy:
+        test = True
+        if serializer.is_valid() and test:
+            image_name = "test.png"
+            result = algorithm_image.delay("test", image_name, True)
+
+            return JsonResponse({"task_id": result.id,
+                                 "task_status": result.status},
+                                status=status.HTTP_200_OK)
+
+
+        elif not test:
 
             image_uploaded = serializer.validated_data['picture']
             image_name = str(serializer.validated_data['picture'])
@@ -31,14 +40,15 @@ class ImageViewSet(viewsets.ModelViewSet):
                 for chunk in image_uploaded:
                     fp.write(chunk)
 
-            result = algorithm_image.delay(file_path)
+            result = algorithm_image.delay("test", image_name)
+
+            return JsonResponse({"task_id": result.id,
+                                 "task_status": result.status},
+                                status=status.HTTP_200_OK)
+
 
         else:
-            result = algorithm_image.delay("test")
-
-        return JsonResponse({"task_id": result.id,
-                             "task_status": result.status},
-                            status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(('GET',))

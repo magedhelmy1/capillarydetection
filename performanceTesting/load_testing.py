@@ -1,18 +1,9 @@
 from locust import HttpUser, task, constant
-import json
 
 
-class Request1(HttpUser):
-    host = "http://127.0.0.1:8000/"
+class TestImage(HttpUser):
+    host = "http://127.0.0.1/"
 
     @task
     def get_users(self):
-        self.client.post("api/analyze_im/", data=
-        {
-            "backend_address": 1
-        })
-
-        # To check output is right
-        # res = self.client.get("api/images/1")
-        # response = json.loads(res.text)
-        # print(response["capillary_area"])
+        self.client.post(url="api/analyze_im/")

@@ -249,14 +249,16 @@ def classify_image(frame):
 
 
 @shared_task
-def algorithm_image(serializer):
-
+def algorithm_image(serializer, image_name, test=False):
     # uncomment below for performance testing
-    #uploaded_pictures = "mediafiles/sample_images/0.png"
 
-    # uncomment below for live testing
-    uploaded_pictures = serializer
-    file_name = "test.png"
+    if test:
+        uploaded_pictures = "testSample.png"
+        file_name = image_name
+
+    else:
+        uploaded_pictures = serializer
+        file_name = image_name
 
     time_taken, analyzed, number_capillaries, area_of_capillaries, segmented_image_clean = \
         classify_image(uploaded_pictures)

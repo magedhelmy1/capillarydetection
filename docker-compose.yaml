@@ -94,6 +94,8 @@ services:
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
     depends_on:
       - celery
+      - web
+      - react
 
 volumes:
   postgres_data:
