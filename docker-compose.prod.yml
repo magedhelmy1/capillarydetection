@@ -19,8 +19,6 @@ services:
       - react_static_volume:/usr/src/app/build/static
     expose:
       - 3000
-    env_file:
-      - frontend_GUI/gui/.env
     command: serve -s build -l 3000
     depends_on:
       - web
