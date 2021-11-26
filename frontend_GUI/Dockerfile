@@ -21,10 +21,7 @@ RUN apk add --no-cache --virtual .gyp \
 COPY ./gui .
 
 # perform npm build
-ARG API_SERVER
-ENV REACT_APP_API_SERVER=${API_SERVER}
-RUN REACT_APP_API_SERVER=${API_SERVER} \ 
-  npm run build
+RUN npm run build
 
 #########
 # FINAL #
