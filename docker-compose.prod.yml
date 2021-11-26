@@ -24,7 +24,6 @@ services:
       - web
     env_file:
       - .env
-
   tensorflow-servings:
     image: "${TENSORFLOW_IMAGE}"
     container_name: tensorflow_serving
