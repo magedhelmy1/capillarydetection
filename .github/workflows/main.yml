@@ -123,5 +123,5 @@ jobs:
             docker pull $TENSORFLOW_IMAGE
             docker pull $FRONTEND_IMAGE
             docker pull $CELERY_IMAGE
-            docker-compose -f docker-compose.prod.yml up -d --build
+            docker-compose -f docker-compose.prod.yml up -d
           ENDSSH
