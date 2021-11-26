@@ -9,9 +9,11 @@ env:
   NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx:$( echo $GITHUB_SHA )
   TENSORFLOW_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tensorflowserving
   TENSORFLOW_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tensorflowserving:$( echo $GITHUB_SHA )
-
+  FRONTEND_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/frontend
+  FRONTEND_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/frontend:$( echo $GITHUB_SHA )
+  CELERY_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/celery
+  CELERY_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/celery:$( echo $GITHUB_SHA )
 jobs:
-
   build:
     name: Build Docker Images
     runs-on: ubuntu-latest
@@ -39,6 +41,9 @@ jobs:
           echo "WEB_IMAGE=$(echo ${{env.WEB_IMAGE}} )" >> $GITHUB_ENV
           echo "NGINX_IMAGE=$(echo ${{env.NGINX_IMAGE}} )" >> $GITHUB_ENV
           echo "TENSORFLOW_IMAGE=$(echo ${{env.TENSORFLOW_IMAGE}} )" >> $GITHUB_ENV
+          echo "FRONTEND_IMAGE=$(echo ${{env.FRONTEND_IMAGE}} )" >> $GITHUB_ENV
+          echo "CELERY_IMAGE=$(echo ${{env.CELERY_IMAGE}} )" >> $GITHUB_ENV
+
       - name: Build images
         run: |
           docker-compose -f docker-compose.ci.yml build
@@ -57,6 +62,12 @@ jobs:
           docker tag ${{ env.TENSORFLOW_IMAGE }} ${{ env.TENSORFLOW_IMAGE_BASE }}:latest
           docker push ${{ env.TENSORFLOW_IMAGE }}
           docker push ${{ env.TENSORFLOW_IMAGE_BASE }}:latest
+          docker tag ${{ env.FRONTEND_IMAGE }} ${{ env.FRONTEND_BASE }}:latest
+          docker push ${{ env.FRONTEND_IMAGE }}
+          docker push ${{ env.FRONTEND_BASE }}:latest
+          docker tag ${{ env.CELERY_IMAGE }} ${{ env.CELERY_BASE }}:latest
+          docker push ${{ env.CELERY_IMAGE }}
+          docker push ${{ env.CELERY_BASE }}:latest
   deploy:
     name: Deploy to DigitalOcean
     runs-on: ubuntu-latest
@@ -83,8 +94,6 @@ jobs:
           echo ALLOWED_HOSTS=${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} >> .env
           echo REACT_APP_AXIOS_URL=${{ secrets.REACT_APP_AXIOS_URL }} >> .env
           echo sentry_secret=${{ secrets.sentry_secret }} >> .env
-
-
       - name: SSH key to ssh-agent
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
@@ -110,5 +119,7 @@ jobs:
             docker pull $WEB_IMAGE
             docker pull $NGINX_IMAGE
             docker pull $TENSORFLOW_IMAGE
+            docker pull $FRONTEND_IMAGE
+            docker pull $CELERY_IMAGE
             docker-compose -f docker-compose.prod.yml up -d --build
           ENDSSH

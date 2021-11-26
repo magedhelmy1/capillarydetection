@@ -1,27 +1,36 @@
-version: "3.8"
+version: "3.9"
 
 services:
   web:
+    container_name: backend
+    image: "${WEB_IMAGE}"
     build:
       context: ./backend
-      dockerfile: Dockerfile.prod
-    image: "${WEB_IMAGE}"
-    command: gunicorn server.wsgi:application --bind 0.0.0.0:8000
+      dockerfile: Dockerfile
     volumes:
-      - static_volume:/usr/src/app/staticfiles
-      - media_volume:/usr/src/app/mediafiles
+      - django_static_volume:/usr/src/app/static
+      - media:/usr/src/app/media
     expose:
       - 8000
-    env_file: .env
-  nginx:
+    env_file:
+      - .env
+    command: gunicorn server.wsgi:application --bind 0.0.0.0:8000
+
+  react:
+    image: "${FRONTEND_IMAGE}"
+    container_name: frontend
     build:
-      context: ./nginx
-    image: "${NGINX_IMAGE}"
+      context: ./frontend_GUI
+      dockerfile: Dockerfile
+      args:
+        - REACT_APP_AXIOS_URL=http://64.227.106.224/
     volumes:
-      - static_volume:/usr/src/app/staticfiles
-      - media_volume:/usr/src/app/mediafiles
-    ports:
-      - 80:80
+      - react_static_volume:/usr/src/app/build/static
+    expose:
+      - 3000
+    env_file:
+      - frontend_GUI/gui/.env
+    command: serve -s build -l 3000
     depends_on:
       - web
 
@@ -33,7 +42,44 @@ services:
       - 8501:8501
     depends_on:
       - web
+
+  nginx:
+    container_name: nginx
+    restart: always
+    build:
+      context: ./nginx
+    image: "${NGINX_IMAGE}"
+    volumes:
+      - django_static_volume:/usr/src/app/django_files/static
+      - react_static_volume:/usr/src/app/react_files/static
+      - media:/usr/src/app/media
+    ports:
+      - 80:80
+    depends_on:
+      - web
+      - react
+
+  redis:
+    container_name: redis
+    image: "redis:alpine"
+
+  celery:
+    image: "${CELERY_IMAGE}"
+    container_name: celery
+    build:
+      context: ./backend
+    command: celery -A server worker -l INFO
+    volumes:
+      - django_static_volume:/usr/src/app/static
+      - media:/usr/src/app/media
+    env_file:
+      - backend/backend_apps/.env
+    depends_on:
+      - redis
+
 volumes:
-  static_volume:
-  media_volume:
+  postgres_data:
+  django_static_volume:
+  react_static_volume:
+  media:
 

@@ -57,7 +57,6 @@ services:
       - django_static_volume:/usr/src/app/django_files/static
       - react_static_volume:/usr/src/app/react_files/static
       - media:/usr/src/app/media
-
     ports:
       - 80:80
     depends_on:

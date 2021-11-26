@@ -1,24 +1,30 @@
-version: "3.8"
+version: "3.9"
 
 services:
   web:
+    container_name: backend
     image: "${WEB_IMAGE}"
     command: gunicorn server.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - static_volume:/usr/src/app/staticfiles
-      - media_volume:/usr/src/app/mediafiles
-    ports:
-      - 8000:8000
+      - django_static_volume:/usr/src/app/static
+      - media:/usr/src/app/media
+    expose:
+      - 8000
     env_file: .env
-  nginx:
-    image: "${NGINX_IMAGE}"
+
+  react:
+    image: "${FRONTEND_IMAGE}"
+    container_name: frontend
     volumes:
-      - static_volume:/usr/src/app/staticfiles
-      - media_volume:/usr/src/app/mediafiles
-    ports:
-      - 80:80
+      - react_static_volume:/usr/src/app/build/static
+    expose:
+      - 3000
+    env_file:
+      - frontend_GUI/gui/.env
+    command: serve -s build -l 3000
     depends_on:
       - web
+
   tensorflow-servings:
     image: "${TENSORFLOW_IMAGE}"
     container_name: tensorflow_serving
@@ -27,7 +33,39 @@ services:
     depends_on:
       - web
 
+  nginx:
+    image: "${NGINX_IMAGE}"
+    restart: always
+    volumes:
+      - django_static_volume:/usr/src/app/django_files/static
+      - react_static_volume:/usr/src/app/react_files/static
+      - media:/usr/src/app/media
+    ports:
+      - 80:80
+    depends_on:
+      - web
+      - react
+
+  redis:
+    container_name: redis
+    image: "redis:alpine"
+
+  celery:
+    image: "${CELERY_IMAGE}"
+    container_name: celery
+    command: celery -A server worker -l INFO
+    volumes:
+      - django_static_volume:/usr/src/app/static
+      - media:/usr/src/app/media
+    env_file:
+      - .env
+    depends_on:
+      - redis
+
 volumes:
-  static_volume:
-  media_volume:
+  postgres_data:
+  django_static_volume:
+  react_static_volume:
+  media:
+
 
