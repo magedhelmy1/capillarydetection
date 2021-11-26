@@ -71,7 +71,7 @@ services:
       - django_static_volume:/usr/src/app/static
       - media:/usr/src/app/media
     env_file:
-      - backend/backend_apps/.env
+      - .env
     depends_on:
       - redis
 
