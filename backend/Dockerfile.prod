@@ -40,11 +40,11 @@ RUN pip install --no-cache /wheels/*
 WORKDIR /usr/src/app
 
 # copy entrypoint.sh
-COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
+COPY ./entrypoint.prod.sh /usr/src/app/entrypoint.prod.sh
 
 # copy our django project
 COPY ./backend_apps .
 
 # run entrypoint.sh
-RUN chmod +x /usr/src/app/entrypoint.sh
+RUN chmod +x /usr/src/app/entrypoint.prod.sh
 ENTRYPOINT ["/usr/src/app/entrypoint.prod.sh"]
