@@ -26,7 +26,7 @@ import image_20 from "../../static_media/20.png"
 import image_21 from "../../static_media/21.png"
 
 console.log(process.env.REACT_APP_AXIOS_URL)
-console.log("ALO: 151121-1006")
+console.log("ALO: 261121-1006")
 
 
 class Classifier extends Component {

@@ -22,6 +22,8 @@ services:
     command: serve -s build -l 3000
     depends_on:
       - web
+    env_file:
+      - .env
 
   tensorflow-servings:
     image: "${TENSORFLOW_IMAGE}"

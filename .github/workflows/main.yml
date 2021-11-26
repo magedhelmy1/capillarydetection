@@ -32,7 +32,7 @@ jobs:
           echo SQL_HOST=${{ secrets.SQL_HOST }} >> .env
           echo SQL_PORT=${{ secrets.SQL_PORT }} >> .env
           echo ALLOWED_HOSTS=${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} >> .env
-          echo REACT_APP_AXIOS_URL_DEV=${{ secrets.REACT_APP_AXIOS_URL }} >> .env
+          echo REACT_APP_AXIOS_URL=${{ secrets.REACT_APP_AXIOS_URL }} >> .env
           echo sentry_secret=${{ secrets.sentry_secret }} >> .env
 
 
