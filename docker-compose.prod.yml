@@ -32,8 +32,9 @@ services:
       - web
 
   nginx:
-    image: "${NGINX_IMAGE}"
+    container_name: nginx
     restart: always
+    image: "${NGINX_IMAGE}"
     volumes:
       - django_static_volume:/usr/src/app/django_files/static
       - react_static_volume:/usr/src/app/react_files/static
