@@ -21,6 +21,10 @@ RUN apk add --no-cache --virtual .gyp \
 COPY ./gui .
 
 # perform npm build
+# perform npm build
+ARG REACT_APP_AXIOS_URL
+ENV REACT_APP_AXIOS_URL=${REACT_APP_AXIOS_URL}
+RUN REACT_APP_AXIOS_URL=${REACT_APP_AXIOS_URL}
 RUN npm run build
 
 #########

@@ -26,7 +26,7 @@ import image_20 from "../../static_media/20.png"
 import image_21 from "../../static_media/21.png"
 
 console.log(process.env.REACT_APP_AXIOS_URL)
-console.log("ALO: 261121-1006")
+console.log("ALO: 291121-1748")
 
 const ImageData = [image_1, image_2, image_3, image_4, image_5,
     image_6, image_7, image_8, image_9, image_10, image_11, image_12,
@@ -45,7 +45,6 @@ class Classifier extends Component {
         showSegmented: false,
         showOriginal: false,
         showUploaded: true,
-
     }
 
     show_original = () => {
@@ -74,7 +73,6 @@ class Classifier extends Component {
             showSegmented: true
         });
     }
-
 
     handleClick = async (e) => {
 
@@ -140,7 +138,6 @@ class Classifier extends Component {
     }
 
     sendImage = () => {
-
 
         this.activateSpinner()
         let formData = new FormData()
