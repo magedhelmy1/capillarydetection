@@ -34,6 +34,7 @@ jobs:
           echo ALLOWED_HOSTS=${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} >> .env
           echo REACT_APP_AXIOS_URL=${{ secrets.REACT_APP_AXIOS_URL }} >> .env
           echo sentry_secret=${{ secrets.sentry_secret }} >> .env
+          echo CELERY_BROKER=${{ secrets.CELERY_BROKER }} >> .env
 
 
       - name: Prepare images
@@ -96,6 +97,8 @@ jobs:
           echo ALLOWED_HOSTS=${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} >> .env
           echo REACT_APP_AXIOS_URL=${{ secrets.REACT_APP_AXIOS_URL }} >> .env
           echo sentry_secret=${{ secrets.sentry_secret }} >> .env
+          echo CELERY_BROKER=${{ secrets.CELERY_BROKER }} >> .env
+
       - name: SSH key to ssh-agent
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
