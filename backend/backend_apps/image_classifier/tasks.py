@@ -249,9 +249,7 @@ def classify_image(frame):
 
 
 @shared_task
-def algorithm_image(serializer, image_name, test=False):
-    # uncomment below for performance testing
-
+def algorithm_image(serializer, image_name, test):
     if test:
         uploaded_pictures = "testSample.png"
         file_name = image_name

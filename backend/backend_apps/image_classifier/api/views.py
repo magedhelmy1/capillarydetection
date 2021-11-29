@@ -28,17 +28,17 @@ class ImageViewSet(viewsets.ModelViewSet):
                                  "task_status": result.status},
                                 status=status.HTTP_200_OK)
 
-        elif not test:
+        elif serializer.is_valid() and not test:
 
             image_uploaded = serializer.validated_data['picture']
             image_name = str(serializer.validated_data['picture'])
-            file_path = os.path.join(settings.IMAGES_DIR, image_name)
+            file_path = os.path.join(settings.IMAGES_DIR, image_name, )
 
             with open(file_path, 'wb+') as fp:
                 for chunk in image_uploaded:
                     fp.write(chunk)
 
-            result = algorithm_image.delay(file_path, image_name)
+            result = algorithm_image.delay(file_path, image_name, test=False)
 
             return JsonResponse({"task_id": result.id,
                                  "task_status": result.status},
