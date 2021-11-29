@@ -19,7 +19,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = ImageSerializer(data=request.data)
 
-        test = True
+        test = False
         if serializer.is_valid() and test:
             image_name = "test.png"
             result = algorithm_image.delay("test", image_name, True)
@@ -28,24 +28,21 @@ class ImageViewSet(viewsets.ModelViewSet):
                                  "task_status": result.status},
                                 status=status.HTTP_200_OK)
 
-
         elif not test:
 
             image_uploaded = serializer.validated_data['picture']
             image_name = str(serializer.validated_data['picture'])
-
             file_path = os.path.join(settings.IMAGES_DIR, image_name)
 
             with open(file_path, 'wb+') as fp:
                 for chunk in image_uploaded:
                     fp.write(chunk)
 
-            result = algorithm_image.delay("test", image_name)
+            result = algorithm_image.delay(file_path, image_name)
 
             return JsonResponse({"task_id": result.id,
                                  "task_status": result.status},
                                 status=status.HTTP_200_OK)
-
 
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

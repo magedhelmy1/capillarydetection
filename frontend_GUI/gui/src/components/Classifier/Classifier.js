@@ -28,6 +28,10 @@ import image_21 from "../../static_media/21.png"
 console.log(process.env.REACT_APP_AXIOS_URL)
 console.log("ALO: 261121-1006")
 
+const ImageData = [image_1, image_2, image_3, image_4, image_5,
+    image_6, image_7, image_8, image_9, image_10, image_11, image_12,
+    image_13, image_14, image_15, image_16, image_17, image_18,
+    image_19, image_20, image_21]
 
 class Classifier extends Component {
 
@@ -71,182 +75,54 @@ class Classifier extends Component {
         });
     }
 
+
     handleClick = async (e) => {
 
         const prefix = e.target.dataset.prefix;
-        const ImageData = [image_1, image_2, image_3, image_4, image_5,
-            image_6, image_7, image_8, image_9, image_10, image_11, image_12,
-            image_13, image_14, image_15, image_16, image_17, image_18,
-            image_19, image_20, image_21]
-
-        const FILES = {
-            "image_1": [{
-                name: "1.png",
-                image: ImageData[0],
-                backend_address: await fetch(ImageData[0]).then(res => res.blob())
-            }],
-            "image_2": [{
-                name: "2.png",
-                image: ImageData[1],
-                backend_address: await fetch(ImageData[1]).then(res => res.blob())
-
-            }],
-            "image_3": [{
-                name: "3.png",
-                image: ImageData[2],
-                backend_address: await fetch(ImageData[2]).then(res => res.blob())
-
-            }],
-            "image_4": [{
-                name: "4.png",
-                image: ImageData[3],
-                backend_address: await fetch(ImageData[3]).then(res => res.blob())
-
-            }],
-            "image_5": [{
-                name: "5.png",
-                image: ImageData[4],
-                backend_address: await fetch(ImageData[4]).then(res => res.blob())
-
-            }],
-            "image_6": [{
-                name: "6.png",
-                image: ImageData[5],
-                backend_address: await fetch(ImageData[5]).then(res => res.blob())
-
-            }],
-            "image_7": [{
-                name: "7.png",
-                image: ImageData[6],
-                backend_address: await fetch(ImageData[6]).then(res => res.blob())
-
-            }],
-            "image_8": [{
-                name: "8.png",
-                image: ImageData[7],
-                backend_address: await fetch(ImageData[7]).then(res => res.blob())
-
-            }],
-            "image_9": [{
-                name: "9.png",
-                image: ImageData[8],
-                backend_address: await fetch(ImageData[8]).then(res => res.blob())
-
-            }],
-            "image_10": [{
-                name: "10.png",
-                image: ImageData[9],
-                backend_address: await fetch(ImageData[9]).then(res => res.blob())
-
-            }],
-            "image_11": [{
-                name: "11.png",
-                image: ImageData[10],
-                backend_address: await fetch(ImageData[10]).then(res => res.blob())
-
-            }],
-            "image_12": [{
-                name: "12.png",
-                image: ImageData[11],
-                backend_address: await fetch(ImageData[11]).then(res => res.blob())
-
-            }],
-            "image_13": [{
-                name: "13.png",
-                image: ImageData[12],
-                backend_address: await fetch(ImageData[12]).then(res => res.blob())
-
-            }],
-            "image_14": [{
-                name: "14.png",
-                image: ImageData[13],
-                backend_address: await fetch(ImageData[13]).then(res => res.blob())
-
-            }],
-
-            "image_15": [{
-                name: "15.png",
-                image: ImageData[14],
-                backend_address: await fetch(ImageData[14]).then(res => res.blob())
-
-            }],
-            "image_16": [{
-                name: "16.png",
-                image: ImageData[15],
-                backend_address: await fetch(ImageData[15]).then(res => res.blob())
-
-            }],
-            "image_17": [{
-                name: "17.png",
-                image: ImageData[16],
-                backend_address: await fetch(ImageData[16]).then(res => res.blob())
-
-            }],
-            "image_18": [{
-                name: "18.png",
-                image: ImageData[17],
-                backend_address: await fetch(ImageData[17]).then(res => res.blob())
-
-            }],
-            "image_19": [{
-                name: "19.png",
-                image: ImageData[18],
-                backend_address: await fetch(ImageData[18]).then(res => res.blob())
-
-            }],
-            "image_20": [{
-                name: "20.png",
-                image: ImageData[19],
-                backend_address: await fetch(ImageData[19]).then(res => res.blob())
-
-            }],
-            "image_21": [{
-                name: "21.png",
-                image: ImageData[20],
-                backend_address: await fetch(ImageData[20]).then(res => res.blob())
-
-            }],
-        }
 
         this.setState({
             files: [],
             isLoading: true,
-            recentImage: null,
             dropzone: null,
+            recentImage: null,
             sample: true
         })
-        this.loadImage(FILES[`image_${prefix}`])
+
+        this.loadImage({
+            name: `${prefix}.png`,
+            image: ImageData[`${prefix}`],
+            backend_address: await fetch(ImageData[`${prefix}`]).then(res => res.blob()),
+        })
     }
 
     onDrop = async (files) => {
         const object_image = URL.createObjectURL(files[0])
-        console.log(files[0].name)
-
-        const FILES = {
-            "uploaded_image": [{
-                name: files[0].name,
-                image: object_image,
-                backend_address: await fetch(object_image).then(res => res.blob())
-            }]
-        }
 
         this.setState({
             files: [],
             isLoading: true,
             dropzone: true,
+            recentImage: null,
             sample: null,
-            recentImage: null
+            showUploaded: true,
+
         })
-        this.loadImage(FILES["uploaded_image"])
+
+        this.loadImage({
+            name: files[0].name,
+            image: object_image,
+            backend_address: await fetch(object_image).then(res => res.blob())
+        })
     }
 
     loadImage = (files) => {
         setTimeout(() => {
             this.setState({
                 files,
+                showUploaded: true,
                 isLoading: false
             }, () => {
-                console.log(this.state.files[0])
+                console.log(this.state.files)
             })
         }, 1000);
     }
@@ -263,11 +139,12 @@ class Classifier extends Component {
         })
     }
 
-
     sendImage = () => {
+
+
         this.activateSpinner()
         let formData = new FormData()
-        formData.append('picture', this.state.files[0].backend_address, this.state.files[0].name)
+        formData.append('picture', this.state.files.backend_address, this.state.files.name)
         axios.post(`${process.env.REACT_APP_AXIOS_URL}/api/analyze_im/`, formData, {
             headers: {
                 'accept': 'application/json',
@@ -309,7 +186,6 @@ class Classifier extends Component {
             isLoading: false,
         })
 
-
         axios.get(`${process.env.REACT_APP_AXIOS_URL}/api/analyze_im/${obj.data.id}/`,
             {
                 headers: {
@@ -330,11 +206,8 @@ class Classifier extends Component {
 
     render() {
 
-        const files = this.state.files.map(file => (
-            <li key={file.name}>
-                {file.name}
-            </li>
-        ));
+        const files = this.state.files.name
+
         return (
 
             <Container>
@@ -355,7 +228,7 @@ class Classifier extends Component {
                 <Row>
                     <Col sm>
                         <button
-                            data-prefix="1"
+                            data-prefix="0"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 1
@@ -363,7 +236,7 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="2"
+                            data-prefix="1"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 2
@@ -371,7 +244,7 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="3"
+                            data-prefix="2"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 3
@@ -379,7 +252,7 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="4"
+                            data-prefix="3"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 4
@@ -387,7 +260,7 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="5"
+                            data-prefix="4"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 5
@@ -395,7 +268,7 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="6"
+                            data-prefix="5"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 6
@@ -403,7 +276,7 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="7"
+                            data-prefix="6"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 7
@@ -414,7 +287,7 @@ class Classifier extends Component {
                 <Row className='mt-1'>
                     <Col sm>
                         <button
-                            data-prefix="8"
+                            data-prefix="7"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 8
@@ -422,7 +295,7 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="9"
+                            data-prefix="8"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 9
@@ -430,7 +303,7 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="10"
+                            data-prefix="9"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 10
@@ -438,7 +311,7 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="11"
+                            data-prefix="10"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 11
@@ -446,7 +319,7 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="12"
+                            data-prefix="11"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 12
@@ -454,7 +327,7 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="13"
+                            data-prefix="12"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 13
@@ -462,7 +335,7 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="14"
+                            data-prefix="13"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 14
@@ -473,7 +346,7 @@ class Classifier extends Component {
                 <Row className='mt-1'>
                     <Col sm>
                         <button
-                            data-prefix="15"
+                            data-prefix="14"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 15
@@ -481,7 +354,7 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="16"
+                            data-prefix="15"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 16
@@ -489,7 +362,7 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="17"
+                            data-prefix="16"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 17
@@ -497,7 +370,7 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="18"
+                            data-prefix="17"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 18
@@ -505,7 +378,7 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="19"
+                            data-prefix="18"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 19
@@ -513,7 +386,7 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="20"
+                            data-prefix="19"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 20
@@ -521,7 +394,7 @@ class Classifier extends Component {
                     </Col>
                     <Col sm>
                         <button
-                            data-prefix="21"
+                            data-prefix="20"
                             onClick={(e) => this.handleClick(e)}
                             className="btn btn-primary">
                             Sample 21
@@ -585,10 +458,10 @@ class Classifier extends Component {
                 <Row>
                     <Col sm>
                         <div className="img-fluid mt-2">
-                            {this.state.files.length > 0 && this.state.dropzone != null && this.state.showUploaded === true &&
+                            {this.state.dropzone != null && this.state.showUploaded === true &&
 
                             <Image
-                                src={this.state.files[0].image}
+                                src={this.state.files?.image}
                                 height='400' rounded/>
                             }
                         </div>
@@ -598,9 +471,9 @@ class Classifier extends Component {
                 <Row>
                     <Col sm>
                         <div className="img-fluid">
-                            {this.state.files.length > 0 && this.state.sample != null && this.state.showUploaded === true &&
+                            {this.state.sample != null && this.state.showUploaded === true &&
                             <Image
-                                src={this.state.files[0].image}
+                                src={this.state.files?.image}
                                 height='400' rounded/>
                             }
                         </div>
@@ -618,7 +491,7 @@ class Classifier extends Component {
 
                         {this.state.recentImage && this.state.showOriginal &&
                         <Image className='justify-content-center'
-                               src={this.state.files[0].image}
+                               src={this.state.files?.image}
                                height='400' rounded/>
 
                         }
@@ -636,14 +509,15 @@ class Classifier extends Component {
 
                 <Row>
                     <Col sm>
-                        {this.state.files.length > 0 && this.state.dropzone != null &&
-                        <Button variant='info' size='lg' className='mt-3' onClick={this.sendImage}>Analyze
-                            Image </Button>}
+                        {this.state.dropzone != null && this.state.isLoading === false &&
+                        <Button variant='info' size='lg' className='mt-3' onClick={this.sendImage}>
+                            Analyze Image
+                        </Button>}
 
-                        {this.state.files.length > 0 && this.state.sample != null &&
-                        <Button variant='info' size='lg' className='mt-3' onClick={this.sendImage}>Analyze
-                            Sample
-                            Image </Button>}
+                        {this.state.sample != null && this.state.isLoading === false &&
+                        <Button variant='info' size='lg' className='mt-3' onClick={this.sendImage}>
+                            Analyze Sample Image
+                        </Button>}
 
                         {
                             this.state.recentImage &&
