@@ -45,7 +45,6 @@ class ImageEnhancement(object):
 
     def __call__(self, image):
         init_dtype = image.dtype
-        print(f"The dtype is {init_dtype}")
 
         if np.max(image) <= 1.0:
             print(f"My np.max is low")
@@ -217,7 +216,7 @@ def capillary_density(image_to_calculate_density_from):
 
 
 def classify_image(frame):
-    print("Starting analysis")
+    #print("Starting analysis")
     img_temp = asarray(Image.open(frame))
 
     start_time = timeit.default_timer()

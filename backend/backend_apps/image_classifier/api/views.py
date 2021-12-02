@@ -19,7 +19,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = ImageSerializer(data=request.data)
 
-        test = False
+        test = True
         if serializer.is_valid() and test:
             image_name = "test.png"
             result = algorithm_image.delay("test", image_name, True)

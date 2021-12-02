@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+import logging.config
 
 from pathlib import Path
 import os
@@ -137,30 +138,26 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # Clear prev config
 LOGGING_CONFIG = None
 
-# Get loglevel from env
-LOGLEVEL = os.getenv('DJANGO_LOGLEVEL', 'info').upper()
+# # Get loglevel from env
+# LOGLEVEL = os.getenv('DJANGO_LOGLEVEL', 'info').upper()
 
-logging.config.dictConfig({
+
+DEFAULT_LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'formatters': {
-        'console': {
-            'format': '%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(process)d %(thread)d %(message)s',
-        },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'console',
-        },
-    },
     'loggers': {
         '': {
-            'level': LOGLEVEL,
-            'handlers': ['console', ],
+            'level': 'INFO',
         },
-    },
-})
+        'another.module': {
+            'level': 'DEBUG',
+        },
+    }
+}
+
+logging.config.dictConfig(DEFAULT_LOGGING)
+
+logging.info('Hello, log')
 
 if os.environ.get('DEBUG') == 0:
     sentry_sdk.init(
