@@ -54,7 +54,6 @@ def get_status(request, task_id):
     context = {'task_status': task.status, 'task_id': task.id}
 
     if task.status == 'PENDING':
-        time.sleep(1)
         return Response({**context}, status=status.HTTP_200_OK)
     else:
         response_data = ImageSerializer(Image.objects.get(pk=task.get()))

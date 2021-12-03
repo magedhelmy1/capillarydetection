@@ -21,3 +21,4 @@ celery==5.2.0
 redis==3.5.3
 flower==1.0.0
 scikit-image==0.18.3
+django-redis==5.1.0

@@ -60,6 +60,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
 ]
+SESSION_ENGINE = "django.contrib.sessions.backends.file"
 
 ROOT_URLCONF = 'server.urls'
 
@@ -189,3 +190,13 @@ IMAGES_DIR = os.path.join(MEDIA_ROOT, 'images')
 
 if not os.path.exists(MEDIA_ROOT) or not os.path.exists(IMAGES_DIR):
     os.makedirs(IMAGES_DIR)
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.environ.get("CELERY_BROKER"),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
