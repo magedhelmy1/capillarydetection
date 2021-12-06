@@ -3,7 +3,7 @@
 ###########
 
 # pull official base image
-FROM python:3.7.9-slim-stretch as builder
+FROM 3.10.0-slim-bullseye as builder
 
 # set work directory
 WORKDIR /usr/src/app
@@ -22,7 +22,7 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requir
 #########
 
 # pull official base image
-FROM python:3.7.9-slim-stretch
+FROM 3.10.0-slim-bullseye
 
 # installing netcat (nc) since we are using that to listen to postgres server in entrypoint.sh
 RUN apt-get update && apt-get install -y --no-install-recommends netcat && \

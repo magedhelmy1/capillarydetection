@@ -60,6 +60,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
 ]
+
+if DEBUG == 0:
+    MIDDLEWARE_CLASSES = list(MIDDLEWARE)
+    MIDDLEWARE_CLASSES.remove('django_cprofile_middleware.middleware.ProfilerMiddleware')
+
 SESSION_ENGINE = "django.contrib.sessions.backends.file"
 
 ROOT_URLCONF = 'server.urls'
