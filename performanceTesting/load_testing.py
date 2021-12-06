@@ -6,4 +6,4 @@ class TestImage(HttpUser):
 
     @task
     def get_users(self):
-        self.client.get(url="api/hello/")
+        self.client.post(url="api/analyze_im/")
