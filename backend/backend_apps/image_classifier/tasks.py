@@ -269,13 +269,15 @@ def algorithm_image(serializer, image_name, test):
     # segmented_file_object = File(new_image_io_segmented, name=file_name)
 
     model_instance = models.Image.objects.create()
-    # model_instance.picture = uploaded_pictures
-    # model_instance.time_to_classify = time_taken
-    # model_instance.number_of_capillaries = number_capillaries
-    # model_instance.capillary_area = area_of_capillaries
-    # model_instance.analyzed_picture = analyzed_file_object
-    # model_instance.segmented_image = segmented_file_object
-    # model_instance.save()
+
+    # model_instance = models.Image.objects.create(
+    #     picture=uploaded_pictures,
+    #     time_to_classify=time_taken,
+    #     number_of_capillaries=number_capillaries,
+    #     capillary_area=area_of_capillaries,
+    #     analyzed_picture=analyzed_file_object,
+    #     segmented_image=segmented_file_object,
+    # )
 
     return model_instance.id
 
