@@ -16,7 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from image_classifier.views import hello
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/', include('image_classifier.api.urls'))]
+    path('api/', include('image_classifier.api.urls')),
+    path('api/hello/', hello, name='hello'),
+]
