@@ -13,7 +13,7 @@ services:
       - 8000
     env_file:
       - ./backend/backend_apps/.env
-    command: gunicorn server.asgi:application --bind 0.0.0.0:8000 --workers=33 -k uvicorn.workers.UvicornWorker
+    command: gunicorn server.wsgi:application --bind 0.0.0.0:8000 --workers=17
     depends_on:
       - db
 

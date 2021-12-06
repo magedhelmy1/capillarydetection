@@ -2,7 +2,7 @@ from locust import HttpUser, task, constant
 
 
 class TestImage(HttpUser):
-    host = "http://127.0.0.1/"
+    host = "http://64.227.106.224/"
 
     @task
     def get_users(self):
