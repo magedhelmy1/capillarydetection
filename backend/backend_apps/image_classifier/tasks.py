@@ -275,7 +275,7 @@ def algorithm_image(serializer, image_name, test):
     # model_instance.capillary_area = area_of_capillaries
     # model_instance.analyzed_picture = analyzed_file_object
     # model_instance.segmented_image = segmented_file_object
-    model_instance.save()
+    # model_instance.save()
 
     return model_instance.id
 
