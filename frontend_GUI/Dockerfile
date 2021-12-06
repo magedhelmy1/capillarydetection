@@ -3,7 +3,7 @@
 ###########
 
 # pull official base image
-FROM node:12.18.3-alpine3.9 as builder
+FROM node:14-alpine3.14 as builder
 
 # set work directory
 WORKDIR /usr/src/app
@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 # install dependencies and avoid `node-gyp rebuild` errors
 COPY ./gui/package.json .
 RUN apk add --no-cache --virtual .gyp \
-        python \
+        python3 \
         make \
         g++ \
     && npm install \
@@ -32,7 +32,7 @@ RUN npm run build
 #########
 
 # pull official base image
-FROM node:12.18.3-alpine3.9 
+FROM node:14-alpine3.14
 
 # set work directory
 WORKDIR /usr/src/app
