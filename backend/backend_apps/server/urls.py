@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include('image_classifier.api.urls')),
-    path('hello/', hello, name='hello'),
+    path('/api/hello/', hello, name='hello'),
 ]
