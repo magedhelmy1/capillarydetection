@@ -3,7 +3,7 @@ version: "3.9"
 services:
   web:
     container_name: backend
-    image: "${WEB_IMAGE_BASE}"
+    image: "${WEB_IMAGE}"
     build:
       context: ./backend
       dockerfile: Dockerfile
