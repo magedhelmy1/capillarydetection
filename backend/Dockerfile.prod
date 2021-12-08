@@ -3,7 +3,8 @@
 ###########
 
 # pull official base image
-FROM python:3.10.0-slim-bullseye as builder
+#FROM python:3.10.0-slim-bullseye as builder
+FROM python:3.10.0-slim-bullseye
 
 # set work directory
 WORKDIR /usr/src/app
@@ -15,14 +16,6 @@ ENV PYTHONUNBUFFERED 1
 # install dependencies
 COPY ./requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
-
-
-#########
-# FINAL #
-#########
-
-# pull official base image
-FROM python:3.10.0-slim-bullseye
 
 # installing netcat (nc) since we are using that to listen to postgres server in entrypoint.sh
 RUN apt-get update && apt-get install -y --no-install-recommends netcat && \

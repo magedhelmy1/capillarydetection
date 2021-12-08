@@ -3,13 +3,13 @@ version: "3.9"
 services:
   web:
     container_name: backend
-    image: "${WEB_IMAGE}"
+    image: "${WEB_IMAGE_BASE}"
 
     build:
       context: ./backend
       dockerfile: Dockerfile
       cache_from:
-        - ${WEB_IMAGE}:latest
+        - ${WEB_IMAGE_BASE}:latest
     volumes:
       - django_static_volume:/usr/src/app/static
       - media:/usr/src/app/media
@@ -20,13 +20,13 @@ services:
     command: gunicorn server.wsgi:application --bind 0.0.0.0:8000 --workers=17
 
   react:
-    image: "${FRONTEND_IMAGE}"
+    image: "${FRONTEND_BASE}"
     container_name: frontend
     build:
       context: ./frontend_GUI
       dockerfile: Dockerfile
       cache_from:
-        - ${FRONTEND_IMAGE}:latest
+        - ${FRONTEND_BASE}:latest
       args:
         - REACT_APP_AXIOS_URL=http://64.227.106.224
     volumes:
@@ -40,11 +40,11 @@ services:
       - web
 
   tensorflow-servings:
-    image: "${TENSORFLOW_IMAGE}"
+    image: "${TENSORFLOW_IMAGE_BASE}"
     build:
       context: ./algorithms
       cache_from:
-        - ${TENSORFLOW_IMAGE}:latest
+        - ${TENSORFLOW_IMAGE_BASE}:latest
     ports:
       - 8501:8501
     depends_on:
@@ -56,8 +56,8 @@ services:
     build:
       context: ./nginx
       cache_from:
-        - ${NGINX_IMAGE}:latest
-    image: "${NGINX_IMAGE}"
+        - ${NGINX_IMAGE_BASE}:latest
+    image: "${NGINX_IMAGE_BASE}"
     volumes:
       - django_static_volume:/usr/src/app/django_files/static
       - react_static_volume:/usr/src/app/react_files/static

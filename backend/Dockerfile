@@ -17,13 +17,6 @@ COPY ./requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
 
 
-#########
-# FINAL #
-#########
-
-# pull official base image
-FROM python:3.9.9-slim-bullseye
-
 # installing netcat (nc) since we are using that to listen to postgres server in entrypoint.sh
 RUN apt-get update && apt-get install -y --no-install-recommends netcat && \
     apt-get install ffmpeg libsm6 libxext6  -y &&\

@@ -3,7 +3,8 @@
 ###########
 
 # pull official base image
-FROM node:14-alpine3.14 as builder
+#FROM node:14-alpine3.14 as builder
+FROM node:14-alpine3.14
 
 # set work directory
 WORKDIR /usr/src/app
@@ -27,13 +28,6 @@ ENV REACT_APP_AXIOS_URL=${REACT_APP_AXIOS_URL}
 RUN REACT_APP_AXIOS_URL=${REACT_APP_AXIOS_URL}
 RUN npm run build
 
-#########
-# FINAL #
-#########
-
-# pull official base image
-FROM node:14-alpine3.14
-
 # set work directory
 WORKDIR /usr/src/app
 
@@ -49,3 +43,11 @@ COPY --from=builder /usr/src/app/build ./build
 # run entrypoint.sh
 RUN chmod +x /usr/src/app/entrypoint.prod.sh
 ENTRYPOINT ["/usr/src/app/entrypoint.prod.sh"]
+
+#########
+# FINAL #
+#########
+
+# pull official base image
+#FROM node:14-alpine3.14
+

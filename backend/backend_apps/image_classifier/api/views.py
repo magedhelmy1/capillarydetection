@@ -52,18 +52,6 @@ class ImageViewSet(viewsets.ModelViewSet):
                                 status=status.HTTP_200_OK)
 
 
-# @api_view(('GET',))
-# def get_status(request, task_id):
-#     task = current_app.AsyncResult(task_id)
-#     context = {'task_status': task.status, 'task_id': task.id}
-#
-#     if task.status == 'PENDING':
-#         return Response({**context}, status=status.HTTP_200_OK)
-#     else:
-#         response_data = task.get()
-#         print(response_data)
-#         return Response({**context, **response_data}, status=status.HTTP_201_CREATED)
-
 @api_view(('GET',))
 def get_status(request, task_id):
     task = current_app.AsyncResult(task_id)
@@ -72,6 +60,7 @@ def get_status(request, task_id):
     if task.status == 'PENDING':
         return Response({**context}, status=status.HTTP_200_OK)
     else:
-        response_data = ImageSerializer(Image.objects.get(pk=task.get()))
-        print(task.get())
-        return Response({**context, **response_data.data}, status=status.HTTP_201_CREATED)
+        response_data = task.get()
+        print(response_data)
+        return Response({**context, **response_data}, status=status.HTTP_201_CREATED)
+
