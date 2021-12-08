@@ -25,7 +25,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends netcat && \
     rm -rf /var/lib/apt/lists/*
 
 # install dependencies
-COPY --from=builder /usr/src/app/wheels /wheels
+#COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --no-cache /wheels/*
 
