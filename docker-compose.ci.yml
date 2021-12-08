@@ -6,7 +6,7 @@ services:
     image: "${WEB_IMAGE}"
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
       cache_from:
         - ${WEB_IMAGE_BASE}:latest
     volumes:
