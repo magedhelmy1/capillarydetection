@@ -247,6 +247,44 @@ def classify_image(frame):
     # return time_taken, img, capillary_count, area_count, segmented_bg
 
 
+# @shared_task
+# def algorithm_image(serializer, image_name, test):
+#     if test:
+#         uploaded_pictures = "testSample.png"
+#         file_name = image_name
+#
+#     else:
+#         uploaded_pictures = serializer
+#         file_name = image_name
+#
+#     time_taken, analyzed, number_capillaries, area_of_capillaries, segmented_image_clean = \
+#         classify_image(uploaded_pictures)
+#
+#     new_image_io = BytesIO()
+#     analyzed.save(new_image_io, format='PNG')
+#     analyzed_file_object = File(new_image_io, name=file_name)
+#
+#     new_image_io_segmented = BytesIO()
+#     segmented_image_clean.save(new_image_io_segmented, format='PNG')
+#     segmented_file_object = File(new_image_io_segmented, name=file_name)
+#
+#     model_instance = models.Image.objects.create(
+#         picture=uploaded_pictures,
+#         time_to_classify=time_taken,
+#         number_of_capillaries=number_capillaries,
+#         capillary_area=area_of_capillaries,
+#         analyzed_picture=analyzed_file_object,
+#         segmented_image=segmented_file_object,
+#     )
+#
+#     return {"picture": model_instance.picture.url,
+#             "time_to_classify": model_instance.time_to_classify,
+#             "number_of_capillaries": model_instance.number_of_capillaries,
+#             "capillary_area": model_instance.capillary_area,
+#             "analyzed_picture": model_instance.analyzed_picture.url,
+#             "segmented_image": model_instance.segmented_image.url,
+#             }
+
 @shared_task
 def algorithm_image(serializer, image_name, test):
     if test:
@@ -277,13 +315,7 @@ def algorithm_image(serializer, image_name, test):
         segmented_image=segmented_file_object,
     )
 
-    return {"picture": model_instance.picture.url,
-            "time_to_classify": model_instance.time_to_classify,
-            "number_of_capillaries": model_instance.number_of_capillaries,
-            "capillary_area": model_instance.capillary_area,
-            "analyzed_picture": model_instance.analyzed_picture.url,
-            "segmented_image": model_instance.segmented_image.url,
-            }
+    return model_instance.id
 
 
 if __name__ == "__main__":
