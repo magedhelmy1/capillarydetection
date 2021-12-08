@@ -5,6 +5,5 @@ class TestImage(HttpUser):
     host = "http://64.227.106.224/"
 
     @task
-    def get_users(self):
-        # self.client.post(url="api/hello/")
-        self.client.get(url="api/hello/")
+    def post_images(self):
+        self.client.post(url="api/analyze_im/")

@@ -277,7 +277,13 @@ def algorithm_image(serializer, image_name, test):
         segmented_image=segmented_file_object,
     )
 
-    return model_instance.id
+    return {"picture": model_instance.picture.url,
+            "time_to_classify": model_instance.time_to_classify,
+            "number_of_capillaries": model_instance.number_of_capillaries,
+            "capillary_area": model_instance.capillary_area,
+            "analyzed_picture": model_instance.analyzed_picture.url,
+            "segmented_image": model_instance.segmented_image.url,
+            }
 
 
 if __name__ == "__main__":

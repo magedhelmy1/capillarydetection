@@ -181,22 +181,10 @@ class Classifier extends Component {
         this.setState({
             showUploaded: false,
             isLoading: false,
+            recentImage: obj,
         })
 
-        axios.get(`${process.env.REACT_APP_AXIOS_URL}/api/analyze_im/${obj.data.id}/`,
-            {
-                headers: {
-                    'accept':
-                        'application/json',
-                }
-            },
-        )
-            .then(resp => {
-                this.setState({recentImage: resp})
-            })
-            .catch(err => {
-                console.log(err.response.data)
-            })
+
         this.deactivateSpinner()
     }
 
@@ -481,7 +469,9 @@ class Classifier extends Component {
                     <Col sm>
                         {this.state.recentImage && this.state.showAnalyzed &&
                         <Image className='justify-content-center'
-                               src={this.state.recentImage.data.analyzed_picture}
+
+
+                               src={ process.env.REACT_APP_AXIOS_URL + this.state.recentImage.data.analyzed_picture}
                                height='400' rounded/>
 
                         }
@@ -495,7 +485,7 @@ class Classifier extends Component {
 
                         {this.state.recentImage && this.state.showSegmented &&
                         <Image className='justify-content-center'
-                               src={this.state.recentImage.data.segmented_image}
+                               src={ process.env.REACT_APP_AXIOS_URL + this.state.recentImage.data.segmented_image}
                                height='400' rounded/>
 
                         }

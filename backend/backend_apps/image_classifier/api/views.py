@@ -16,6 +16,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
 
+    # [TODO] try to split this into a function of its own
     def create(self, request, *args, **kwargs):
         serializer = ImageSerializer(data=request.data)
 
@@ -27,6 +28,8 @@ class ImageViewSet(viewsets.ModelViewSet):
         elif serializer.is_valid() and test:
             image_name = "test.png"
             result = algorithm_image.delay("test", image_name, True)
+
+            print(result)
 
             return JsonResponse({"task_id": result.id,
                                  "task_status": result.status},
@@ -57,5 +60,6 @@ def get_status(request, task_id):
     if task.status == 'PENDING':
         return Response({**context}, status=status.HTTP_200_OK)
     else:
-        response_data = ImageSerializer(Image.objects.get(pk=task.get()))
-        return Response({**context, **response_data.data}, status=status.HTTP_201_CREATED)
+        response_data = task.get()
+        print(response_data)
+        return Response({**context, **response_data}, status=status.HTTP_201_CREATED)
