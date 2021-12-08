@@ -4,7 +4,6 @@ services:
   web:
     container_name: backend
     image: "${WEB_IMAGE_BASE}"
-
     build:
       context: ./backend
       dockerfile: Dockerfile
