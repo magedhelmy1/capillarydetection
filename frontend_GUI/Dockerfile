@@ -3,8 +3,7 @@
 ###########
 
 # pull official base image
-#FROM node:14-alpine3.14 as builder
-FROM node:14-alpine3.14
+FROM node:14-alpine3.14 as builder
 
 # set work directory
 WORKDIR /usr/src/app
@@ -27,11 +26,25 @@ ARG REACT_APP_AXIOS_URL
 ENV REACT_APP_AXIOS_URL=${REACT_APP_AXIOS_URL}
 RUN REACT_APP_AXIOS_URL=${REACT_APP_AXIOS_URL}
 RUN npm run build
-# install serve - deployment static server suggested by official create-react-app
-RUN npm install -g serve
+
+#########
+# FINAL #
+#########
+
+# pull official base image
+FROM node:14-alpine3.14
+
+# set work directory
+WORKDIR /usr/src/app
 
 # copy entrypoint.sh
 COPY ./entrypoint.prod.sh /usr/src/app/entrypoint.prod.sh
+
+# install serve - deployment static server suggested by official create-react-app
+RUN npm install -g serve
+
+# copy our build files from our builder stage
+COPY --from=builder /usr/src/app/build ./build
 
 # run entrypoint.sh
 RUN chmod +x /usr/src/app/entrypoint.prod.sh

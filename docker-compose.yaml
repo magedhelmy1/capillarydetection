@@ -2,6 +2,7 @@ version: "3.9"
 
 services:
   web:
+    restart: always
     container_name: backend
     build:
       context: ./backend
@@ -9,6 +10,7 @@ services:
     volumes:
       - django_static_volume:/usr/src/app/static
       - media:/usr/src/app/media
+      - ./backend/backend_apps:/usr/src/app
     expose:
       - 8000
     env_file:
