@@ -3,7 +3,7 @@
 ###########
 
 # pull official base image
-FROM python:3.9.9-slim-bullseye as builder
+FROM python:3.9.9-slim-bullseye
 
 # set work directory
 WORKDIR /usr/src/app
