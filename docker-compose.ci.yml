@@ -9,7 +9,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
       cache_from:
-        - ${WEB_IMAGE}
+        - ${WEB_IMAGE}:latest
     volumes:
       - django_static_volume:/usr/src/app/static
       - media:/usr/src/app/media
@@ -26,7 +26,7 @@ services:
       context: ./frontend_GUI
       dockerfile: Dockerfile
       cache_from:
-        - ${FRONTEND_IMAGE}
+        - ${FRONTEND_IMAGE}:latest
       args:
         - REACT_APP_AXIOS_URL=http://64.227.106.224
     volumes:
@@ -44,7 +44,7 @@ services:
     build:
       context: ./algorithms
       cache_from:
-        - ${TENSORFLOW_IMAGE}
+        - ${TENSORFLOW_IMAGE}:latest
     ports:
       - 8501:8501
     depends_on:
@@ -56,7 +56,7 @@ services:
     build:
       context: ./nginx
       cache_from:
-        - ${NGINX_IMAGE}
+        - ${NGINX_IMAGE}:latest
     image: "${NGINX_IMAGE}"
     volumes:
       - django_static_volume:/usr/src/app/django_files/static
@@ -77,7 +77,7 @@ services:
     build:
       context: ./backend
       cache_from:
-        - ${CELERY_IMAGE}
+        - ${CELERY_IMAGE}:latest
     container_name: celery
     command: celery -A server worker -l INFO
     volumes:
