@@ -75,6 +75,7 @@ services:
     image: "${CELERY_IMAGE}"
     build:
       context: ./backend
+      dockerfile: Dockerfile.prod
       cache_from:
         - ${CELERY_IMAGE}:latest
     container_name: celery

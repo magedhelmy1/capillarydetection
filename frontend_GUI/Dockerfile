@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 
 # install dependencies and avoid `node-gyp rebuild` errors
 COPY ./gui/package.json .
-RUN apk add --no-cache --virtual .gyp \
+RUN apk add --virtual .gyp \
         python3 \
         make \
         g++ \
