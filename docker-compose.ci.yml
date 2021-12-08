@@ -3,7 +3,7 @@ version: "3.9"
 services:
   web:
     container_name: backend
-    image: "${WEB_IMAGE}"
+    image: "${WEB_IMAGE_BASE}"
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
@@ -19,7 +19,7 @@ services:
     command: gunicorn server.wsgi:application --bind 0.0.0.0:8000 --workers=17
 
   react:
-    image: "${FRONTEND}"
+    image: "${FRONTEND_BASE}"
     container_name: frontend
     build:
       context: ./frontend_GUI
@@ -39,7 +39,7 @@ services:
       - web
 
   tensorflow-servings:
-    image: "${TENSORFLOW_IMAGE}"
+    image: "${TENSORFLOW_IMAGE_BASE}"
     build:
       context: ./algorithms
       cache_from:
@@ -55,7 +55,7 @@ services:
     build:
       context: ./nginx
       cache_from:
-        - ${NGINX_IMAGE_BASE}:latest
+        - ${NGINX_IMAGE}:latest
     image: "${NGINX_IMAGE}"
     volumes:
       - django_static_volume:/usr/src/app/django_files/static
