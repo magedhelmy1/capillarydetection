@@ -62,13 +62,13 @@ jobs:
       - name: Push images
         run: |
           docker tag ${{ env.WEB_IMAGE }}  ${{ env.WEB_IMAGE_BASE }}:latest
-          docker push ${{ env.WEB_IMAGE }} -a
+          docker push ${{ env.WEB_IMAGE_BASE }} -a
           docker tag ${{ env.NGINX_IMAGE }} ${{ env.NGINX_IMAGE_BASE }}:latest
-          docker push ${{ env.NGINX_IMAGE }} -a
+          docker push ${{ env.NGINX_IMAGE_BASE }} -a
           docker tag ${{ env.TENSORFLOW_IMAGE }} ${{ env.TENSORFLOW_IMAGE_BASE }}:latest
-          docker push ${{ env.TENSORFLOW_IMAGE }} -a
-          docker tag ${{ env.FRONTEND_IMAGE }} ${{ env.FRONTEND_BASE }}:latest
-          docker push ${{ env.FRONTEND_IMAGE }} -a
+          docker push ${{ env.TENSORFLOW_IMAGE_BASE }} -a
+          docker tag ${{ env.FRONTEND_IMAGE }} ${{ env.FRONTEND_IMAGE_BASE }}:latest
+          docker push ${{ env.FRONTEND_IMAGE_BASE }} -a
   deploy:
     name: Deploy to DigitalOcean
     runs-on: ubuntu-latest
