@@ -7,8 +7,9 @@ WORKDIR /usr/src/app
 # copy entrypoint.sh
 COPY ./entrypoint.prod.sh /usr/src/app/entrypoint.prod.sh
 
-# copy our react project
-COPY ./gui .
+# copy our react dependency files
+COPY ./gui/package.json .
+COPY ./gui/package-lock.json .
 
 # install serve - deployment static server suggested by official create-react-app
 RUN npm install -g serve
@@ -20,6 +21,9 @@ RUN apk add --virtual .gyp \
         g++ \
     && npm install \
     && apk del .gyp
+
+# copy our react project
+COPY ./gui .
 
 ARG REACT_APP_AXIOS_URL
 ENV REACT_APP_AXIOS_URL=${REACT_APP_AXIOS_URL}
