@@ -1,4 +1,4 @@
-from .views import ImageViewSet, get_status,process_image
+from .views import ImageViewSet, get_status, process_image
 from rest_framework import routers
 from django.urls import path, include
 
