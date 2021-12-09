@@ -1,3 +1,4 @@
+from asgiref.sync import sync_to_async
 from rest_framework import viewsets
 from .serializers import ImageSerializer
 from ..models import Image
@@ -17,6 +18,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     serializer_class = ImageSerializer
 
 
+@sync_to_async
 @api_view(('POST',))
 def analyze_image(request):
     serializer = ImageSerializer(data=request.data)
