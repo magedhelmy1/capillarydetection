@@ -1,6 +1,9 @@
 name: Continuous Integration and Delivery
 
-on: [ push ]
+on:
+  push:
+    branches:
+      - master
 
 env:
   WEB_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/web
@@ -9,9 +12,9 @@ env:
   NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx:$( echo $GITHUB_SHA )
   TENSORFLOW_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tensorflowserving
   TENSORFLOW_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tensorflowserving:$( echo $GITHUB_SHA )
-  FRONTEND_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/frontend
+  FRONTEND_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/frontend
   FRONTEND_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/frontend:$( echo $GITHUB_SHA )
-  CELERY_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/celery
+  CELERY_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/celery
   CELERY_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/celery:$( echo $GITHUB_SHA )
 jobs:
   build:
@@ -36,39 +39,36 @@ jobs:
           echo sentry_secret=${{ secrets.sentry_secret }} >> .env
           echo CELERY_BROKER=${{ secrets.CELERY_BROKER }} >> .env
 
-
       - name: Prepare images
         run: |
           echo "WEB_IMAGE=$(echo ${{env.WEB_IMAGE}} )" >> $GITHUB_ENV
+          echo "WEB_IMAGE_BASE=$(echo ${{env.WEB_IMAGE_BASE}} )" >> $GITHUB_ENV
           echo "NGINX_IMAGE=$(echo ${{env.NGINX_IMAGE}} )" >> $GITHUB_ENV
+          echo "NGINX_IMAGE_BASE=$(echo ${{env.NGINX_IMAGE_BASE}} )" >> $GITHUB_ENV
           echo "TENSORFLOW_IMAGE=$(echo ${{env.TENSORFLOW_IMAGE}} )" >> $GITHUB_ENV
+          echo "TENSORFLOW_IMAGE_BASE=$(echo ${{env.TENSORFLOW_IMAGE_BASE}} )" >> $GITHUB_ENV
           echo "FRONTEND_IMAGE=$(echo ${{env.FRONTEND_IMAGE}} )" >> $GITHUB_ENV
-          echo "CELERY_IMAGE=$(echo ${{env.CELERY_IMAGE}} )" >> $GITHUB_ENV
+          echo "FRONTEND_IMAGE_BASE=$(echo ${{env.FRONTEND_IMAGE_BASE}} )" >> $GITHUB_ENV
 
-      - name: Build images
-        run: |
-          docker-compose -f docker-compose.ci.yml build
       - name: Log in to GitHub Packages
         run: echo ${PERSONAL_ACCESS_TOKEN} | docker login ghcr.io -u ${{ secrets.NAMESPACE }} --password-stdin
         env:
           PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      - name: Build images
+        run: |
+          docker-compose -f docker-compose.ci.yml build web react tensorflow-servings nginx
+
       - name: Push images
         run: |
           docker tag ${{ env.WEB_IMAGE }}  ${{ env.WEB_IMAGE_BASE }}:latest
-          docker push ${{ env.WEB_IMAGE }}
-          docker push ${{ env.WEB_IMAGE_BASE }}:latest
+          docker push ${{ env.WEB_IMAGE }} -a
           docker tag ${{ env.NGINX_IMAGE }} ${{ env.NGINX_IMAGE_BASE }}:latest
-          docker push ${{ env.NGINX_IMAGE }}
-          docker push ${{ env.NGINX_IMAGE_BASE }}:latest
+          docker push ${{ env.NGINX_IMAGE }} -a
           docker tag ${{ env.TENSORFLOW_IMAGE }} ${{ env.TENSORFLOW_IMAGE_BASE }}:latest
-          docker push ${{ env.TENSORFLOW_IMAGE }}
-          docker push ${{ env.TENSORFLOW_IMAGE_BASE }}:latest
+          docker push ${{ env.TENSORFLOW_IMAGE }} -a
           docker tag ${{ env.FRONTEND_IMAGE }} ${{ env.FRONTEND_BASE }}:latest
-          docker push ${{ env.FRONTEND_IMAGE }}
-          docker push ${{ env.FRONTEND_BASE }}:latest
-          docker tag ${{ env.CELERY_IMAGE }} ${{ env.CELERY_BASE }}:latest
-          docker push ${{ env.CELERY_IMAGE }}
-          docker push ${{ env.CELERY_BASE }}:latest
+          docker push ${{ env.FRONTEND_IMAGE }} -a
   deploy:
     name: Deploy to DigitalOcean
     runs-on: ubuntu-latest
@@ -91,7 +91,7 @@ jobs:
           echo NGINX_IMAGE=${{ env.NGINX_IMAGE }} >> .env
           echo TENSORFLOW_IMAGE=${{ env.TENSORFLOW_IMAGE }} >> .env
           echo FRONTEND_IMAGE=${{ env.FRONTEND_IMAGE }} >> .env
-          echo CELERY_IMAGE=${{ env.CELERY_IMAGE }} >> .env
+          echo CELERY_IMAGE=${{ env.WEB_IMAGE }} >> .env
           echo NAMESPACE=${{ secrets.NAMESPACE }} >> .env
           echo PERSONAL_ACCESS_TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }} >> .env
           echo ALLOWED_HOSTS=${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} >> .env
@@ -121,10 +121,6 @@ jobs:
             docker volume rm $(docker volume ls -q)
             source .env
             docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
-            docker pull $WEB_IMAGE
-            docker pull $NGINX_IMAGE
-            docker pull $TENSORFLOW_IMAGE
-            docker pull $FRONTEND_IMAGE
-            docker pull $CELERY_IMAGE
-            docker-compose -f docker-compose.prod.yml up -d
+            docker-compose -f docker-compose.prod.yml up --quiet-pull --force-recreate -d
+            docker rmi $(docker images -f "dangling=true" -q)
           ENDSSH

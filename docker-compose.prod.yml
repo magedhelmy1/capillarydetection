@@ -8,8 +8,6 @@ services:
     volumes:
       - django_static_volume:/usr/src/app/static
       - media:/usr/src/app/media
-    expose:
-      - 8000
     env_file: .env
 
   react:
@@ -17,8 +15,6 @@ services:
     container_name: frontend
     volumes:
       - react_static_volume:/usr/src/app/build/static
-    expose:
-      - 3000
     command: serve -s build -l 3000
     depends_on:
       - web
@@ -28,8 +24,6 @@ services:
   tensorflow-servings:
     image: "${TENSORFLOW_IMAGE}"
     container_name: tensorflow_serving
-    ports:
-      - 8501:8501
     depends_on:
       - web
 
@@ -42,7 +36,7 @@ services:
       - react_static_volume:/usr/src/app/react_files/static
       - media:/usr/src/app/media
     ports:
-      - 80:80
+      - "80:80"
     depends_on:
       - web
       - react
@@ -68,5 +62,3 @@ volumes:
   django_static_volume:
   react_static_volume:
   media:
-
-
