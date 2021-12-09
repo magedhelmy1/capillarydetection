@@ -18,7 +18,6 @@ class ImageViewSet(viewsets.ModelViewSet):
     serializer_class = ImageSerializer
 
 
-@sync_to_async
 @api_view(('POST',))
 def analyze_image(request):
     serializer = ImageSerializer(data=request.data)
