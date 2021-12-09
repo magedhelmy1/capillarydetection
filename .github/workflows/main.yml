@@ -57,6 +57,11 @@ jobs:
 
       - name: Build images
         run: |
+          docker pull ${{ env.WEB_IMAGE_BASE }}:latest
+          docker pull ${{ env.NGINX_IMAGE_BASE }}:latest
+          docker pull ${{ env.NGINX_IMAGE_BASE }}:latest
+          docker pull ${{ env.TENSORFLOW_IMAGE_BASE }}:latest
+          docker pull ${{ env.FRONTEND_IMAGE_BASE }}:latest
           docker-compose -f docker-compose.ci.yml build web react tensorflow-servings nginx
 
       - name: Push images
