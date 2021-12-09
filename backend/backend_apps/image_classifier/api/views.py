@@ -1,9 +1,8 @@
-from asgiref.sync import sync_to_async
 from rest_framework import viewsets
 from .serializers import ImageSerializer
 from ..models import Image
 from rest_framework.response import Response
-from celery import current_app
+from celery import shared_task, current_app
 import os
 from django.conf import settings
 from rest_framework import status
@@ -17,52 +16,40 @@ class ImageViewSet(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
 
+    # [TODO] try to split this into a function of its own
+    def create(self, request, *args, **kwargs):
+        serializer = ImageSerializer(data=request.data)
 
-# @api_view(('POST',))
-# def test_RPSs(request):
-#     return JsonResponse({"task_id": "test",
-#                          "task_status": "RPS"},
-#                         status=status.HTTP_200_OK)
-#
-#
-# @api_view(('GET',))
-# def test_Response(request, task_id):
-#     return JsonResponse({"task_id": task_id,
-#                          "task_status": "RPS"},
-#                         status=status.HTTP_200_OK)
+        test = True
 
-@api_view(('POST',))
-def analyze_image(request):
-    serializer = ImageSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    test = True
+        elif serializer.is_valid() and test:
+            image_name = "test.png"
+            result = algorithm_image.delay("test", image_name, True)
 
-    if not serializer.is_valid():
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            print(result)
 
-    elif serializer.is_valid() and test:
-        image_name = "test.png"
-        result = algorithm_image.delay("test", image_name, True)
+            return JsonResponse({"task_id": result.id,
+                                 "task_status": result.status},
+                                status=status.HTTP_200_OK)
 
-        return JsonResponse({"task_id": result.id,
-                             "task_status": result.status},
-                            status=status.HTTP_200_OK)
+        elif serializer.is_valid() and not test:
 
-    elif serializer.is_valid() and not test:
+            image_uploaded = serializer.validated_data['picture']
+            image_name = str(serializer.validated_data['picture'])
+            file_path = os.path.join(settings.IMAGES_DIR, image_name, )
 
-        image_uploaded = serializer.validated_data['picture']
-        image_name = str(serializer.validated_data['picture'])
-        file_path = os.path.join(settings.IMAGES_DIR, image_name, )
+            with open(file_path, 'wb+') as fp:
+                for chunk in image_uploaded:
+                    fp.write(chunk)
 
-        with open(file_path, 'wb+') as fp:
-            for chunk in image_uploaded:
-                fp.write(chunk)
+            result = algorithm_image.delay(file_path, image_name, test=False)
 
-        result = algorithm_image.delay(file_path, image_name, test=False)
-
-        return JsonResponse({"task_id": result.id,
-                             "task_status": result.status},
-                            status=status.HTTP_200_OK)
+            return JsonResponse({"task_id": result.id,
+                                 "task_status": result.status},
+                                status=status.HTTP_200_OK)
 
 
 @api_view(('GET',))
@@ -76,3 +63,4 @@ def get_status(request, task_id):
         response_data = task.get()
         print(response_data)
         return Response({**context, **response_data}, status=status.HTTP_201_CREATED)
+
