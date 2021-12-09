@@ -1,3 +1,4 @@
+from asgiref.sync import sync_to_async
 from rest_framework import viewsets
 from .serializers import ImageSerializer
 from ..models import Image
@@ -16,6 +17,8 @@ class ImageViewSet(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
 
+
+@sync_to_async
 @api_view(('POST',))
 def process_image(request, *args, **kwargs):
     serializer = ImageSerializer(data=request.data)
@@ -58,5 +61,4 @@ def get_status(request, task_id):
         return Response({**context}, status=status.HTTP_200_OK)
     else:
         response_data = task.get()
-        print(response_data)
         return Response({**context, **response_data}, status=status.HTTP_201_CREATED)
