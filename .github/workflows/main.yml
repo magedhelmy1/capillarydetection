@@ -116,11 +116,9 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} << 'ENDSSH'
             cd /app
             docker-compose -f docker-compose.prod.yml down --volume --rmi all
-            yes | docker image prune -a
-            docker rmi -f $(docker images -a -q)
             docker volume rm $(docker volume ls -q)
             source .env
             docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
             docker-compose -f docker-compose.prod.yml up --quiet-pull --force-recreate -d
-            docker rmi $(docker images -f "dangling=true" -q)
+            yes | docker image prune -a
           ENDSSH
