@@ -64,6 +64,7 @@ def analyze_image(request):
                              "task_status": result.status},
                             status=status.HTTP_200_OK)
 
+
 @api_view(('GET',))
 def get_status(request, task_id):
     task = current_app.AsyncResult(task_id)
