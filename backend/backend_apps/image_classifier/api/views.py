@@ -28,9 +28,6 @@ class ImageViewSet(viewsets.ModelViewSet):
         elif serializer.is_valid() and test:
             image_name = "test.png"
             result = algorithm_image.delay("test", image_name, True)
-
-            print(result)
-
             return JsonResponse({"task_id": result.id,
                                  "task_status": result.status},
                                 status=status.HTTP_200_OK)
@@ -63,4 +60,3 @@ def get_status(request, task_id):
         response_data = task.get()
         print(response_data)
         return Response({**context, **response_data}, status=status.HTTP_201_CREATED)
-
