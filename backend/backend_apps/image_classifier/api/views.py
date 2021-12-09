@@ -16,37 +16,37 @@ class ImageViewSet(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
 
-    # [TODO] try to split this into a function of its own
-    def create(self, request, *args, **kwargs):
-        serializer = ImageSerializer(data=request.data)
 
-        test = True
+def process_image(request, *args, **kwargs):
+    serializer = ImageSerializer(data=request.data)
 
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    test = True
 
-        elif serializer.is_valid() and test:
-            image_name = "test.png"
-            result = algorithm_image.delay("test", image_name, True)
-            return JsonResponse({"task_id": result.id,
-                                 "task_status": result.status},
-                                status=status.HTTP_200_OK)
+    if not serializer.is_valid():
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        elif serializer.is_valid() and not test:
+    elif serializer.is_valid() and test:
+        image_name = "test.png"
+        result = algorithm_image.delay("test", image_name, True)
+        return JsonResponse({"task_id": result.id,
+                             "task_status": result.status},
+                            status=status.HTTP_200_OK)
 
-            image_uploaded = serializer.validated_data['picture']
-            image_name = str(serializer.validated_data['picture'])
-            file_path = os.path.join(settings.IMAGES_DIR, image_name, )
+    elif serializer.is_valid() and not test:
 
-            with open(file_path, 'wb+') as fp:
-                for chunk in image_uploaded:
-                    fp.write(chunk)
+        image_uploaded = serializer.validated_data['picture']
+        image_name = str(serializer.validated_data['picture'])
+        file_path = os.path.join(settings.IMAGES_DIR, image_name, )
 
-            result = algorithm_image.delay(file_path, image_name, test=False)
+        with open(file_path, 'wb+') as fp:
+            for chunk in image_uploaded:
+                fp.write(chunk)
 
-            return JsonResponse({"task_id": result.id,
-                                 "task_status": result.status},
-                                status=status.HTTP_200_OK)
+        result = algorithm_image.delay(file_path, image_name, test=False)
+
+        return JsonResponse({"task_id": result.id,
+                             "task_status": result.status},
+                            status=status.HTTP_200_OK)
 
 
 @api_view(('GET',))
