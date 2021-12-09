@@ -31,7 +31,6 @@ class ImageViewSet(viewsets.ModelViewSet):
 #                          "task_status": "RPS"},
 #                         status=status.HTTP_200_OK)
 
-@sync_to_async
 @api_view(('POST',))
 def analyze_image(request):
     serializer = ImageSerializer(data=request.data)
@@ -65,7 +64,6 @@ def analyze_image(request):
                              "task_status": result.status},
                             status=status.HTTP_200_OK)
 
-@sync_to_async
 @api_view(('GET',))
 def get_status(request, task_id):
     task = current_app.AsyncResult(task_id)
