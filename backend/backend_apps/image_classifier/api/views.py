@@ -19,7 +19,7 @@ class ImageViewSet(viewsets.ModelViewSet):
 
 
 @api_view(('POST',))
-async def process_image(request, *args, **kwargs):
+def process_image(request, *args, **kwargs):
     serializer = ImageSerializer(data=request.data)
 
     test = True
