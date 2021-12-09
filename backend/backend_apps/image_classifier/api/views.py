@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from .serializers import ImageSerializer
 from ..models import Image
 from rest_framework.response import Response
-from celery import shared_task, current_app
+from celery import current_app
 import os
 from django.conf import settings
 from rest_framework import status
@@ -16,6 +16,20 @@ import time
 class ImageViewSet(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
+
+
+@api_view(('POST',))
+def test_RPSs(request):
+    return JsonResponse({"task_id": "test",
+                         "task_status": "RPS"},
+                        status=status.HTTP_200_OK)
+
+
+@api_view(('GET',))
+def test_Response(request, task_id):
+    return JsonResponse({"task_id": task_id,
+                         "task_status": "RPS"},
+                        status=status.HTTP_200_OK)
 
 
 @api_view(('POST',))
