@@ -4,7 +4,7 @@ services:
   web:
     container_name: backend
     image: "${WEB_IMAGE}"
-    command: gunicorn server.asgi:application --bind 0.0.0.0:8000 --workers=17 -k uvicorn.workers.UvicornWorker
+    command: gunicorn server.asgi:application --bind 0.0.0.0:8000 -k uvicorn.workers.UvicornWorker
     volumes:
       - django_static_volume:/usr/src/app/static
       - media:/usr/src/app/media
@@ -54,7 +54,7 @@ services:
   celery:
     image: "${CELERY_IMAGE}"
     container_name: celery
-    command: celery -A server worker -l INFO
+    command: celery -A server worker -l INFO  --autoscale=30,1
     volumes:
       - django_static_volume:/usr/src/app/static
       - media:/usr/src/app/media
