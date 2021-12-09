@@ -16,7 +16,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
 
-
+@api_view(('POST',))
 def process_image(request, *args, **kwargs):
     serializer = ImageSerializer(data=request.data)
 
