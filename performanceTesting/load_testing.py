@@ -9,4 +9,5 @@ class TestImage(HttpUser):
     def post_images(self):
         # self.client.post(url="api/analyze_im/")
         # self.client.post("api/example/")
-        self.client.get(url="api/example/")
+        res = self.client.get(url="api/example/")
+        print(res.content)
