@@ -8,10 +8,10 @@ async def hello(request):
 
 
 async def example(request):
-    async with aiohttp.ClientSession() as session:
-        url = "http://64.227.106.224/api/analyze_im/"
-        async with session.post(url) as res:
-            res = await res.json()
+    # async with aiohttp.ClientSession() as session:
+    #     url = "http://64.227.106.224/api/analyze_im/"
+    #     async with session.post(url) as res:
+    #         res = await res.json()
 
-    #return render(request, "index.html", {"data": res})
-    return  HttpResponse("Hello, example Django!")
+    # return render(request, "index.html", {"data": res})
+    return HttpResponse("Hello, example Django!")
