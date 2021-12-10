@@ -9,7 +9,7 @@ async def hello(request):
 
 async def example(request):
     async with aiohttp.ClientSession() as session:
-        url = "http://127.0.0.1:8000/api/analyze_im/"
+        url = "http://64.227.106.224//api/analyze_im/"
         async with session.post(url) as res:
             pokemon = await res.json()
 
