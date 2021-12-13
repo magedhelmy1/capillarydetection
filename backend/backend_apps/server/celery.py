@@ -13,7 +13,7 @@ app.conf.task_default_queue = 'default'
 app.conf.task_queues = (
     Queue('celery', routing_key='celery'),
     Queue('transient', Exchange('transient', delivery_mode=1),
-          routing_key='transient', durable=False),
+          routing_key='transient', durable=True),
 )
 app.conf.task_default_exchange = 'tasks'
 app.conf.task_default_exchange_type = 'topic'
