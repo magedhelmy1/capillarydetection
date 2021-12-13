@@ -1027,7 +1027,6 @@ staticfiles
 *.mdb
 *.pdb
 *.sqlite3
-**/migrations/**
 # End of https://www.toptal.com/developers/gitignore/api/django,pycharm
 
 jq.exe
