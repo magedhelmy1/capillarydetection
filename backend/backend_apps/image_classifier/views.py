@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 import json
 
+# Experimenting with ASGI
 
 async def hello(request):
     return HttpResponse("Hello, async Django!")
