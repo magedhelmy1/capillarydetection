@@ -32,8 +32,8 @@ def process_image(request, *args, **kwargs):
 
         result = algorithm_image.delay("test", image_name, True)
 
-        return JsonResponse({"task_id": 123,
-                             "task_status": "PENDING"},
+        return JsonResponse({"task_id": result.id,
+                             "task_status": result.status},
                             status=status.HTTP_200_OK)
 
     elif serializer.is_valid() and not test:
