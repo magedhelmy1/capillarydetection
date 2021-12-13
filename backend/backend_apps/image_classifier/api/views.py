@@ -30,8 +30,7 @@ def process_image(request, *args, **kwargs):
     elif serializer.is_valid() and test:
         image_name = "test.png"
 
-        result = algorithm_image.delay("test", image_name, True)
-
+        result = algorithm_image.apply_async(("test", image_name, True), queue='transient')
         return JsonResponse({"task_id": result.id,
                              "task_status": result.status},
                             status=status.HTTP_200_OK)
