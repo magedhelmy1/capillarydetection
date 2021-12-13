@@ -19,8 +19,8 @@ app.conf.task_default_exchange = 'tasks'
 app.conf.task_default_exchange_type = 'topic'
 app.conf.task_default_routing_key = 'task.default'
 app.conf.BROKER_TRANSPORT_OPTIONS = {"max_retries": 10, "interval_start": 1, "interval_step": 3, "interval_max": 60}
-task_acks_late = True
-worker_prefetch_multiplier = 0
+# task_acks_late = True
+# worker_prefetch_multiplier = 0
 
 @app.task(bind=True)
 def debug_task(self):
