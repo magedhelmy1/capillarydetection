@@ -25,3 +25,4 @@ worker_prefetch_multiplier = 0
 @app.task(bind=True)
 def debug_task(self):
     print(f'Request: {self.request!r}')
+
