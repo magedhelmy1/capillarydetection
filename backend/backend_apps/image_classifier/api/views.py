@@ -46,8 +46,7 @@ def process_image(request, *args, **kwargs):
             for chunk in image_uploaded:
                 fp.write(chunk)
 
-        result = algorithm_image.delay(file_path, image_name, test=False)
-
+        result = algorithm_image.apply_async((file_path, image_name, False), queue='transient')
         return JsonResponse({"task_id": result.id,
                              "task_status": result.status},
                             status=status.HTTP_200_OK)
