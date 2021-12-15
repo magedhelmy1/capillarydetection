@@ -20,6 +20,7 @@ async def hello(request):
 
 async def performance_test(request):
     res = await performance_test_process_image()
+    print(res)
 
     json_data = json.loads(res.content)
 
