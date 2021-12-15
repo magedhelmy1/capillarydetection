@@ -18,9 +18,8 @@ async def hello(request):
     return HttpResponse("Hello, async Django!")
 
 
-@csrf_exempt
 async def performance_test(request):
-    res = await performance_test_process_image(request)
+    res = await performance_test_process_image()
 
     json_data = json.loads(res.content)
 
@@ -28,10 +27,10 @@ async def performance_test(request):
                                           "task_status": json_data["task_status"]})
 
 
-async def performance_test_process_image(request, *args, **kwargs):
+async def performance_test_process_image():
     image_name = "test.png"
 
-    result = algorithm_image.delay("test", image_name, True)
+    result = algorithm_image.apply_async(("test", image_name, True), queue='transient')
 
     return JsonResponse({"task_id": result.id,
                          "task_status": result.status},
