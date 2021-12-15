@@ -7,8 +7,8 @@ import ray
 """
 Part 0: Initialize Env to use CPU and ignore Ray reinitialization 
 """
-#os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
-#ray.init(ignore_reinit_error=True)
+# os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+# ray.init(ignore_reinit_error=True)
 
 """
 Part 1: Ray Serve Parameters
@@ -23,7 +23,6 @@ Part 1: Ray Serve Parameters
 Part 2 - Get Data from request and pass to server
 """
 
-TRAINED_MODEL_PATH = os.path.join(tempfile.gettempdir(), "mnist_model.h5")
 
 @serve.deployment(route_prefix="/mnist")
 class TFMnistModel:
@@ -31,6 +30,7 @@ class TFMnistModel:
         import tensorflow as tf
         self.model_path = model_path
         self.model = tf.keras.models.load_model(model_path)
+        self.accuracy_accepted = 0.5
 
     async def __call__(self, starlette_request):
         # Step 1: transform HTTP request -> tensorflow input

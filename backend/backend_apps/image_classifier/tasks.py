@@ -42,7 +42,8 @@ def make_prediction_tensorflow(instances):
 def make_prediction_ray(instances):
     resp = requests.get(
         "http://localhost:8000/mnist",
-        json={"array": np.random.randn(28 * 28).tolist()})
+        json={"array": instances.tolist()})
+
     print(resp.json())
     return resp.json()
 
