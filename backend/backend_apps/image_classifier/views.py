@@ -18,13 +18,15 @@ async def hello(request):
     return HttpResponse("Hello, async Django!")
 
 
+@csrf_exempt
 async def performance_test(request):
-    res = await performance_test_process_image()
+    if request.method == 'POST':
+        res = await performance_test_process_image()
 
-    json_data = json.loads(res.content)
+        json_data = json.loads(res.content)
 
-    return render(request, "index.html", {"task_id": json_data["task_id"],
-                                          "task_status": json_data["task_status"]})
+        return render(request, "index.html", {"task_id": json_data["task_id"],
+                                              "task_status": json_data["task_status"]})
 
 
 async def performance_test_process_image():
@@ -38,12 +40,14 @@ async def performance_test_process_image():
 
 
 async def async_image_analyze(request):
-    result = await image_algorithm(request)
-    json_data = json.loads(result.content)
+    if request.method == 'POST':
 
-    return JsonResponse({"task_id": json_data["task_id"],
-                         "task_status": json_data["task_status"]},
-                        status=status.HTTP_200_OK)
+        result = await image_algorithm(request)
+        json_data = json.loads(result.content)
+
+        return JsonResponse({"task_id": json_data["task_id"],
+                             "task_status": json_data["task_status"]},
+                            status=status.HTTP_200_OK)
 
 
 async def image_algorithm(request, *args, **kwargs):
