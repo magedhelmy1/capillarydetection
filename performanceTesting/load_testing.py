@@ -13,4 +13,4 @@ class TestImage(HttpUser):
         # self.client.post(url="api/hello")
         # self.client.post(url="api/analyze_im/")
         # self.client.post("nginx_hello")
-        self.client.post(url="api/performance_test/")
+        self.client.get(url="api/hello/")
