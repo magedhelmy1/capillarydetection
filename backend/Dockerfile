@@ -1,12 +1,9 @@
 # pull official base image
 FROM python:3.9.9-slim-bullseye
 
-# set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
 # set work directory
 WORKDIR /usr/src/app
+
 
 # Copy dependencies file
 COPY requirements.txt .
@@ -22,6 +19,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends netcat && \
 # copy our django project
 ADD ./backend_apps .
 
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 # run entrypoint.sh
 RUN chmod +x /usr/src/app/entrypoint.sh
