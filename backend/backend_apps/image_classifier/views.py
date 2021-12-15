@@ -20,18 +20,18 @@ async def hello(request):
 
 @csrf_exempt
 async def performance_test(request):
-    if request.method == 'POST':
-        res = await performance_test_process_image(request)
-        json_data = json.loads(res.content)
+    res = await performance_test_process_image(request)
 
-        return render(request, "index.html", {"task_id": json_data["task_id"],
-                                              "task_status": json_data["task_status"]})
+    json_data = json.loads(res.content)
+
+    return render(request, "index.html", {"task_id": json_data["task_id"],
+                                          "task_status": json_data["task_status"]})
 
 
 async def performance_test_process_image(request, *args, **kwargs):
     image_name = "test.png"
 
-    result = algorithm_image.apply_async(("test", image_name, True), queue='transient')
+    result = algorithm_image.delay("test", image_name, True)
 
     return JsonResponse({"task_id": result.id,
                          "task_status": result.status},
