@@ -72,7 +72,7 @@ ROOT_URLCONF = 'server.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS':  [BASE_DIR, 'templates'],
+        'DIRS': [BASE_DIR, 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,7 +85,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'server.wsgi.application'
+# WSGI_APPLICATION = 'server.wsgi.application'
 ASGI_APPLICATION = 'server.asgi.application'
 
 # Database
@@ -163,7 +163,6 @@ DEFAULT_LOGGING = {
 }
 
 logging.config.dictConfig(DEFAULT_LOGGING)
-
 logging.info('Hello, log')
 
 if os.environ.get('DEBUG') == 0:

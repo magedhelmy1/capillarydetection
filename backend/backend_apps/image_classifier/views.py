@@ -20,18 +20,18 @@ async def hello(request):
 
 
 async def performance_test(request):
-    res = await performance_test_process_image(request)
+    if request.method == 'POST':
+        res = await performance_test_process_image(request)
+        json_data = json.loads(res.content)
 
-    json_data = json.loads(res.content)
-
-    return render(request, "index.html", {"task_id": json_data["task_id"],
-                                          "task_status": json_data["task_status"]})
+        return render(request, "index.html", {"task_id": json_data["task_id"],
+                                              "task_status": json_data["task_status"]})
 
 
 async def performance_test_process_image(request, *args, **kwargs):
     image_name = "test.png"
 
-    result = algorithm_image.delay("test", image_name, True)
+    result = algorithm_image.apply_async(("test", image_name, True), queue='transient')
 
     return JsonResponse({"task_id": result.id,
                          "task_status": result.status},
@@ -39,27 +39,21 @@ async def performance_test_process_image(request, *args, **kwargs):
 
 
 async def async_image_analyze(request):
-    if request.method == 'POST':
-        result = await image_algorithm(request)
-        json_data = json.loads(result.content)
+    result = await image_algorithm(request)
+    json_data = json.loads(result.content)
 
-        return JsonResponse({"task_id": json_data["task_id"],
-                             "task_status": json_data["task_status"]},
-                            status=status.HTTP_200_OK)
+    return JsonResponse({"task_id": json_data["task_id"],
+                         "task_status": json_data["task_status"]},
+                        status=status.HTTP_200_OK)
 
 
 async def image_algorithm(request, *args, **kwargs):
-    if request.method == 'POST':
-        image_name = str(request.FILES["picture"])
-        file_path = os.path.join(settings.IMAGES_DIR, image_name)
-        path = default_storage.save(file_path, ContentFile(request.FILES["picture"].read()))
+    image_name = str(request.FILES["picture"])
+    file_path = os.path.join(settings.IMAGES_DIR, image_name)
+    path = default_storage.save(file_path, ContentFile(request.FILES["picture"].read()))
 
-        # with open(file_path, 'wb+') as fp:
-        #     for chunk in image_uploaded:
-        #         fp.write(chunk)
+    result = algorithm_image.apply_async((path, image_name, False), queue='transient')
 
-        result = algorithm_image.apply_async((path, image_name, False), queue='transient')
-
-        return JsonResponse({"task_id": result.id,
-                             "task_status": result.status},
-                            status=status.HTTP_200_OK)
+    return JsonResponse({"task_id": result.id,
+                         "task_status": result.status},
+                        status=status.HTTP_200_OK)
