@@ -40,11 +40,11 @@ def make_prediction_tensorflow(instances):
 
 
 def make_prediction_ray(instances):
-    data = json.dumps({"signature_name": "serving_default", "instances": instances.tolist()})
-    headers = {"content-type": "application/json"}
-    json_response = requests.post(url, data=data, headers=headers)
-    predictions = json.loads(json_response.text)['predictions']
-    return predictions
+    resp = requests.get(
+        "http://localhost:8000/mnist",
+        json={"array": np.random.randn(28 * 28).tolist()})
+    print(resp.json())
+    return resp.json()
 
 
 class ImageEnhancement(object):
@@ -195,18 +195,31 @@ def get_countours_apply_to_image(res_img, image_to_write_on, input_shape=(50, 50
         capillary_count = 0
 
         # for performance comparison (Django / TFX restpoint / TFX gRC / Ray)
-        # TFX = True
-        # if TFX:
-        #     prediction = make_prediction_tensorflow(reshaped_array)
-        #
-        #     if prediction[0][0] < accepted_accuracy:
-        #         capillary_count += 1
-        #         # true_coords.append([startX, startY, endX, endY])
-        #         cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        #
-        #     else:
-        #         # false_coords.append([startX, startY, endX, endY])
-        #         cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 0, 255), 2)
+        TFX = True
+        if TFX:
+            prediction = make_prediction_tensorflow(reshaped_array)
+
+            if prediction[0][0] < accepted_accuracy:
+                capillary_count += 1
+                # true_coords.append([startX, startY, endX, endY])
+                cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+            else:
+                # false_coords.append([startX, startY, endX, endY])
+                cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 0, 255), 2)
+
+        use_ray = False
+        if use_ray:
+            prediction = make_prediction_ray(reshaped_array)
+
+            if prediction[0][0] < accepted_accuracy:
+                capillary_count += 1
+                # true_coords.append([startX, startY, endX, endY])
+                cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+            else:
+                # false_coords.append([startX, startY, endX, endY])
+                cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 0, 255), 2)
 
     return image_to_write_on, capillary_count
 

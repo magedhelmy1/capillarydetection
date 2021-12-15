@@ -11,12 +11,14 @@ import os
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+from django.views.decorators.csrf import csrf_exempt
 
 
 async def hello(request):
     return HttpResponse("Hello, async Django!")
 
 
+@csrf_exempt
 async def performance_test(request):
     # if request.method == 'POST':
     res = await performance_test_process_image(request)

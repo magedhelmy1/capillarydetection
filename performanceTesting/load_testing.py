@@ -8,7 +8,6 @@ class TestImage(HttpUser):
     # host = "http://127.0.0.1/"
 
     @task
-    @csrf_exempt
     def post_images(self):
         #self.client.get(url="api/example/")
         # self.client.post(url="api/hello")
