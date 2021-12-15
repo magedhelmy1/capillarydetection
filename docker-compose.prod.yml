@@ -16,7 +16,6 @@ services:
     container_name: frontend
     volumes:
       - react_static_volume:/usr/src/app/build/static
-    command: serve -s build -l 3000
     depends_on:
       - web
     env_file:

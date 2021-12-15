@@ -1,0 +1,7 @@
+FROM nginx:1.21.0-alpine
+
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.prod.conf /etc/nginx/conf.d/nginx.conf
+COPY nginx_root.conf /etc/nginx/nginx.conf
+
+WORKDIR /usr/src/app
