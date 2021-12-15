@@ -31,7 +31,15 @@ np_config.enable_numpy_behavior()
 url = 'http://tensorflow-servings:8501/v1/models/model:predict'
 
 
-def make_prediction(instances):
+def make_prediction_tensorflow(instances):
+    data = json.dumps({"signature_name": "serving_default", "instances": instances.tolist()})
+    headers = {"content-type": "application/json"}
+    json_response = requests.post(url, data=data, headers=headers)
+    predictions = json.loads(json_response.text)['predictions']
+    return predictions
+
+
+def make_prediction_ray(instances):
     data = json.dumps({"signature_name": "serving_default", "instances": instances.tolist()})
     headers = {"content-type": "application/json"}
     json_response = requests.post(url, data=data, headers=headers)
@@ -189,7 +197,7 @@ def get_countours_apply_to_image(res_img, image_to_write_on, input_shape=(50, 50
         # for performance comparison (Django / TFX restpoint / TFX gRC / Ray)
         TFX = True
         if TFX:
-            prediction = make_prediction(reshaped_array)
+            prediction = make_prediction_tensorflow(reshaped_array)
 
             if prediction[0][0] < accepted_accuracy:
                 capillary_count += 1

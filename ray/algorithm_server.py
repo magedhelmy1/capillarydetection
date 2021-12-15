@@ -7,23 +7,23 @@ import ray
 """
 Part 0: Initialize Env to use CPU and ignore Ray reinitialization 
 """
-os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
-ray.init(ignore_reinit_error=True)
+#os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+#ray.init(ignore_reinit_error=True)
 
 """
 Part 1: Ray Serve Parameters
 """
-client = serve.start()
-config = {"num_replicas": 30}
-client.create_backend("tf:v1", TFMnistModel_RaySever, config=config)
-client.create_endpoint("tf_classifier", backend="tf:v1", route="/capServe")
-handle = client.get_handle("tf_classifier")
-visualize_bounding_box_true = False
+# client = serve.start()
+# config = {"num_replicas": 30}
+# client.create_backend("tf:v1", TFMnistModel_RaySever, config=config)
+# client.create_endpoint("tf_classifier", backend="tf:v1", route="/capServe")
+# handle = client.get_handle("tf_classifier")
 
 """
 Part 2 - Get Data from request and pass to server
 """
 
+TRAINED_MODEL_PATH = os.path.join(tempfile.gettempdir(), "mnist_model.h5")
 
 @serve.deployment(route_prefix="/mnist")
 class TFMnistModel:

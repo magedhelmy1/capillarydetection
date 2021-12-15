@@ -18,12 +18,12 @@ async def hello(request):
 
 
 async def performance_test(request):
-    if request.method == 'POST':
-        res = await performance_test_process_image(request)
-        json_data = json.loads(res.content)
+    # if request.method == 'POST':
+    res = await performance_test_process_image(request)
+    json_data = json.loads(res.content)
 
-        return render(request, "index.html", {"task_id": json_data["task_id"],
-                                              "task_status": json_data["task_status"]})
+    return render(request, "index.html", {"task_id": json_data["task_id"],
+                                          "task_status": json_data["task_status"]})
 
 
 async def performance_test_process_image(request, *args, **kwargs):
