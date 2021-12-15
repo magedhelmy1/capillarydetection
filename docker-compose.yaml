@@ -13,7 +13,7 @@ services:
     expose:
       - 8000
     env_file:
-      - ./backend/backend_apps/.env
+      - ./backend/backend_apps/.env.dev
     command: python manage.py runserver 0.0.0.0:8000
     depends_on:
       - db
