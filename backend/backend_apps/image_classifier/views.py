@@ -17,7 +17,6 @@ from django.views.decorators.csrf import csrf_exempt
 async def hello(request):
     return HttpResponse("Hello, async Django!")
 
-
 @csrf_exempt
 async def performance_test(request):
     if request.method == 'POST':
@@ -27,8 +26,10 @@ async def performance_test(request):
 
         return render(request, "index.html", {"task_id": json_data["task_id"],
                                               "task_status": json_data["task_status"]})
+    else:
+        print("Something Failed")
 
-
+@csrf_exempt
 async def performance_test_process_image():
     image_name = "test.png"
 
@@ -41,7 +42,6 @@ async def performance_test_process_image():
 
 async def async_image_analyze(request):
     if request.method == 'POST':
-
         result = await image_algorithm(request)
         json_data = json.loads(result.content)
 
