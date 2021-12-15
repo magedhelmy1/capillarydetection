@@ -13,8 +13,6 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 
 
-# Experimenting with ASGI
-
 async def hello(request):
     return HttpResponse("Hello, async Django!")
 
@@ -24,9 +22,8 @@ async def performance_test(request):
         res = await performance_test_process_image(request)
         json_data = json.loads(res.content)
 
-        return JsonResponse({"task_id": json_data["task_id"],
-                             "task_status": json_data["task_status"]},
-                            status=status.HTTP_200_OK)
+        return render(request, "index.html", {"task_id": json_data["task_id"],
+                                              "task_status": json_data["task_status"]})
 
 
 async def performance_test_process_image(request, *args, **kwargs):
