@@ -1,22 +1,16 @@
-from asgiref.sync import sync_to_async
+from celery import current_app
+from rest_framework import status
 from rest_framework import viewsets
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 from .serializers import ImageSerializer
 from ..models import Image
-from rest_framework.response import Response
-from celery import shared_task, current_app
-import os
-from django.conf import settings
-from rest_framework import status
-from ..tasks import algorithm_image
-from django.http import JsonResponse
-from rest_framework.decorators import api_view
-import time
 
 
 class ImageViewSet(viewsets.ModelViewSet):
     queryset = Image.objects.all()
     serializer_class = ImageSerializer
-
 
 
 @api_view(('GET',))

@@ -1,6 +1,7 @@
-from .views import ImageViewSet, get_status  # , process_image
+from django.urls import path
 from rest_framework import routers
-from django.urls import path, include
+
+from .views import get_status  # , process_image
 
 router = routers.DefaultRouter()
 # router.register(r'analyze_im', ImageViewSet)

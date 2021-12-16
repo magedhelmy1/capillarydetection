@@ -1,26 +1,18 @@
 ---
-title: 'CapillaryWeb: An Automated System for Image Capillary Analysis using Deep Learning and Azure'
-tags:
-  - Python
-  - Django
-  - Tensorflow
-authors:
-  - name: Maged Helmy^[first author,corresponding author]
-    affiliation: 1
-  - name: Paulo Ferreira
-    affiliation: 1
-  - name: Eric Jul
-    affiliation: 1
-  - name: Trung Tuyen Truong
-    affiliation: 2
-affiliations:
-  - name: Department of Informatics - University of Oslo
-    index: 1
-  - name: Department of Mathematics - University of Oslo
-    index: 2
+title: 'CapillaryWeb: An Automated System for Image Capillary Analysis using Deep Learning and Azure' tags:
 
-date: 1 October 2021
-bibliography: paper.bib
+- Python
+- Django
+- Tensorflow authors:
+- name: Maged Helmy^[first author,corresponding author]
+  affiliation: 1
+- name: Paulo Ferreira affiliation: 1
+- name: Eric Jul affiliation: 1
+- name: Trung Tuyen Truong affiliation: 2 affiliations:
+- name: Department of Informatics - University of Oslo index: 1
+- name: Department of Mathematics - University of Oslo index: 2
+
+date: 1 October 2021 bibliography: paper.bib
 ---
 
 # 1. Introduction
@@ -42,7 +34,6 @@ This is a test sentence
 # 3. System
 
 This is a test sentence
-
 
 # 4. Implementation
 
@@ -82,7 +73,7 @@ This is a test sentence
 
 # Acknowledgements
 
-We acknowledge contributions from Brigitta Sipocz, Syrtis Major, and Semyeong
-Oh, and support from Kathryn Johnston during the genesis of this project.
+We acknowledge contributions from Brigitta Sipocz, Syrtis Major, and Semyeong Oh, and support from Kathryn Johnston
+during the genesis of this project.
 
 # References

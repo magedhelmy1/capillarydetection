@@ -1,8 +1,6 @@
-from ray import serve
 import numpy as np
 import requests
-import os
-import ray
+from ray import serve
 
 """
 Part 0: Initialize Env to use CPU and ignore Ray reinitialization 

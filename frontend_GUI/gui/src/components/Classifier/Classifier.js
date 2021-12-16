@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Dropzone from 'react-dropzone';
 import './Classifier.css'
-import {Spinner, Button, Alert, Image, Container, Row, Col} from 'react-bootstrap'
+import {Alert, Button, Col, Container, Image, Row, Spinner} from 'react-bootstrap'
 import axios from 'axios'
 import image_1 from "../../static_media/1.png"
 import image_2 from "../../static_media/2.png"

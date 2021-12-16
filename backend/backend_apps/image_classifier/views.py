@@ -1,21 +1,21 @@
-from django.http import HttpResponse
-from rest_framework import status
-from rest_framework.decorators import api_view
+import json
+import os
 
-from .tasks import algorithm_image
+from django.conf import settings
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
+from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import render
-import json
-from django.views.decorators.csrf import csrf_protect
-import os
-from django.conf import settings
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework import status
+
+from .tasks import algorithm_image
 
 
 async def hello(request):
     return HttpResponse("Hello, async Django!")
+
 
 @csrf_exempt
 async def performance_test(request):
@@ -28,6 +28,7 @@ async def performance_test(request):
                                               "task_status": json_data["task_status"]})
     else:
         print("Something Failed")
+
 
 @csrf_exempt
 async def performance_test_process_image():

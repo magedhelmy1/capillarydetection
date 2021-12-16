@@ -1,19 +1,20 @@
+import json
+import os
+import timeit
+from io import BytesIO
+
 import cv2
-from PIL import ImageEnhance
 import imutils
 import numpy as np
-from skimage.exposure import histogram
-from skimage import color
-from PIL import Image
-import timeit
-import json
 import requests
-from numpy import asarray
-from . import models
-from io import BytesIO
-from django.core.files import File
+from PIL import Image
+from PIL import ImageEnhance
 from celery import shared_task
-import os
+from django.core.files import File
+from numpy import asarray
+from skimage.exposure import histogram
+
+from . import models
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 import tensorflow as tf

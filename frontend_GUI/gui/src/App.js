@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Classifier from './components/Classifier/Classifier';
 import Navigation from './components/Navigation/Navigation';
-import {Route, BrowserRouter, Switch} from 'react-router-dom'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 
 
 function App() {

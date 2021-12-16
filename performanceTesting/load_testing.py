@@ -1,5 +1,4 @@
-from locust import HttpUser, task, constant
-from django.views.decorators.csrf import csrf_exempt
+from locust import HttpUser, task
 
 
 class TestImage(HttpUser):
