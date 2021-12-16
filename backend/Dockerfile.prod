@@ -2,11 +2,8 @@
 FROM python:3.9-slim-bullseye
 
 # set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-
-# Let all *.pyc files stay within the container, for Python >= 3.8
-ENV PYTHONPYCACHEPREFIX /.pycache
-RUN mkdir -p $PYTHONPYCACHEPREFIX
 
 # set work directory
 WORKDIR /usr/src/app
