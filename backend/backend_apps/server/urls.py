@@ -25,4 +25,5 @@ urlpatterns = [
     path('api/hello/', hello, name='hello'),
     path('api/performance_test/', performance_test, name='performance_test'),
     path('api/async_image_analyze/', async_image_analyze, name='async_image_analyze'),
+
 ]

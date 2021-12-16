@@ -7,30 +7,26 @@ from django.core.files.storage import default_storage
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 
 from .tasks import algorithm_image
 
 
+# Experimenting with ASGI
+
 async def hello(request):
     return HttpResponse("Hello, async Django!")
 
 
-@csrf_exempt
 async def performance_test(request):
-    if request.method == 'POST':
         res = await performance_test_process_image()
 
         json_data = json.loads(res.content)
 
         return render(request, "index.html", {"task_id": json_data["task_id"],
                                               "task_status": json_data["task_status"]})
-    else:
-        print("Something Failed")
 
 
-@csrf_exempt
 async def performance_test_process_image():
     image_name = "test.png"
 
