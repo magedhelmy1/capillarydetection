@@ -70,7 +70,7 @@ ROOT_URLCONF = 'server.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR, 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -83,8 +83,7 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'server.wsgi.application'
-ASGI_APPLICATION = 'server.asgi.application'
+WSGI_APPLICATION = 'server.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -168,7 +167,7 @@ LOGGING = {
     }
 }
 
-if os.environ.get('DEBUG') == 0:
+if not DEBUG:
     sentry_sdk.init(
         dsn=os.environ.get('sentry_secret'),
         integrations=[DjangoIntegration()],

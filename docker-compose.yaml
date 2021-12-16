@@ -34,7 +34,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - backend/backend_apps/.env
+      - backend/backend_apps/.env.dev
 
   tensorflow-servings:
     container_name: tfserving_classifier
