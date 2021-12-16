@@ -60,7 +60,7 @@ MIDDLEWARE = [
 
 ]
 
-if DEBUG == 0:
+if not DEBUG:
     MIDDLEWARE_CLASSES = list(MIDDLEWARE)
     MIDDLEWARE_CLASSES.remove('django_cprofile_middleware.middleware.ProfilerMiddleware')
 
