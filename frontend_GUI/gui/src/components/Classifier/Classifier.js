@@ -26,7 +26,10 @@ import image_20 from "../../static_media/20.png"
 import image_21 from "../../static_media/21.png"
 
 console.log(process.env.REACT_APP_AXIOS_URL)
-console.log("ALO: 061221-1926")
+console.log("ALO: 151221-1515")
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.withCredentials = true
 
 const ImageData = [image_1, image_2, image_3, image_4, image_5,
     image_6, image_7, image_8, image_9, image_10, image_11, image_12,
@@ -142,11 +145,11 @@ class Classifier extends Component {
         this.activateSpinner()
         let formData = new FormData()
         formData.append('picture', this.state.files.backend_address, this.state.files.name)
-        axios.post(`${process.env.REACT_APP_AXIOS_URL}/api/analyze_im/`, formData, {
+        axios.post(`${process.env.REACT_APP_AXIOS_URL}/api/async_image_analyze/`, formData, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'multipart/form-data'
-            }
+            },
         })
             .then(resp => {
                 console.log(resp)
@@ -471,7 +474,7 @@ class Classifier extends Component {
                         <Image className='justify-content-center'
 
 
-                               src={ process.env.REACT_APP_AXIOS_URL + this.state.recentImage.data.analyzed_picture}
+                               src={process.env.REACT_APP_AXIOS_URL + this.state.recentImage.data.analyzed_picture}
                                height='400' rounded/>
 
                         }
@@ -485,7 +488,7 @@ class Classifier extends Component {
 
                         {this.state.recentImage && this.state.showSegmented &&
                         <Image className='justify-content-center'
-                               src={ process.env.REACT_APP_AXIOS_URL + this.state.recentImage.data.segmented_image}
+                               src={process.env.REACT_APP_AXIOS_URL + this.state.recentImage.data.segmented_image}
                                height='400' rounded/>
 
                         }
@@ -529,5 +532,3 @@ class Classifier extends Component {
 }
 
 export default Classifier;
-
-

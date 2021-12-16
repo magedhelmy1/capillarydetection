@@ -1,0 +1,11 @@
+**/__pycache__
+*.pyo
+*.pyc
+
+# Do not copy .env files to docker image
+backend/backend_apps/.env
+backend/backend_apps/.env.*
+backend/backend_apps/media
+
+# Do not copy node_modules to docker image
+frontend_GUI/gui/node_modules

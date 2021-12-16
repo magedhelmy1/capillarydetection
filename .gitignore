@@ -1030,8 +1030,8 @@ staticfiles
 # End of https://www.toptal.com/developers/gitignore/api/django,pycharm
 
 jq.exe
-.env.prod
-.env.dev
+backend/.env.prod
+backend/backend_apps/.env.dev
 .env
 backend/frontend/.env.development
 backend/frontend/.env.production

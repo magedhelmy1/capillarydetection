@@ -1,4 +1,5 @@
 from locust import HttpUser, task, constant
+from django.views.decorators.csrf import csrf_exempt
 
 
 class TestImage(HttpUser):
@@ -8,7 +9,8 @@ class TestImage(HttpUser):
 
     @task
     def post_images(self):
-        #self.client.get(url="api/example/")
-        self.client.post(url="api/hello")
+        # self.client.get(url="api/example/")
+        # self.client.post(url="api/hello")
         # self.client.post(url="api/analyze_im/")
         # self.client.post("nginx_hello")
+        self.client.post("api/performance_test/")

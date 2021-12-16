@@ -7,47 +7,42 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     volumes:
-      - django_static_volume:/usr/src/app/static
-      - media:/usr/src/app/media
       - ./backend/backend_apps:/usr/src/app
-    expose:
-      - 8000
+      - media:/usr/src/app/media
     env_file:
-      - ./backend/backend_apps/.env
-    command: python manage.py runserver 0.0.0.0:8000
+      - ./backend/backend_apps/.env.dev
+    command: ./manage.py runserver 0.0.0.0:8000
     depends_on:
       - db
-
 
   react:
     container_name: frontend
     build:
       context: ./frontend_GUI
-      dockerfile: Dockerfile
-      args:
-        - REACT_APP_AXIOS_URL=http://127.0.0.1
     volumes:
-      - react_static_volume:/usr/src/app/build/static
+      - ./frontend_GUI/gui:/usr/src/app
     expose:
       - 3000
-    env_file:
-      - frontend_GUI/gui/.env
-    command: serve -s build -l 3000
+    environment:
+      - REACT_APP_AXIOS_URL=http://127.0.0.1
     depends_on:
       - web
+
   db:
     container_name: database
     image: postgres:14.1-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - backend/backend_apps/.env
+      - backend/backend_apps/.env.dev
 
   tensorflow-servings:
     container_name: tfserving_classifier
-    build: ./algorithms
+    image: tensorflow/serving
+    volumes:
+      - "./algorithms/SSIM_Model:/models/model"
     ports:
-      - 8501:8501
+      - "8501:8501"
     depends_on:
       - web
 
@@ -56,11 +51,9 @@ services:
     restart: always
     build: ./nginx
     volumes:
-      - django_static_volume:/usr/src/app/django_files/static
-      - react_static_volume:/usr/src/app/react_files/static
       - media:/usr/src/app/media
     ports:
-      - 80:80
+      - "80:80"
     depends_on:
       - react
 
@@ -68,30 +61,33 @@ services:
     container_name: redis
     image: "redis:6.2.6-alpine"
 
-
   celery:
     container_name: celery
     build:
       context: ./backend
     command: celery -A server worker -l INFO
     volumes:
-      - django_static_volume:/usr/src/app/static
       - media:/usr/src/app/media
+      - ./backend/backend_apps:/usr/src/app
     env_file:
-      - backend/backend_apps/.env
+      - backend/backend_apps/.env.dev
     depends_on:
       - redis
 
   flower:
     container_name: flower
     build: ./backend
-    command: celery flower worker -l INFO
+    command: celery -A server flower -l INFO
     ports:
-      - 5556:5555
+      - "5556:5555"
     environment:
       - FLASK_DEBUG=1
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    volumes:
+      - ./backend/backend_apps:/usr/src/app
+    env_file:
+      - backend/backend_apps/.env.dev
     depends_on:
       - celery
       - web
@@ -99,7 +95,4 @@ services:
 
 volumes:
   postgres_data:
-  django_static_volume:
-  react_static_volume:
   media:
-

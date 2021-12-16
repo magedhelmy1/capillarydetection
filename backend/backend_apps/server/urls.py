@@ -16,12 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from image_classifier.views import hello, example
+from image_classifier.views import hello, performance_test, async_image_analyze
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include('image_classifier.api.urls')),
     path('api/hello/', hello, name='hello'),
-    path('api/example/', example, name='example'),
+    path('api/performance_test/', performance_test, name='performance_test'),
+    path('api/async_image_analyze/', async_image_analyze, name='async_image_analyze'),
 ]
+

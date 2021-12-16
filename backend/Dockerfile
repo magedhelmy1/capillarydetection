@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.9.9-slim-bullseye
+FROM python:3.9-slim-bullseye
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -8,21 +8,19 @@ ENV PYTHONUNBUFFERED 1
 # set work directory
 WORKDIR /usr/src/app
 
-# Copy dependencies file
-COPY requirements.txt .
-
-# installing netcat (nc) since we are using that to listen to postgres server in entrypoint.sh
+# installing netcat (nc) since we are using that to listen to postgres server in entrypoint
 RUN apt-get update && apt-get install -y --no-install-recommends netcat && \
-    apt-get install ffmpeg libsm6 libxext6  -y &&\
+    apt-get install ffmpeg libsm6 libxext6 build-essential -y &&\
     apt-get autoremove -y && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    pip install -r requirements.txt
+    rm -rf /var/lib/apt/lists/*
 
-# copy our django project
-ADD ./backend_apps .
+# Copy dependencies file
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
+COPY entrypoint.sh /usr/src/entrypoint.sh
 
 # run entrypoint.sh
-RUN chmod +x /usr/src/app/entrypoint.sh
-ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
+ENTRYPOINT ["/usr/src/entrypoint.sh"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

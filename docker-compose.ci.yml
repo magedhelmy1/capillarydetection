@@ -23,7 +23,7 @@ services:
     container_name: frontend
     build:
       context: ./frontend_GUI
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
       args:
         - REACT_APP_AXIOS_URL=http://64.227.106.224
       cache_from:
@@ -54,6 +54,7 @@ services:
     restart: always
     build:
       context: ./nginx
+      dockerfile: Dockerfile.prod
       cache_from:
         - "${NGINX_IMAGE_BASE}:latest"
     image: "${NGINX_IMAGE}"

@@ -9,11 +9,9 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-import logging.config
 
 from pathlib import Path
 import os
-import logging.config
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
@@ -22,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-DEBUG = int(os.environ.get('DEBUG', default=0))
+DEBUG = bool(int(os.environ.get('DEBUG', default=0)))
 
 ALLOWED_HOSTS = ['64.227.106.224', 'localhost', '127.0.0.1']
 
@@ -72,7 +70,7 @@ ROOT_URLCONF = 'server.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS':  [BASE_DIR, 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -86,7 +84,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'server.wsgi.application'
-ASGI_APPLICATION = 'server.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -142,31 +139,35 @@ REST_FRAMEWORK = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
-# Clear prev config
-LOGGING_CONFIG = None
-
 # # Get loglevel from env
 # LOGLEVEL = os.getenv('DJANGO_LOGLEVEL', 'info').upper()
 
 
-DEFAULT_LOGGING = {
+LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    "formatters": {
+        "default": {
+            "format": "%(asctime)s [%(levelname)s] %(name)s:%(lineno)d %(funcName)s - %(message)s"
+        },
+    },
+    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "default"}},
     'loggers': {
         '': {
             'level': 'INFO',
+            "handlers": ["console"],
         },
         'another.module': {
             'level': 'DEBUG',
         },
+        # 'django.utils.autoreload': {
+        #     'level': 'DEBUG',
+        #     "propagate": True,
+        # },
     }
 }
 
-logging.config.dictConfig(DEFAULT_LOGGING)
-
-logging.info('Hello, log')
-
-if os.environ.get('DEBUG') == 0:
+if not DEBUG:
     sentry_sdk.init(
         dsn=os.environ.get('sentry_secret'),
         integrations=[DjangoIntegration()],
