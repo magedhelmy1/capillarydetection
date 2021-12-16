@@ -11,7 +11,7 @@ services:
       - media:/usr/src/app/media
     env_file:
       - ./backend/backend_apps/.env.dev
-    command: ./manage.py runserver 0.0.0.0:8000
+    command: python ./manage.py runserver 0.0.0.0:8000
     depends_on:
       - db
 
