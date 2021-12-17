@@ -1,6 +1,7 @@
 import json
 import os
 
+from asgiref.sync import sync_to_async
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
@@ -18,7 +19,7 @@ async def hello(request):
     return HttpResponse("Hello, async Django!")
 
 
-async def performance_test(request):
+def performance_test(request):
         res = await performance_test_process_image()
 
         json_data = json.loads(res.content)
@@ -27,7 +28,8 @@ async def performance_test(request):
                                               "task_status": json_data["task_status"]})
 
 
-async def performance_test_process_image():
+@sync_to_async
+def performance_test_process_image():
     image_name = "test.png"
 
     result = algorithm_image.apply_async(("test", image_name, True), queue='transient')
@@ -47,7 +49,8 @@ async def async_image_analyze(request):
                             status=status.HTTP_200_OK)
 
 
-async def image_algorithm(request, *args, **kwargs):
+@sync_to_async
+def image_algorithm(request, *args, **kwargs):
     image_name = str(request.FILES["picture"])
     file_path = os.path.join(settings.IMAGES_DIR, image_name)
     path = default_storage.save(file_path, ContentFile(request.FILES["picture"].read()))
