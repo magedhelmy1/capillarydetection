@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+import logging.config
 from pathlib import Path
 
 import sentry_sdk
@@ -142,8 +143,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # # Get loglevel from env
 # LOGLEVEL = os.getenv('DJANGO_LOGLEVEL', 'info').upper()
 
+LOG_LEVEL = "INFO" if DEBUG else "WARNING"
 
-LOGGING = {
+LOGGING_CONFIG = None
+
+logging.config.dictConfig({
     'version': 1,
     'disable_existing_loggers': False,
     "formatters": {
@@ -151,26 +155,14 @@ LOGGING = {
             "format": "%(asctime)s [%(levelname)s] %(name)s:%(lineno)d %(funcName)s - %(message)s"
         },
     },
-    "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
     "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "default"}},
     "loggers": {
         "": {
-            "level": "INFO",
+            "level": LOG_LEVEL,
             "handlers": ["console"],
         },
-        "django": {"handlers": [], "propagate": True},
-        "django.request": {"handlers": [], "propagate": True},
-        "django.security": {"handlers": [], "propagate": True},
     }
-}
-
-if not DEBUG:
-    LOGGING["loggers"][""] = {
-        "handlers": ["console"],
-        "level": "WARNING",
-        "filters": ["require_debug_false"],
-    }
-
+})
 
 if not DEBUG:
     sentry_sdk.init(
