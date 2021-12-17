@@ -61,8 +61,7 @@ MIDDLEWARE = [
 ]
 
 if not DEBUG:
-    MIDDLEWARE_CLASSES = list(MIDDLEWARE)
-    MIDDLEWARE_CLASSES.remove('django_cprofile_middleware.middleware.ProfilerMiddleware')
+    MIDDLEWARE.remove('django_cprofile_middleware.middleware.ProfilerMiddleware')
 
 SESSION_ENGINE = "django.contrib.sessions.backends.file"
 
