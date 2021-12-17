@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
-import logging.config
 from pathlib import Path
 
 import sentry_sdk
@@ -145,26 +144,26 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 LOG_LEVEL = "INFO" if DEBUG else "WARNING"
 
-LOGGING_CONFIG = None
-
-logging.config.dictConfig({
+LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    "formatters": {
-        "default": {
-            "format": "%(asctime)s [%(levelname)s] %(name)s:%(lineno)d %(funcName)s - %(message)s"
-        },
-    },
-    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "default"}},
+    # "formatters": {
+    #     "default": {
+    #         "format": "%(asctime)s [%(levelname)s] %(name)s:%(lineno)d %(funcName)s - %(message)s"
+    #     },
+    # },
+    "handlers": {"console": {"class": "logging.StreamHandler"}}, # , "formatter": "default"
     "loggers": {
         "": {
             "level": LOG_LEVEL,
             "handlers": ["console"],
         },
     }
-})
+}
 
-if not DEBUG:
+ENABLE_SENTRY = False
+
+if not DEBUG and ENABLE_SENTRY:
     sentry_sdk.init(
         dsn=os.environ.get('sentry_secret'),
         integrations=[DjangoIntegration()],
