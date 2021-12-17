@@ -1,13 +1,14 @@
 import json
 import os
 
-from asgiref.sync import sync_to_async
+from asgiref.sync import async_to_sync, sync_to_async
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 
 from .tasks import algorithm_image
@@ -19,7 +20,7 @@ async def hello(request):
     return HttpResponse("Hello, async Django!")
 
 
-def performance_test(request):
+async def performance_test(request):
         res = await performance_test_process_image()
 
         json_data = json.loads(res.content)
@@ -39,6 +40,9 @@ def performance_test_process_image():
                         status=status.HTTP_200_OK)
 
 
+@sync_to_async
+@csrf_exempt
+@async_to_sync
 async def async_image_analyze(request):
     if request.method == 'POST':
         result = await image_algorithm(request)
