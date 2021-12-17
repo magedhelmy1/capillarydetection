@@ -151,21 +151,26 @@ LOGGING = {
             "format": "%(asctime)s [%(levelname)s] %(name)s:%(lineno)d %(funcName)s - %(message)s"
         },
     },
+    "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
     "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "default"}},
-    'loggers': {
-        '': {
-            'level': 'INFO',
+    "loggers": {
+        "": {
+            "level": "INFO",
             "handlers": ["console"],
         },
-        'another.module': {
-            'level': 'DEBUG',
-        },
-        # 'django.utils.autoreload': {
-        #     'level': 'DEBUG',
-        #     "propagate": True,
-        # },
+        "django": {"handlers": [], "propagate": True},
+        "django.request": {"handlers": [], "propagate": True},
+        "django.security": {"handlers": [], "propagate": True},
     }
 }
+
+if not DEBUG:
+    LOGGING["loggers"][""] = {
+        "handlers": ["console"],
+        "level": "WARNING",
+        "filters": ["require_debug_false"],
+    }
+
 
 if not DEBUG:
     sentry_sdk.init(
