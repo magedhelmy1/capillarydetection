@@ -161,6 +161,10 @@ LOGGING = {
     }
 }
 
+if not DEBUG:
+    del LOGGING["loggers"][""]["handlers"]
+    del LOGGING["handlers"]
+
 ENABLE_SENTRY = False
 
 if not DEBUG and ENABLE_SENTRY:

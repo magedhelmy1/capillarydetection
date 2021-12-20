@@ -21,12 +21,12 @@ async def hello(request):
 
 
 async def performance_test(request):
-        res = await performance_test_process_image()
+    res = await performance_test_process_image()
 
-        json_data = json.loads(res.content)
+    json_data = json.loads(res.content)
 
-        return render(request, "index.html", {"task_id": json_data["task_id"],
-                                              "task_status": json_data["task_status"]})
+    return render(request, "index.html", {"task_id": json_data["task_id"],
+                                          "task_status": json_data["task_status"]})
 
 
 @sync_to_async
