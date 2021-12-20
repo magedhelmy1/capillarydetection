@@ -11,6 +11,7 @@ services:
       - media:/usr/src/app/media
     env_file: .env
 
+
   react:
     image: "${FRONTEND_IMAGE}"
     container_name: frontend
