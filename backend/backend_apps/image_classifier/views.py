@@ -14,8 +14,6 @@ from rest_framework import status
 from .tasks import algorithm_image
 
 
-# Experimenting with ASGI
-
 async def hello(request):
     return HttpResponse("Hello, async Django!")
 
