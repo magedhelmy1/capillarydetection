@@ -55,7 +55,7 @@ async def async_image_analyze(request):
 def image_algorithm(request, *args, **kwargs):
     image_name = str(request.FILES["picture"])
     file_path = os.path.join(settings.IMAGES_DIR, image_name)
-    path = default_storage.save(file_path, ContentFile(request.FILES["picture"].read()))
+    path = default_storage.save(file_path, ContentFile(request.FILES["picture"]))
 
     result = algorithm_image.apply_async((path, image_name, False))  # , queue='transient')
 
