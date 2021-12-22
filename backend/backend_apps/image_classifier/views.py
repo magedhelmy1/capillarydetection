@@ -31,7 +31,7 @@ async def performance_test(request):
 def performance_test_process_image():
     image_name = "test.png"
 
-    result = algorithm_image.apply_async(("test", image_name, True), queue='transient')
+    result = algorithm_image.apply_async(("test", image_name, True))
 
     return JsonResponse({"task_id": result.id,
                          "task_status": result.status},
@@ -57,7 +57,7 @@ def image_algorithm(request, *args, **kwargs):
     file_path = os.path.join(settings.IMAGES_DIR, image_name)
     path = default_storage.save(file_path, ContentFile(request.FILES["picture"].read()))
 
-    result = algorithm_image.apply_async((path, image_name, False), queue='transient')
+    result = algorithm_image.apply_async((path, image_name, False))  # , queue='transient')
 
     return JsonResponse({"task_id": result.id,
                          "task_status": result.status},
