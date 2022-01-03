@@ -4,16 +4,16 @@ import os
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from rest_framework import status
 
 from .tasks import algorithm_image
 
 
-# Base test
-# async def hello(request):
-#     return HttpResponse("Hello, async Django!")
+#Base test
+async def hello(request):
+    return HttpResponse("Hello, async Django!")
 
 
 async def performance_test(request):
