@@ -5,7 +5,7 @@ services:
     container_name: backend
     image: "${WEB_IMAGE}"
     # command: gunicorn server.wsgi:application --bind 0.0.0.0:8000 -w 17 --access-logfile - --error-logfile - --capture-output --log-level debug
-    command: gunicorn server.asgi:application --bind 0.0.0.0:8000 -w 17 -k uvicorn.workers.UvicornWorker --access-logfile - --error-logfile - --capture-output --log-level debug --lifespan on
+    command: gunicorn server.asgi:application --bind 0.0.0.0:8000 -w 17 -k uvicorn.workers.UvicornWorker --access-logfile - --error-logfile - --capture-output --log-level debug
     volumes:
       - django_static_volume:/usr/src/app/static
       - media:/usr/src/app/media
