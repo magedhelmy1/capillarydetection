@@ -1,12 +1,13 @@
 import json
 import os
 
-from asgiref.sync import sync_to_async
+from asgiref.sync import async_to_sync, sync_to_async
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 
 from .tasks import algorithm_image
@@ -16,6 +17,9 @@ async def hello(request):
     return HttpResponse("Hello, async Django!")
 
 
+@sync_to_async
+@csrf_exempt
+@async_to_sync
 async def performance_test(request):
 
     res = await performance_test_process_image()
