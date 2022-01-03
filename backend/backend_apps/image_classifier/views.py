@@ -16,9 +16,6 @@ async def hello(request):
     return HttpResponse("Hello, async Django!")
 
 
-# @sync_to_async
-# @csrf_exempt
-# @async_to_sync
 async def performance_test(request):
     res = await performance_test_process_image()
     json_data = json.loads(res.content)
@@ -27,8 +24,7 @@ async def performance_test(request):
                                           "task_status": json_data["task_status"]})
 
 
-@sync_to_async
-def performance_test_process_image():
+async def performance_test_process_image():
     image_name = "test.png"
 
     result = algorithm_image.delay("test", image_name, True)
@@ -38,9 +34,6 @@ def performance_test_process_image():
                         status=status.HTTP_200_OK)
 
 
-# @sync_to_async
-# @csrf_exempt
-# @async_to_sync
 async def async_image_analyze(request):
     if request.method == 'POST':
         result = await image_algorithm(request)
@@ -51,8 +44,8 @@ async def async_image_analyze(request):
                             status=status.HTTP_200_OK)
 
 
-# @sync_to_async
-async def image_algorithm(request, *args, **kwargs):
+@sync_to_async
+def image_algorithm(request, *args, **kwargs):
     image_name = str(request.FILES["picture"])
     file_path = os.path.join(settings.IMAGES_DIR, image_name)
     path = default_storage.save(file_path, ContentFile(request.FILES["picture"].read()))
