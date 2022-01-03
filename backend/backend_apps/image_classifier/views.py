@@ -30,7 +30,7 @@ async def performance_test(request):
 
 
 # @sync_to_async
-def performance_test_process_image():
+async def performance_test_process_image():
     image_name = "test.png"
 
     result = algorithm_image.delay("test", image_name, True)
