@@ -16,7 +16,7 @@ from .tasks import algorithm_image
 #     return HttpResponse("Hello, async Django!")
 
 
-def performance_test(request):
+async def performance_test(request):
     res = await performance_test_process_image()
     json_data = json.loads(res.content)
 
@@ -24,7 +24,7 @@ def performance_test(request):
                                           "task_status": json_data["task_status"]})
 
 
-def performance_test_process_image():
+async def performance_test_process_image():
     image_name = "test.png"
 
     result = algorithm_image.delay("test", image_name, True)
