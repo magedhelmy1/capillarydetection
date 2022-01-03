@@ -16,7 +16,7 @@ app.conf.task_queues = (
           routing_key='transient', durable=False),
 )
 
-worker_prefetch_multiplier = 128
+worker_prefetch_multiplier = 0
 
 
 # @app.task(bind=True)

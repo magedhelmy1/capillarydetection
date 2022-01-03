@@ -4,15 +4,16 @@ import os
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework import status
 
 from .tasks import algorithm_image
 
 
-async def hello(request):
-    return HttpResponse("Hello, async Django!")
+# Base test
+# async def hello(request):
+#     return HttpResponse("Hello, async Django!")
 
 
 async def performance_test(request):
@@ -26,7 +27,7 @@ async def performance_test(request):
 async def performance_test_process_image():
     image_name = "test.png"
 
-    #result = algorithm_image.delay("test", image_name, True)
+    # result = algorithm_image.delay("test", image_name, True)
     result = algorithm_image.apply_async(("test", image_name, True), queue='transient')
 
     return JsonResponse({"task_id": result.id,
