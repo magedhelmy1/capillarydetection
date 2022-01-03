@@ -7,12 +7,12 @@ import cv2
 import imutils
 import numpy as np
 import requests
-from PIL import Image
-from PIL import ImageEnhance
+from PIL import Image, ImageEnhance
 from celery import shared_task
 from django.core.files.base import ContentFile
 from numpy import asarray
 from skimage.exposure import histogram
+from django.core.files import File
 
 from . import models
 
@@ -239,7 +239,6 @@ def capillary_density(image_to_calculate_density_from):
 
 
 def classify_image(frame):
-    # print("Starting analysis")
     img_temp = asarray(Image.open(frame))
 
     start_time = timeit.default_timer()
@@ -280,16 +279,16 @@ def algorithm_image(serializer, image_name, test):
         uploaded_pictures = serializer
         file_name = image_name
 
-    time_taken, analyzed, number_capillaries, area_of_capillaries, segmented_image_clean = \
-        classify_image(uploaded_pictures)
+    time_taken, analyzed, number_capillaries, area_of_capillaries, segmented_image_clean = classify_image(
+        uploaded_pictures)
 
     new_image_io = BytesIO()
     analyzed.save(new_image_io, format='PNG')
-    analyzed_file_object = ContentFile(new_image_io, name=os.path.basename(file_name))
+    analyzed_file_object = File(new_image_io, name=os.path.basename(file_name))
 
     new_image_io_segmented = BytesIO()
     segmented_image_clean.save(new_image_io_segmented, format='PNG')
-    segmented_file_object = ContentFile(new_image_io_segmented, name=os.path.basename(file_name))
+    segmented_file_object = File(new_image_io_segmented, name=os.path.basename(file_name))
 
     model_instance = models.Image.objects.create(
         picture=uploaded_pictures,

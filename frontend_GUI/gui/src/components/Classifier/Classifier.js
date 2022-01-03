@@ -156,7 +156,7 @@ class Classifier extends Component {
                 this.getStatus(resp)
             })
             .catch(err => {
-                console.log(err.response.data)
+                console.log(err.response)
             })
     }
 
@@ -174,7 +174,7 @@ class Classifier extends Component {
 
         })
             .catch(err => {
-                console.log(err.response.data)
+                console.log(err.response)
             })
 
     }
