@@ -17,9 +17,9 @@ async def hello(request):
     return HttpResponse("Hello, async Django!")
 
 
-@sync_to_async
-@csrf_exempt
-@async_to_sync
+# @sync_to_async
+# @csrf_exempt
+# @async_to_sync
 async def performance_test(request):
 
     res = await performance_test_process_image()
@@ -29,7 +29,7 @@ async def performance_test(request):
                                           "task_status": json_data["task_status"]})
 
 
-@sync_to_async
+# @sync_to_async
 def performance_test_process_image():
     image_name = "test.png"
 
