@@ -10,13 +10,11 @@ app = Celery('server')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
-app.conf.task_queues = (
-    Queue('celery', routing_key='celery'),
-    Queue('transient', Exchange('transient', delivery_mode=1),
-          routing_key='transient', durable=False),
-)
+task_routes = {
+    'proj.tasks.add': {'queue': 'celery', 'delivery_mode': 'transient'}
+}
 
-worker_prefetch_multiplier = 0
+# worker_prefetch_multiplier = 0
 
 
 # @app.task(bind=True)
