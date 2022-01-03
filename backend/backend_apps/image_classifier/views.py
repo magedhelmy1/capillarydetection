@@ -1,7 +1,6 @@
 import json
 import os
 
-from asgiref.sync import sync_to_async
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
@@ -44,8 +43,7 @@ async def async_image_analyze(request):
                             status=status.HTTP_200_OK)
 
 
-@sync_to_async
-def image_algorithm(request, *args, **kwargs):
+async def image_algorithm(request, *args, **kwargs):
     image_name = str(request.FILES["picture"])
     file_path = os.path.join(settings.IMAGES_DIR, image_name)
     path = default_storage.save(file_path, ContentFile(request.FILES["picture"].read()))
