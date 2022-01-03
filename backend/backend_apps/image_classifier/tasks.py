@@ -9,10 +9,9 @@ import numpy as np
 import requests
 from PIL import Image, ImageEnhance
 from celery import shared_task
-from django.core.files.base import ContentFile
+from django.core.files import File
 from numpy import asarray
 from skimage.exposure import histogram
-from django.core.files import File
 
 from . import models
 
@@ -197,7 +196,7 @@ def get_countours_apply_to_image(res_img, image_to_write_on, input_shape=(50, 50
         capillary_count = 0
 
         # for performance comparison (Django / TFX restpoint / TFX gRC / Ray)
-        TFX = True
+        TFX = False
         if TFX:
             prediction = make_prediction_tensorflow(reshaped_array)
 

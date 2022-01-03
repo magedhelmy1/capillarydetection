@@ -17,8 +17,8 @@ async def hello(request):
 
 
 async def performance_test(request):
-    res = await performance_test_process_image()
 
+    res = await performance_test_process_image()
     json_data = json.loads(res.content)
 
     return render(request, "index.html", {"task_id": json_data["task_id"],
@@ -29,7 +29,7 @@ async def performance_test(request):
 def performance_test_process_image():
     image_name = "test.png"
 
-    result = algorithm_image.apply_async(("test", image_name, True))
+    result = algorithm_image.delay("test", image_name, True)
 
     return JsonResponse({"task_id": result.id,
                          "task_status": result.status},
