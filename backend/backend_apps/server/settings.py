@@ -186,6 +186,10 @@ if not DEBUG and ENABLE_SENTRY:
 # CELERY_IMPORTS = ['apps.image_classifier.tasks']
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER")
+CELERY_ACKS_LATE = True
+CELERY_SEND_EVENTS = False
+CELERY_IGNORE_RESULT = True
+CELERYD_PREFETCH_MULTIPLIER = 10
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
