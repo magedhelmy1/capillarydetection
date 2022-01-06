@@ -58,10 +58,11 @@ services:
     container_name: redis
     image: "redis:alpine"
 
+
   celery:
     container_name: celery
     image: "${CELERY_IMAGE}"
-    command: celery -A server worker
+    command: celery -A server worker -l info -c 4 -Ofair — without-gossip — without-mingle — without-heartbeat
     volumes:
       - django_static_volume:/usr/src/app/static
       - media:/usr/src/app/media
