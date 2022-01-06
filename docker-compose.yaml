@@ -15,18 +15,18 @@ services:
     depends_on:
       - db
 
-  react:
-    container_name: frontend
-    build:
-      context: ./frontend_GUI
-    volumes:
-      - ./frontend_GUI/gui:/usr/src/app
-    expose:
-      - 3000
-    environment:
-      - REACT_APP_AXIOS_URL=http://127.0.0.1
-    depends_on:
-      - web
+  #  react:
+  #    container_name: frontend
+  #    build:
+  #      context: ./frontend_GUI
+  #    volumes:
+  #      - ./frontend_GUI/gui:/usr/src/app
+  #    expose:
+  #      - 3000
+  #    environment:
+  #      - REACT_APP_AXIOS_URL=http://127.0.0.1
+  #    depends_on:
+  #      - web
 
   db:
     container_name: database
@@ -55,7 +55,6 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - react
 
   redis:
     container_name: redis
@@ -91,7 +90,6 @@ services:
     depends_on:
       - celery
       - web
-      - react
 
 volumes:
   postgres_data:
