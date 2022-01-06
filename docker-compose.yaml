@@ -65,7 +65,7 @@ services:
     container_name: celery
     build:
       context: ./backend
-    command: celery -A server worker -l info -Ofair — without-gossip — without-mingle — without-heartbeat
+    command: celery -A server worker --without-heartbeat --without-gossip --without-mingle
     volumes:
       - media:/usr/src/app/media
       - ./backend/backend_apps:/usr/src/app
