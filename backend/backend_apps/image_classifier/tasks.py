@@ -7,10 +7,9 @@ import cv2
 import imutils
 import numpy as np
 import requests
-from PIL import Image, ImageEnhance
-from celery import shared_task
 from django.core.files import File
 from numpy import asarray
+from PIL import Image, ImageEnhance
 from skimage.exposure import histogram
 
 from . import models
@@ -268,7 +267,7 @@ def classify_image(frame):
     # return time_taken, img, capillary_count, area_count, segmented_bg
 
 
-@shared_task
+# @shared_task
 def algorithm_image(serializer, image_name, test):
     if test:
         uploaded_pictures = "testSample.png"

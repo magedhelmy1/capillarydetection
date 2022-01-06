@@ -153,7 +153,8 @@ class Classifier extends Component {
         })
             .then(resp => {
                 console.log(resp)
-                this.getStatus(resp)
+                this.getImageClass(resp)
+                // this.getStatus(resp)
             })
             .catch(err => {
                 console.log(err.response)
