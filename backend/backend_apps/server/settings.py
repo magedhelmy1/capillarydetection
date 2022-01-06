@@ -186,14 +186,6 @@ if not DEBUG and ENABLE_SENTRY:
 # CELERY_IMPORTS = ['apps.image_classifier.tasks']
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER")
-broker_pool_limit = 1  # Will decrease connection usage
-broker_heartbeat = None  # We're using TCP keep-alive instead
-
-
-worker_send_task_event = False
-task_ignore_result = True
-task_acks_late = True
-
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
