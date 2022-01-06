@@ -16,7 +16,7 @@ task_ignore_result = True
 task_time_limit = 60
 task_soft_time_limit = 50
 task_acks_late = True
-worker_prefetch_multiplier = 10
+worker_prefetch_multiplier = 0
 
 # task_queues = (
 #     Queue('celery', routing_key='celery'),
