@@ -10,6 +10,12 @@ app = Celery('server')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
+task_queues = (
+    Queue('celery', routing_key='celery'),
+    Queue('transient', Exchange('transient', delivery_mode=1),
+          routing_key='transient', durable=False),
+)
+
 # app.conf.task_default_queue = 'default'
 # app.conf.task_queues = (
 #     Queue('celery', routing_key='celery'),
