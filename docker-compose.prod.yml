@@ -5,7 +5,7 @@ services:
     container_name: backend
     image: "${WEB_IMAGE}"
     # command: gunicorn server.wsgi:application --bind 0.0.0.0:8000 -w 17
-    command: daphne server.asgi:application --bind 0.0.0.0:8000 #-w 17 -k uvicorn.workers.UvicornWorker
+    command: daphne server.asgi:application #--bind 0.0.0.0:8000 #-w 17 -k uvicorn.workers.UvicornWorker
     volumes:
       - django_static_volume:/usr/src/app/static
       - media:/usr/src/app/media
