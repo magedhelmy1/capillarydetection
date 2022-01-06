@@ -187,10 +187,10 @@ if not DEBUG and ENABLE_SENTRY:
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER")
 
-worker_send_task_event = False
-task_ignore_result = True
-task_acks_late = True
-worker_prefetch_multiplier = 10
+# worker_send_task_event = False
+# task_ignore_result = True
+# task_acks_late = True
+# worker_prefetch_multiplier = 10
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
