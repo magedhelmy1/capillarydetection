@@ -7,10 +7,10 @@ import cv2
 import imutils
 import numpy as np
 import requests
-from PIL import Image, ImageEnhance
 from celery import shared_task
 from django.core.files import File
 from numpy import asarray
+from PIL import Image, ImageEnhance
 from skimage.exposure import histogram
 
 from . import models

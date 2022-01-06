@@ -186,11 +186,12 @@ if not DEBUG and ENABLE_SENTRY:
 # CELERY_IMPORTS = ['apps.image_classifier.tasks']
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER")
-
-# worker_send_task_event = False
-# task_ignore_result = True
-# task_acks_late = True
-# worker_prefetch_multiplier = 10
+broker_pool_limit = 1  # Will decrease connection usage
+broker_heartbeat = None  # We're using TCP keep-alive instead
+broker_connection_timeout = 30  # May require a long timeout due to Linux DNS timeouts etc
+result_backend = None  # AMQP is not recommended as result backend as it creates thousands of queues
+event_queue_expires = 60  # Will delete all celeryev. queues without consumers after 1 minute.
+worker_prefetch_multiplier = 1  # Disable prefetching, it's causes problems and doesn't help performance
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
