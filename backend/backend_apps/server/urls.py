@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from image_classifier.views import hello, performance_test, async_image_analyze
+from image_classifier.views import hello, performance_test, async_image_analyze, get_status
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +25,5 @@ urlpatterns = [
     path('api/hello/', hello, name='hello'),
     path('api/performance_test/', performance_test, name='performance_test'),
     path('api/async_image_analyze/', async_image_analyze, name='async_image_analyze'),
-
+    path('task/<task_id>/', get_status, name="get_status"),
 ]

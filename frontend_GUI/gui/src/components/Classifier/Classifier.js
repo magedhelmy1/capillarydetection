@@ -161,7 +161,8 @@ class Classifier extends Component {
     }
 
     getStatus = (obj) => {
-        axios.get(`${process.env.REACT_APP_AXIOS_URL}/api/task/${obj.data.task_id}/`,
+        // axios.get(`${process.env.REACT_APP_AXIOS_URL}/api/task/${obj.data.task_id}/`,
+        axios.get(`${process.env.REACT_APP_AXIOS_URL}/task/${obj.data.task_id}/`,
             {
                 headers: {
                     'accept':

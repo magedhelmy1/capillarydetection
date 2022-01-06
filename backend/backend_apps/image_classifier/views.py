@@ -2,6 +2,7 @@ import asyncio
 import json
 import os
 
+from celery import current_app
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
@@ -18,7 +19,6 @@ async def hello(request):
 
 
 # Test Step
-
 async def performance_test(request):
     task1 = asyncio.create_task(performance_test_process_image())
     res = await task1
@@ -38,6 +38,22 @@ async def performance_test_process_image():
     return JsonResponse({"task_id": result.id,
                          "task_status": result.status},
                         status=status.HTTP_200_OK)
+
+
+def get_status(task_id):
+    if request.method == 'GET':
+        print(task_id)
+        print("Here")
+
+        task = current_app.AsyncResult(task_id)
+        context = {'task_status': task.status, 'task_id': task.id}
+
+        if task.status == 'PENDING':
+            return Response({**context}, status=status.HTTP_200_OK)
+
+        else:
+            response_data = task.get()
+            return Response({**context, **response_data}, status=status.HTTP_201_CREATED)
 
 
 # Live Step
