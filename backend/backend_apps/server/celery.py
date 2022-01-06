@@ -9,6 +9,8 @@ app = Celery('server')
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
+worker_send_task_event = False
+task_ignore_result = True
 
 # task_queues = (
 #     Queue('celery', routing_key='celery'),
