@@ -2,7 +2,6 @@ import asyncio
 import json
 import os
 
-from asgiref.sync import async_to_sync, sync_to_async
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
@@ -31,8 +30,7 @@ async def performance_test(request):
                                           "task_status": json_data["task_status"]})
 
 
-@sync_to_async
-def performance_test_process_image():
+async def performance_test_process_image():
     image_name = "test.png"
 
     result = algorithm_image.delay("test", image_name, True)
