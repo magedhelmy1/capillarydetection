@@ -1,5 +1,5 @@
-Django==3.2.5
-djangorestframework==3.11.2
+Django==4.0.1
+djangorestframework==3.13.1
 django-rest-auth==0.9.5
 django-cors-headers==3.5.0
 psycopg2-binary==2.9.2
@@ -14,7 +14,7 @@ numpy==1.21.4
 opencv-python
 Pillow==8.4.0
 sentry-sdk==1.5.0
-tensorflow-cpu==2.7.0
+tensorflow-cpu
 django-cprofile-middleware
 celery==5.2.1
 redis==3.5.3
@@ -22,5 +22,4 @@ flower==1.0.0
 scikit-image==0.19.0
 django-redis==5.1.0
 uvicorn==0.15.0
-ray==1.9
 daphne==3.0.2
