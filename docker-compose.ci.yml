@@ -80,7 +80,7 @@ services:
       dockerfile: Dockerfile.prod
       cache_from:
         - "${CELERY_IMAGE_BASE}:latest"
-    command: celery -A server worker
+    command: celery -A server worker -l info -c 4 -Ofair — without-gossip — without-mingle — without-heartbeat
     volumes:
       - django_static_volume:/usr/src/app/static
       - media:/usr/src/app/media
