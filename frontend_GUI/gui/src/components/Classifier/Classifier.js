@@ -25,8 +25,9 @@ import image_19 from "../../static_media/19.png"
 import image_20 from "../../static_media/20.png"
 import image_21 from "../../static_media/21.png"
 
+console.log(Date.now());
+
 console.log(process.env.REACT_APP_AXIOS_URL)
-console.log("ALO: 060122-1123")
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.withCredentials = true

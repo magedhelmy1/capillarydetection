@@ -184,8 +184,8 @@ if not DEBUG and ENABLE_SENTRY:
 
 # Redis and Celery Conf
 # CELERY_IMPORTS = ['apps.image_classifier.tasks']
-CELERY_BROKER_URL = os.environ.get("CELERY_BROKER")
-CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER")
+# CELERY_BROKER_URL = os.environ.get("CELERY_BROKER")
+# CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER")
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
