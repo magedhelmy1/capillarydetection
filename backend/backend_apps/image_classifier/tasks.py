@@ -268,7 +268,7 @@ def classify_image(frame):
     # return time_taken, img, capillary_count, area_count, segmented_bg
 
 
-@shared_task
+@shared_task(bind=True)
 def algorithm_image(serializer, image_name, test):
     if test:
         uploaded_pictures = "testSample.png"
