@@ -61,7 +61,7 @@ services:
   celery:
     container_name: celery
     image: "${CELERY_IMAGE}"
-    command: celery -A server worker -l INFO
+    command: celery -A server worker --without-heartbeat --without-gossip --without-mingle
     volumes:
       - django_static_volume:/usr/src/app/static
       - media:/usr/src/app/media
