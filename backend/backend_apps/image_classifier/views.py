@@ -44,8 +44,9 @@ async def performance_test_process_image():
 # Live Step
 async def async_image_analyze(request):
     if request.method == 'POST':
-        result = await image_algorithm(request)
-        json_data = json.loads(result.content)
+        task1 = asyncio.create_task(image_algorithm(request))
+        res = await task1
+        json_data = json.loads(res.content)
 
         return JsonResponse({"task_id": json_data["task_id"],
                              "task_status": json_data["task_status"]},
