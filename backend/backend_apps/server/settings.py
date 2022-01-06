@@ -23,7 +23,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = bool(int(os.environ.get('DEBUG', default=0)))
 
-ALLOWED_HOSTS = ['64.227.106.224', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['64.227.106.224', 'localhost', '127.0.0.1',"http://localhost:3000"]
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

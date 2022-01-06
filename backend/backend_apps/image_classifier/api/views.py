@@ -20,10 +20,6 @@ def get_status(request, task_id):
     if task.status == 'PENDING':
         return Response({**context}, status=status.HTTP_200_OK)
 
-    # elif task.status == 'FAILURE':
-    #     print(f"Celery Task Failed - {task}")
-    #     return Response({**context}, status=status.HTTP_404_NOT_FOUND)
-
     else:
         response_data = task.get()
         return Response({**context, **response_data}, status=status.HTTP_201_CREATED)
