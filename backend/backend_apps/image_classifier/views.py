@@ -1,3 +1,4 @@
+import asyncio
 import json
 import os
 
@@ -11,13 +12,19 @@ from rest_framework import status
 from .tasks import algorithm_image
 
 
-#Base test
+# Base test
 async def hello(request):
     return HttpResponse("Hello, async Django!")
 
 
+
+
 async def performance_test(request):
-    res = await performance_test_process_image()
+
+    task1 = asyncio.create_task(performance_test_process_image())
+    res = await task1
+
+    #res = await performance_test_process_image()
     json_data = json.loads(res.content)
 
     return render(request, "index.html", {"task_id": json_data["task_id"],
