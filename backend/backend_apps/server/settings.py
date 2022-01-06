@@ -23,9 +23,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = bool(int(os.environ.get('DEBUG', default=0)))
 
-ALLOWED_HOSTS = ['64.227.106.224', 'localhost', '127.0.0.1',"http://localhost:3000"]
-CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+ALLOWED_HOSTS = ['64.227.106.224', 'localhost', '127.0.0.1']
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -188,14 +186,14 @@ if not DEBUG and ENABLE_SENTRY:
 # CELERY_IMPORTS = ['apps.image_classifier.tasks']
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER")
-# CELERY_ACKS_LATE = True
-# CELERY_SEND_EVENTS = False
-# CELERY_IGNORE_RESULT = True
-# BROKER_POOL_LIMIT = 1
-# BROKER_HEARTBEAT = None
-# BROKER_CONNECTION_TIMEOUT = 30
-# CELERY_EVENT_QUEUE_EXPIRES = 60
-# CELERYD_PREFETCH_MULTIPLIER = 1
+CELERY_ACKS_LATE = True
+CELERY_SEND_EVENTS = False
+CELERY_IGNORE_RESULT = True
+BROKER_POOL_LIMIT = 1
+BROKER_HEARTBEAT = None
+BROKER_CONNECTION_TIMEOUT = 30
+CELERY_EVENT_QUEUE_EXPIRES = 60
+CELERYD_PREFETCH_MULTIPLIER = 1
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
