@@ -152,7 +152,7 @@ LOGGING = {
     #         "format": "%(asctime)s [%(levelname)s] %(name)s:%(lineno)d %(funcName)s - %(message)s"
     #     },
     # },
-    "handlers": {"console": {"class": "logging.StreamHandler"}}, # , "formatter": "default"
+    "handlers": {"console": {"class": "logging.StreamHandler"}},  # , "formatter": "default"
     "loggers": {
         "": {
             "level": LOG_LEVEL,
@@ -186,6 +186,13 @@ if not DEBUG and ENABLE_SENTRY:
 # CELERY_IMPORTS = ['apps.image_classifier.tasks']
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER")
+
+worker_send_task_event = False
+task_ignore_result = True
+task_time_limit = 60
+task_soft_time_limit = 50
+task_acks_late = True
+worker_prefetch_multiplier = 2
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
