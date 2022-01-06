@@ -2,6 +2,7 @@ import asyncio
 import json
 import os
 
+from asgiref.sync import async_to_sync, sync_to_async
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
@@ -17,21 +18,21 @@ async def hello(request):
     return HttpResponse("Hello, async Django!")
 
 
-
+# Test Step
 
 async def performance_test(request):
-
     task1 = asyncio.create_task(performance_test_process_image())
     res = await task1
 
-    #res = await performance_test_process_image()
+    # res = await performance_test_process_image()
     json_data = json.loads(res.content)
 
     return render(request, "index.html", {"task_id": json_data["task_id"],
                                           "task_status": json_data["task_status"]})
 
 
-async def performance_test_process_image():
+@sync_to_async
+def performance_test_process_image():
     image_name = "test.png"
 
     result = algorithm_image.delay("test", image_name, True)
@@ -42,6 +43,7 @@ async def performance_test_process_image():
                         status=status.HTTP_200_OK)
 
 
+# Live Step
 async def async_image_analyze(request):
     if request.method == 'POST':
         result = await image_algorithm(request)
