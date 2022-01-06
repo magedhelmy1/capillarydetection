@@ -13,8 +13,8 @@ services:
 
 
   react:
-    image: "${FRONTEND_IMAGE}"
     container_name: frontend
+    image: "${FRONTEND_IMAGE}"
     volumes:
       - react_static_volume:/usr/src/app/build/static
     depends_on:
@@ -23,8 +23,8 @@ services:
       - .env
 
   tensorflow-servings:
-    image: "${TENSORFLOW_IMAGE}"
     container_name: tensorflow_serving
+    image: "${TENSORFLOW_IMAGE}"
     depends_on:
       - web
 
@@ -59,8 +59,8 @@ services:
     image: "redis:alpine"
 
   celery:
-    image: "${CELERY_IMAGE}"
     container_name: celery
+    image: "${CELERY_IMAGE}"
     command: celery -A server worker -l INFO
     volumes:
       - django_static_volume:/usr/src/app/static
