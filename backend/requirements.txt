@@ -23,3 +23,4 @@ scikit-image==0.19.0
 django-redis==5.1.0
 uvicorn==0.15.0
 ray==1.9
+daphne==3.0.2

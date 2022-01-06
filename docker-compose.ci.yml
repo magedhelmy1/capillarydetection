@@ -16,7 +16,7 @@ services:
       - 8000
     env_file:
       - .env
-    command: gunicorn server.asgi:application --bind 0.0.0.0:8000 -w 17 -k uvicorn.workers.UvicornWorker
+    command: daphne server.asgi:application --bind 0.0.0.0:8000 #-w 17 -k uvicorn.workers.UvicornWorker
 
   react:
     image: "${FRONTEND_IMAGE}"
