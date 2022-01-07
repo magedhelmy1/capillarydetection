@@ -35,8 +35,6 @@ async def performance_test(request):
 
 
 @sync_to_async
-@csrf_exempt
-@async_to_sync
 async def performance_test_process_image():
     image_name = "test.png"
 
@@ -62,9 +60,7 @@ async def async_image_analyze(request):
 
 
 @sync_to_async
-@csrf_exempt
-@async_to_sync
-async def image_algorithm(request, *args, **kwargs):
+def image_algorithm(request, *args, **kwargs):
     image_name = str(request.FILES["picture"])
     file_path = os.path.join(settings.IMAGES_DIR, image_name)
     path = default_storage.save(file_path, ContentFile(request.FILES["picture"].read()))

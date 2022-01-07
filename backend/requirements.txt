@@ -27,5 +27,5 @@ scipy==1.7.3
 sentry-sdk==1.5.1
 tensorflow-cpu==2.7.0
 tensorboard==2.7.0
-uvicorn==0.16.0
+uvicorn==0.15.0
 daphne==3.0.2
