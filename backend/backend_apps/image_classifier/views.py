@@ -34,7 +34,7 @@ async def performance_test(request):
                                           "task_status": json_data["task_status"]})
 
 
-@sync_to_async
+
 async def performance_test_process_image():
     image_name = "test.png"
 
@@ -59,8 +59,7 @@ async def async_image_analyze(request):
                         status=status.HTTP_200_OK)
 
 
-@sync_to_async
-def image_algorithm(request, *args, **kwargs):
+async def image_algorithm(request, *args, **kwargs):
     image_name = str(request.FILES["picture"])
     file_path = os.path.join(settings.IMAGES_DIR, image_name)
     path = default_storage.save(file_path, ContentFile(request.FILES["picture"].read()))
