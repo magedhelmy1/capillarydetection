@@ -19,7 +19,9 @@ async def hello(request):
 
 
 # Test Step
+@sync_to_async
 @csrf_exempt
+@async_to_sync
 async def performance_test(request):
     task1 = asyncio.create_task(performance_test_process_image())
     res = await task1
@@ -31,7 +33,9 @@ async def performance_test(request):
                                           "task_status": json_data["task_status"]})
 
 
+@sync_to_async
 @csrf_exempt
+@async_to_sync
 async def performance_test_process_image():
     image_name = "test.png"
 
@@ -43,7 +47,9 @@ async def performance_test_process_image():
 
 
 # Live Step
+@sync_to_async
 @csrf_exempt
+@async_to_sync
 async def async_image_analyze(request):
     task1 = asyncio.create_task(image_algorithm(request))
     res = await task1
@@ -54,7 +60,9 @@ async def async_image_analyze(request):
                         status=status.HTTP_200_OK)
 
 
+@sync_to_async
 @csrf_exempt
+@async_to_sync
 async def image_algorithm(request, *args, **kwargs):
     image_name = str(request.FILES["picture"])
     file_path = os.path.join(settings.IMAGES_DIR, image_name)
