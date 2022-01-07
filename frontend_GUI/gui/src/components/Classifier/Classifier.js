@@ -145,8 +145,8 @@ class Classifier extends Component {
         this.activateSpinner()
         let formData = new FormData()
         formData.append('picture', this.state.files.backend_address, this.state.files.name)
-        // axios.post(`${process.env.REACT_APP_AXIOS_URL}/api/async_image_analyze/`, formData, {
-        axios.post(`${process.env.REACT_APP_AXIOS_URL}/api/analyze_im/`, formData, {
+        axios.post(`${process.env.REACT_APP_AXIOS_URL}/api/async_image_analyze/`, formData, {
+        // axios.post(`${process.env.REACT_APP_AXIOS_URL}/api/analyze_im/`, formData, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'multipart/form-data'
