@@ -10,6 +10,6 @@ class TestImage(HttpUser):
     def post_images(self):
         # self.client.get(url="api/example/")
         # self.client.post(url="api/hello")
-        # self.client.post(url="api/analyze_im/")
+        self.client.post(url="api/analyze_im/")
         # self.client.post("nginx_hello")
-        self.client.get("api/performance_test/")
+        #self.client.pos("api/performance_test/")

@@ -21,15 +21,13 @@ class ImageViewSet(viewsets.ModelViewSet):
 def analyze_image(request, *args, **kwargs):
     serializer = ImageSerializer(data=request.data)
 
-    test = True
+    test = False
     if not serializer.is_valid():
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif serializer.is_valid() and test:
         image_name = "test.png"
 
-        # result = algorithm_image.delay("test", image_name, True)
-        result = algorithm_image.apply_async(("test", image_name, True), queue='transient')
         result = algorithm_image.delay("test", image_name, True)
 
         return JsonResponse({"task_id": result.id,
