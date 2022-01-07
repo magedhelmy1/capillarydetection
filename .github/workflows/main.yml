@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Add environment variables
         run: |
-          echo DEBUG=1 >> .env
+          echo DEBUG=0 >> .env
           echo SQL_ENGINE=django.db.backends.postgresql >> .env
           echo DATABASE=postgres >> .env
           echo SECRET_KEY="${{ secrets.SECRET_KEY }}" >> .env
@@ -83,7 +83,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Add environment variables to .env
         run: |
-          echo DEBUG=1 >> .env
+          echo DEBUG=0 >> .env
           echo SQL_ENGINE=django.db.backends.postgresql >> .env
           echo DATABASE=postgres >> .env
           echo SECRET_KEY="${{ secrets.SECRET_KEY }}" >> .env
