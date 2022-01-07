@@ -34,7 +34,6 @@ async def performance_test(request):
                                           "task_status": json_data["task_status"]})
 
 
-
 async def performance_test_process_image():
     image_name = "test.png"
 

@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends netcat && \
 # Copy dependencies file
 COPY requirements.txt .
 RUN pip install -r requirements.txt
+#RUN pip install -U 'Twisted[tls,http2]'
 
 COPY entrypoint.sh /usr/src/entrypoint.sh
 
