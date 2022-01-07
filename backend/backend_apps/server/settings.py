@@ -26,6 +26,8 @@ DEBUG = bool(int(os.environ.get('DEBUG', default=0)))
 ALLOWED_HOSTS = ['64.227.106.224', 'localhost', '127.0.0.1', '143.198.246.160', '143.198.52.225', '164.90.144.184',
                  '143.198.59.34']
 
+CORS_ALLOWED_ORIGINS = ['127.0.0.1', '143.198.246.160', '143.198.52.225', '164.90.144.184',
+                        '143.198.59.34']
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
