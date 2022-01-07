@@ -24,12 +24,14 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = bool(int(os.environ.get('DEBUG', default=0)))
 
 ALLOWED_HOSTS = ['http://127.0.0.1',
+                 'http://64.227.106.224',
                  'http://143.198.246.160',
                  'http://143.198.52.225',
                  'http://164.90.144.184',
-                 'http://143.198.59.34' ]
+                 'http://143.198.59.34']
 
 CORS_ALLOWED_ORIGINS = ['http://127.0.0.1',
+                        'http://64.227.106.224',
                         'http://143.198.246.160',
                         'http://143.198.52.225',
                         'http://164.90.144.184',
@@ -38,6 +40,7 @@ CORS_ALLOWED_ORIGINS = ['http://127.0.0.1',
 
 CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1',
+    'http://64.227.106.224',
     'http://143.198.246.160',
     'http://143.198.52.225',
     'http://164.90.144.184',
