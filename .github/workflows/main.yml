@@ -113,12 +113,54 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           ssh-add - <<< "${{ secrets.PRIVATE_KEY }}"
 
-      - name: Build and deploy
+      - name: Build and deploy 1
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
           scp  -o StrictHostKeyChecking=no -r ./.env ./docker-compose.prod.yml root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }}:/app
           ssh -o StrictHostKeyChecking=no root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} << 'ENDSSH'
+            cd /app
+            docker-compose -f docker-compose.prod.yml down --volume --rmi all
+            source .env
+            docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
+            docker-compose -f docker-compose.prod.yml up --quiet-pull --force-recreate -d
+            yes | docker image prune -a
+          ENDSSH
+
+      - name: Build and deploy 2
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          scp  -o StrictHostKeyChecking=no -r ./.env ./docker-compose.prod.yml root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS_2 }}:/app
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS_2 }} << 'ENDSSH'
+            cd /app
+            docker-compose -f docker-compose.prod.yml down --volume --rmi all
+            source .env
+            docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
+            docker-compose -f docker-compose.prod.yml up --quiet-pull --force-recreate -d
+            yes | docker image prune -a
+          ENDSSH
+
+      - name: Build and deploy 3
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          scp  -o StrictHostKeyChecking=no -r ./.env ./docker-compose.prod.yml root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS_3 }}:/app
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS_3 }} << 'ENDSSH'
+            cd /app
+            docker-compose -f docker-compose.prod.yml down --volume --rmi all
+            source .env
+            docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
+            docker-compose -f docker-compose.prod.yml up --quiet-pull --force-recreate -d
+            yes | docker image prune -a
+          ENDSSH
+
+      - name: Build and deploy 4
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          scp  -o StrictHostKeyChecking=no -r ./.env ./docker-compose.prod.yml root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS_4 }}:/app
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS_4 }} << 'ENDSSH'
             cd /app
             docker-compose -f docker-compose.prod.yml down --volume --rmi all
             source .env
