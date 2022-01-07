@@ -2,6 +2,7 @@ import asyncio
 import json
 import os
 
+from asgiref.sync import async_to_sync, sync_to_async
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
