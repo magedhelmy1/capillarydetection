@@ -7,6 +7,7 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 
 from .tasks import algorithm_image
@@ -18,6 +19,7 @@ async def hello(request):
 
 
 # Test Step
+@csrf_exempt
 async def performance_test(request):
     task1 = asyncio.create_task(performance_test_process_image())
     res = await task1
@@ -29,6 +31,7 @@ async def performance_test(request):
                                           "task_status": json_data["task_status"]})
 
 
+@csrf_exempt
 async def performance_test_process_image():
     image_name = "test.png"
 
@@ -40,6 +43,7 @@ async def performance_test_process_image():
 
 
 # Live Step
+@csrf_exempt
 async def async_image_analyze(request):
     if request.method == 'POST':
         task1 = asyncio.create_task(image_algorithm(request))
@@ -51,6 +55,7 @@ async def async_image_analyze(request):
                             status=status.HTTP_200_OK)
 
 
+@csrf_exempt
 async def image_algorithm(request, *args, **kwargs):
     image_name = str(request.FILES["picture"])
     file_path = os.path.join(settings.IMAGES_DIR, image_name)
