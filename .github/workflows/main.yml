@@ -98,7 +98,6 @@ jobs:
           echo CELERY_IMAGE=${{ env.WEB_IMAGE }} >> .env
           echo NAMESPACE=${{ secrets.NAMESPACE }} >> .env
           echo PERSONAL_ACCESS_TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }} >> .env
-          echo ALLOWED_HOSTS=${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} >> .env
           echo REACT_APP_AXIOS_URL=${{ secrets.REACT_APP_AXIOS_URL }} >> .env
           echo sentry_secret=${{ secrets.sentry_secret }} >> .env
           echo CELERY_BROKER=${{ secrets.CELERY_BROKER }} >> .env
