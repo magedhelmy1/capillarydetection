@@ -11,7 +11,8 @@ services:
       - media:/usr/src/app/media
     env_file:
       - ./backend/backend_apps/.env.dev
-    command: python ./manage.py runserver 0.0.0.0:8000
+    command: uvicorn server.asgi --log-level critical --workers 4
+    # command: python ./manage.py runserver 0.0.0.0:8000
     # command: daphne server.asgi:application --port 8000 --bind 0.0.0.0
     depends_on:
       - db
