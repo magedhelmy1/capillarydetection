@@ -34,7 +34,6 @@ jobs:
           echo SQL_PASSWORD=${{ secrets.SQL_PASSWORD }} >> .env
           echo SQL_HOST=${{ secrets.SQL_HOST }} >> .env
           echo SQL_PORT=${{ secrets.SQL_PORT }} >> .env
-          echo ALLOWED_HOSTS=${{ secrets.LOAD_BALANCER }} >> .env
           echo REACT_APP_AXIOS_URL=${{ secrets.REACT_APP_AXIOS_URL }} >> .env
           echo sentry_secret=${{ secrets.sentry_secret }} >> .env
           echo CELERY_BROKER=${{ secrets.CELERY_BROKER }} >> .env
