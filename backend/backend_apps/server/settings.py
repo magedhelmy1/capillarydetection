@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+from corsheaders.defaults import default_headers
+
 
 import os
 from pathlib import Path
@@ -33,7 +35,6 @@ ALLOWED_HOSTS = ['localhost',
                  '143.198.59.34']
 
 CORS_ALLOWED_ORIGINS = ['http://localhost',
-                        'localhost',
                         'http://127.0.0.1',
                         'http://64.227.106.224',
                         'http://143.198.246.160',
@@ -53,6 +54,7 @@ CORS_ORIGIN_WHITELIST = ['localhost',
                          ]
 CSRF_TRUSTED_ORIGINS = [
     'localhost',
+    'http://localhost',
     '127.0.0.1',
     '64.227.106.224',
     '143.198.246.160',
@@ -60,6 +62,12 @@ CSRF_TRUSTED_ORIGINS = [
     '164.90.144.184',
     '143.198.59.34',
 ]
+
+
+CORS_ALLOW_HEADERS = default_headers + (
+    'Access-Control-Allow-Origin',
+)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
