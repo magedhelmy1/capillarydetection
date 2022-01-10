@@ -9,13 +9,11 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-from corsheaders.defaults import default_headers
-
-
 import os
 from pathlib import Path
 
 import sentry_sdk
+from corsheaders.defaults import default_headers
 from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,43 +24,21 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = ['localhost',
-                 'http://localhost',
                  '127.0.0.1',
                  '64.227.106.224',
                  '143.198.246.160',
                  '143.198.52.225',
                  '164.90.144.184',
                  '143.198.59.34']
-
-CORS_ALLOWED_ORIGINS = ['http://localhost',
-                        'http://127.0.0.1',
-                        'http://64.227.106.224',
-                        'http://143.198.246.160',
-                        'http://143.198.52.225',
-                        'http://164.90.144.184',
-                        'http://143.198.59.34',
-                        ]
-
-CORS_ORIGIN_WHITELIST = ['localhost',
-                         'http://localhost',
-                         'http://127.0.0.1',
-                         'http://64.227.106.224',
-                         'http://143.198.246.160',
-                         'http://143.198.52.225',
-                         'http://164.90.144.184',
-                         'http://143.198.59.34',
-                         ]
-CSRF_TRUSTED_ORIGINS = [
-    'localhost',
-    'http://localhost',
-    '127.0.0.1',
-    '64.227.106.224',
-    '143.198.246.160',
-    '143.198.52.225',
-    '164.90.144.184',
-    '143.198.59.34',
-]
-
+#
+# CORS_ALLOWED_ORIGINS = ['http://localhost',
+#                         'http://127.0.0.1',
+#                         'http://64.227.106.224',
+#                         'http://143.198.246.160',
+#                         'http://143.198.52.225',
+#                         'http://164.90.144.184',
+#                         'http://143.198.59.34',
+#                         ]
 
 CORS_ALLOW_HEADERS = default_headers + (
     'Access-Control-Allow-Origin',
