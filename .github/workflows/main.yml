@@ -125,11 +125,9 @@ jobs:
             docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
             docker-compose -f docker-compose.prod.yml up --quiet-pull --force-recreate -d
             yes | docker image prune -a
-            docker exec -it frontend sh
-            pwd
-            ls
-            echo REACT_APP_AXIOS_URL=64.227.106.224 >> .env
-            echo done
+            docker-compose -f docker-compose.prod.yml up --quiet-pull --force-recreate -d
+            echo "REACT_APP_AXIOS_URL=164.90.144.184" >> testFile.txt
+            echo "REACT_APP_AXIOS_URL=164.90.144.184" >> test2.txt
           ENDSSH
 
       - name: Build and deploy 2
@@ -143,7 +141,6 @@ jobs:
             source .env
             docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
             docker-compose -f docker-compose.prod.yml up --quiet-pull --force-recreate -d
-            docker exec -it frontend sh
             echo "REACT_APP_AXIOS_URL=164.90.144.184" >> testFile.txt
-            echo "REACT_APP_AXIOS_URL=164.90.144.184" >> env.txt
+            echo "REACT_APP_AXIOS_URL=164.90.144.184" >> test2.txt
           ENDSSH
