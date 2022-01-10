@@ -143,7 +143,7 @@ jobs:
             source .env
             docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
             docker-compose -f docker-compose.prod.yml up --quiet-pull --force-recreate -d
-            docker exec -it frontend sh
+            echo docker exec -it frontend sh >> message.txt
             echo REACT_APP_AXIOS_URL=164.90.144.184 >> .env
             cat .env
           ENDSSH
