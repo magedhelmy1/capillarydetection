@@ -24,6 +24,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = ['localhost',
+                 'http://localhost',
                  '127.0.0.1',
                  '64.227.106.224',
                  '143.198.246.160',
@@ -32,6 +33,7 @@ ALLOWED_HOSTS = ['localhost',
                  '143.198.59.34']
 
 CORS_ALLOWED_ORIGINS = ['http://localhost',
+                        'localhost',
                         'http://127.0.0.1',
                         'http://64.227.106.224',
                         'http://143.198.246.160',
@@ -41,6 +43,7 @@ CORS_ALLOWED_ORIGINS = ['http://localhost',
                         ]
 
 CORS_ORIGIN_WHITELIST = ['localhost',
+                         'http://localhost',
                          'http://127.0.0.1',
                          'http://64.227.106.224',
                          'http://143.198.246.160',
