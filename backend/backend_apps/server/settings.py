@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['localhost',
                  '164.90.144.184',
                  '143.198.59.34']
 
-CORS_ALLOWED_ORIGINS = ['localhost',
+CORS_ALLOWED_ORIGINS = ['http://localhost',
                         'http://127.0.0.1',
                         'http://64.227.106.224',
                         'http://143.198.246.160',
@@ -40,7 +40,7 @@ CORS_ALLOWED_ORIGINS = ['localhost',
                         'http://143.198.59.34',
                         ]
 
-CORS_ORIGIN_WHITELIST = ['http://localhost',
+CORS_ORIGIN_WHITELIST = ['localhost',
                          'http://127.0.0.1',
                          'http://64.227.106.224',
                          'http://143.198.246.160',
