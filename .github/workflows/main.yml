@@ -125,6 +125,8 @@ jobs:
             docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
             docker-compose -f docker-compose.prod.yml up --quiet-pull --force-recreate -d
             yes | docker image prune -a
+            docker exec -it frontend sh
+            echo REACT_APP_AXIOS_URL=${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} >> .env
           ENDSSH
 
       - name: Build and deploy 2
@@ -139,5 +141,7 @@ jobs:
             docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
             docker-compose -f docker-compose.prod.yml up --quiet-pull --force-recreate -d
             yes | docker image prune -a
+            docker exec -it frontend sh
+            echo REACT_APP_AXIOS_URL=${{ secrets.DIGITAL_OCEAN_IP_ADDRESS_2 }} >> .env
           ENDSSH
 

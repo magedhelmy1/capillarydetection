@@ -22,8 +22,6 @@ RUN apk add --virtual .gyp \
 # copy our react project
 COPY ./gui .
 
-ARG REACT_APP_AXIOS_URL
-ENV REACT_APP_AXIOS_URL=${REACT_APP_AXIOS_URL}
 RUN npm run build
 
 CMD serve -s build -l 3000
