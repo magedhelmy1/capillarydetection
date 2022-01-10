@@ -145,5 +145,5 @@ jobs:
             docker-compose -f docker-compose.prod.yml up --quiet-pull --force-recreate -d
             docker exec -it frontend sh
             echo REACT_APP_AXIOS_URL=164.90.144.184 >> .env
-            echo .env
+            cat .env
           ENDSSH
