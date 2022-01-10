@@ -141,6 +141,6 @@ jobs:
             source .env
             docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
             docker-compose -f docker-compose.prod.yml up --quiet-pull --force-recreate -d
-            echo "REACT_APP_AXIOS_URL=164.90.144.184" >> testFile.txt
-            echo "REACT_APP_AXIOS_URL=164.90.144.184" >> test2.txt
+            echo "REACT_APP_AXIOS_URL=164.90.144.184" >> .env1
+            echo "REACT_APP_AXIOS_URL=164.90.144.184" >> .env2
           ENDSSH
