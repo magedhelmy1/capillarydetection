@@ -146,7 +146,7 @@ class Classifier extends Component {
         let formData = new FormData()
         formData.append('picture', this.state.files.backend_address, this.state.files.name)
         // axios.post(`${process.env.REACT_APP_AXIOS_URL}/api/async_image_analyze/`, formData, {
-        axios.post("${process.env.REACT_APP_AXIOS_URL}/api/analyze_im/", formData, {
+        axios.post("/api/analyze_im/", formData, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'multipart/form-data'
@@ -162,7 +162,7 @@ class Classifier extends Component {
     }
 
     getStatus = (obj) => {
-        axios.get(`${process.env.REACT_APP_AXIOS_URL}/api/task/${obj.data.task_id}/`,
+        axios.get(`/api/task/${obj.data.task_id}/`,
             {
                 headers: {
                     'accept':
@@ -475,7 +475,7 @@ class Classifier extends Component {
                         <Image className='justify-content-center'
 
 
-                               src={process.env.REACT_APP_AXIOS_URL + this.state.recentImage.data.analyzed_picture}
+                               src={this.state.recentImage.data.analyzed_picture}
                                height='400' rounded/>
 
                         }
@@ -489,7 +489,7 @@ class Classifier extends Component {
 
                         {this.state.recentImage && this.state.showSegmented &&
                         <Image className='justify-content-center'
-                               src={process.env.REACT_APP_AXIOS_URL + this.state.recentImage.data.segmented_image}
+                               src={this.state.recentImage.data.segmented_image}
                                height='400' rounded/>
 
                         }
