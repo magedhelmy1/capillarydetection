@@ -1,0 +1,20 @@
+name: "Build and deploy"
+inputs:
+  server:
+    description: 'Target Server'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: "Build and deploy - ${{ inputs.server }}"
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: |
+        scp  -o StrictHostKeyChecking=no -r ./.env ./docker-compose.prod.yml root@${{ inputs.server }}:/app
+        ssh -o StrictHostKeyChecking=no root@${{ inputs.server }} << 'ENDSSH'
+          cd /app
+          docker-compose -f docker-compose.prod.yml down --volume --rmi all
+          source .env
+          docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
+          docker-compose -f docker-compose.prod.yml up --quiet-pull --force-recreate -d
+        ENDSSH
