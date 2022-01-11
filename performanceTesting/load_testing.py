@@ -4,7 +4,7 @@ from locust import HttpUser, task
 class TestImage(HttpUser):
     # host = "http://64.227.106.224/"
     # host = "http://127.0.0.1/"
-    host = "http://143.198.246.160/"
+    host = "http://139.59.206.141/"
 
     @task
     def post_images(self):

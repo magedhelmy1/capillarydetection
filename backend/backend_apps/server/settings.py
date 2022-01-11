@@ -23,22 +23,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = ['localhost',
-                 '127.0.0.1',
-                 '64.227.106.224',
-                 '143.198.246.160',
-                 '143.198.52.225',
-                 '164.90.144.184',
-                 '143.198.59.34']
-#
-# CORS_ALLOWED_ORIGINS = ['http://localhost',
-#                         'http://127.0.0.1',
-#                         'http://64.227.106.224',
-#                         'http://143.198.246.160',
-#                         'http://143.198.52.225',
-#                         'http://164.90.144.184',
-#                         'http://143.198.59.34',
-#                         ]
+ALLOWED_HOSTS = list(filter(bool, os.environ.get('ALLOWED_HOSTS', default='').split(','))) or ['localhost', '127.0.0.1']
 
 CORS_ALLOW_HEADERS = default_headers + (
     'Access-Control-Allow-Origin',
