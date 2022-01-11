@@ -102,6 +102,10 @@ jobs:
     name: Deploy to DigitalOcean
     runs-on: ubuntu-latest
     needs: build
+
+    environment:
+      name: 'Production'
+
     steps:
       - name: Checkout master
         uses: actions/checkout@v2
