@@ -146,8 +146,32 @@ jobs:
 
       - uses: "./.github/actions/build-deploy"
         with:
-          server: ${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }}
+          server: ${{ secrets.DIGITAL_OCEAN_IP_ADDRESS_1 }}
 
       - uses: "./.github/actions/build-deploy"
         with:
           server: ${{ secrets.DIGITAL_OCEAN_IP_ADDRESS_2 }}
+
+      - uses: "./.github/actions/build-deploy"
+        with:
+          server: ${{ secrets.DIGITAL_OCEAN_IP_ADDRESS_3 }}
+
+      - uses: "./.github/actions/build-deploy"
+        with:
+          server: ${{ secrets.DIGITAL_OCEAN_IP_ADDRESS_4 }}
+
+      - uses: "./.github/actions/build-deploy"
+        with:
+          server: ${{ secrets.DIGITAL_OCEAN_IP_ADDRESS_5 }}
+
+      - uses: "./.github/actions/build-deploy"
+        with:
+          server: ${{ secrets.DIGITAL_OCEAN_IP_ADDRESS_6 }}
+
+      - uses: "./.github/actions/build-deploy"
+        with:
+          server: ${{ secrets.DIGITAL_OCEAN_IP_ADDRESS_7 }}
+
+      - uses: "./.github/actions/build-deploy"
+        with:
+          server: ${{ secrets.DIGITAL_OCEAN_IP_ADDRESS_8 }}
