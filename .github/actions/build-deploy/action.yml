@@ -18,3 +18,4 @@ runs:
           docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
           docker-compose -f docker-compose.prod.yml up --quiet-pull --force-recreate -d
         ENDSSH
+      shell: bash
