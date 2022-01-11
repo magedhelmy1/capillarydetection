@@ -57,6 +57,11 @@ jobs:
           echo ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} >> .env
           echo sentry_secret=${{ secrets.sentry_secret }} >> .env
           echo CELERY_BROKER=${{ secrets.CELERY_BROKER }} >> .env
+          echo USE_SPACES=${{ secrets.USE_SPACES }} >> .env
+          echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} >> .env
+          echo AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} >> .env
+          echo AWS_S3_REGION_NAME=${{ secrets.AWS_S3_REGION_NAME }} >> .env
+
 
       - name: Prepare images
         run: |
@@ -121,6 +126,10 @@ jobs:
           echo ALLOWED_HOSTS=${{ secrets.ALLOWED_HOSTS }} >> .env
           echo sentry_secret=${{ secrets.sentry_secret }} >> .env
           echo CELERY_BROKER=${{ secrets.CELERY_BROKER }} >> .env
+          echo USE_SPACES=${{ secrets.USE_SPACES }} >> .env
+          echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} >> .env
+          echo AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} >> .env
+          echo AWS_S3_REGION_NAME=${{ secrets.AWS_S3_REGION_NAME }} >> .env
 
       - name: SSH key to ssh-agent
         env:
