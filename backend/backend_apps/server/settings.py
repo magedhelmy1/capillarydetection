@@ -202,18 +202,8 @@ if not DEBUG and ENABLE_SENTRY:
     )
 
 # Redis and Celery Conf
-# CELERY_IMPORTS = ['apps.image_classifier.tasks']
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER")
-# CELERY_ACKS_LATE = True
-# CELERY_SEND_EVENTS = False
-# CELERY_IGNORE_RESULT = True
-# BROKER_POOL_LIMIT = 1
-# BROKER_HEARTBEAT = None
-# BROKER_CONNECTION_TIMEOUT = 30
-# CELERY_EVENT_QUEUE_EXPIRES = 60
-# CELERYD_PREFETCH_MULTIPLIER = 1
-
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
