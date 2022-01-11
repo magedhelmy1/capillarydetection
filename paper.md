@@ -39,12 +39,14 @@ Furthermore, it eliminates inter-observer variability by standardizing the analy
 Clearly illustrates the research purpose of the software.
 
 # Related work
-The authors have prepared the related work in a separate paper titled CapillaryNet: An Automated System to Quantify Skin Capillary Density and Red Blood Cell Velocity from Handheld Vital Microscopy [@helmy2021capillarynet].
+The authors have prepared the related work in a separate paper titled CapillaryNet: An Automated System to Quantify Skin Capillary Density and Red Blood Cell Velocity from Handheld Vital Microscopy [@Pearson:2017].
 
 # System and Functionality
 Here add the functionality and function of the system
+Add the 4 diagrams
 
 # Acknowledgement 
-The Research Council of Norway provided the necessary funds for this project: Industrial Ph.D. project nr: 305716 and BIA project nr: 282213.
+The authors would like to thank the Research Council of Norway for providing the necessary funds for this project: Industrial Ph.D. project nr: 305716 and BIA project nr: 282213.
+The authors would also like to thank the MedTech Partner ODI Medical AS for providing the data, hardware, and support to test and evaluate this project.
 
 # References
