@@ -234,4 +234,4 @@ if os.environ.get('USE_SPACES', default=''):
     AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
 
     AWS_S3_REGION_NAME = os.environ.get("AWS_S3_REGION_NAME", default="fra1")
-    AWS_S3_ENDPOINT_URL = f"https://${AWS_S3_REGION_NAME}.digitaloceanspaces.com"
+    AWS_S3_ENDPOINT_URL = f"https://{AWS_S3_REGION_NAME}.digitaloceanspaces.com"
