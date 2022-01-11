@@ -144,8 +144,6 @@ jobs:
             source .env
             docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
             docker-compose -f docker-compose.prod.yml up --quiet-pull --force-recreate -d
-            yes | docker image prune -a
-            docker-compose -f docker-compose.prod.yml up --quiet-pull --force-recreate -d
           ENDSSH
 
       - name: Build and deploy 2
@@ -158,7 +156,4 @@ jobs:
             docker-compose -f docker-compose.prod.yml down --volume --rmi all
             docker login ghcr.io -u $NAMESPACE -p $PERSONAL_ACCESS_TOKEN
             docker-compose -f docker-compose.prod.yml up --quiet-pull --force-recreate -d
-            echo "REACT_APP_AXIOS_URL=164.90.144.184" >> .env1
-            docker exec -it frontend sh
-            echo "REACT_APP_AXIOS_URL=164.90.144.184" >> .env
           ENDSSH
