@@ -44,7 +44,9 @@ def analyze_image(request, *args, **kwargs):
             for chunk in image_uploaded:
                 fp.write(chunk)
 
+        result = algorithm_image(file_path, image_name, False)
         result = algorithm_image.delay(file_path, image_name, False)
+
         return JsonResponse({"task_id": result.id,
                              "task_status": result.status},
                             status=status.HTTP_200_OK)
@@ -60,4 +62,6 @@ def get_status(request, task_id):
 
     else:
         response_data = task.get()
+        print(f"Response data is {response_data}")
+
         return Response({**context, **response_data}, status=status.HTTP_201_CREATED)

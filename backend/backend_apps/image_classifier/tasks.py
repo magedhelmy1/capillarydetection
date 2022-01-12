@@ -193,8 +193,6 @@ def get_countours_apply_to_image(res_img, image_to_write_on, input_shape=(50, 50
 
         reshaped_array = tf.expand_dims(temp_image, 0)
 
-        capillary_count = 0
-
         # for performance comparison (Django / TFX restpoint / TFX gRC / Ray)
         TFX = True
         if TFX:
@@ -207,6 +205,7 @@ def get_countours_apply_to_image(res_img, image_to_write_on, input_shape=(50, 50
 
             else:
                 # false_coords.append([startX, startY, endX, endY])
+                print(f"NOT capillary count is {capillary_count}")
                 cv2.rectangle(image_to_write_on, (x, y), (x + w, y + h), (0, 0, 255), 2)
 
         use_ray = False
@@ -257,7 +256,6 @@ def classify_image(frame):
     segmented_image_clean, area_count = remove_high_green_pixels(segmented_bg)
 
     img, capillary_count = get_countours_apply_to_image(segmented_image_clean, org_enhanced)
-
     analyzed_im = Image.fromarray(img)
     segmented_im = Image.fromarray(segmented_bg)
 
@@ -278,7 +276,7 @@ def algorithm_image(serializer, image_name, test):
         uploaded_pictures = serializer
         file_name = image_name
 
-    time_taken, analyzed, number_capillaries, area_of_capillaries, segmented_image_clean = classify_image(
+    time_taken, analyzed, number_of_capillaries, area_of_capillaries, segmented_image_clean = classify_image(
         uploaded_pictures)
 
     new_image_io = BytesIO()
@@ -292,7 +290,7 @@ def algorithm_image(serializer, image_name, test):
     model_instance = models.Image.objects.create(
         picture=uploaded_pictures,
         time_to_classify=time_taken,
-        number_of_capillaries=number_capillaries,
+        number_of_cap=int(number_of_capillaries),
         capillary_area=area_of_capillaries,
         analyzed_picture=analyzed_file_object,
         segmented_image=segmented_file_object,
@@ -300,7 +298,7 @@ def algorithm_image(serializer, image_name, test):
 
     return {"picture": model_instance.picture.url,
             "time_to_classify": model_instance.time_to_classify,
-            "number_of_capillaries": model_instance.number_of_capillaries,
+            "number_of_capillaries": model_instance.number_of_cap,
             "capillary_area": model_instance.capillary_area,
             "analyzed_picture": model_instance.analyzed_picture.url,
             "segmented_image": model_instance.segmented_image.url,
