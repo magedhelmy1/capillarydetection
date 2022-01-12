@@ -18,7 +18,7 @@ class ImageViewSet(viewsets.ModelViewSet):
 
 
 @api_view(('POST',))
-def analyze_image(request, *args, **kwargs):
+def analyze_image(request, **kwargs):
     serializer = ImageSerializer(data=request.data)
 
     test = False
@@ -44,7 +44,6 @@ def analyze_image(request, *args, **kwargs):
             for chunk in image_uploaded:
                 fp.write(chunk)
 
-        result = algorithm_image(file_path, image_name, False)
         result = algorithm_image.delay(file_path, image_name, False)
 
         return JsonResponse({"task_id": result.id,
