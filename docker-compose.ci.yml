@@ -38,7 +38,7 @@ services:
   tensorflow-servings:
     image: "${TENSORFLOW_IMAGE}"
     build:
-      context: ./algorithms
+      context: algorithms_HSV
       cache_from:
         - "${TENSORFLOW_IMAGE_BASE}:latest"
     ports:

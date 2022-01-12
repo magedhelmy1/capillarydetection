@@ -39,8 +39,9 @@ services:
 
 
   tensorflow-servings_HSV_Model:
+    build: algorithms_HSV
     container_name: tfserving_classifier_hsv
-    image: tensorflow/serving
+    image: tensorflow/serving:latest
     volumes:
       - "./algorithms/HSV_Model:/models/HSV_Model"
     ports:
@@ -50,8 +51,9 @@ services:
 
 
   tensorflow-servings_SSIM:
+    build: algorithms_HSV
     container_name: tfserving_classifier_ssim
-    image: tensorflow/serving
+    image: tensorflow/serving:latest
     volumes:
       - "./algorithms/SSIM_Model:/models/SSIM_Model"
     ports:
