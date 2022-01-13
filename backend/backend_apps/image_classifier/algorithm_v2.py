@@ -75,7 +75,7 @@ url_hsv = 'http://tfserving_classifier_hsv:8501/v1/models/model:predict'
 
 # docker run -t --rm -p 8503:8501 -v "C:\Users\maged\Desktop\Projects\PyCharm_Projects\21_Django_ML\algorithms
 # \SSIM_Model\:/models/SSIM_Model/" -e MODEL_NAME=SSIM_Model tensorflow/serving &
-url_ssim = 'http://tfserving_classifier_ssim:8502/v1/models/model:predict'
+url_ssim = 'http://tfserving_classifier_ssim:8501/v1/models/model:predict'
 
 
 def make_prediction_HSV(instances):

@@ -35,14 +35,24 @@ services:
     depends_on:
       - web
 
-  tensorflow-servings:
-    image: "${TENSORFLOW_IMAGE}"
-    build:
-      context: algorithms
-      cache_from:
-        - "${TENSORFLOW_IMAGE_BASE}:latest"
+  tfserving_classifier_hsv:
+    container_name: tfserving_classifier_hsv
+    image: tensorflow/serving:latest
+    volumes:
+      - ./algorithms/HSV_Model:/models/model
     ports:
       - "8501:8501"
+    depends_on:
+      - web
+
+
+  tfserving_classifier_ssim:
+    container_name: tfserving_classifier_ssim
+    image: tensorflow/serving:latest
+    volumes:
+      - ./algorithms/SSIM_Model:/models/model
+    ports:
+      - "8502:8501"
     depends_on:
       - web
 
