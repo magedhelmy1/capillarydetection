@@ -285,6 +285,18 @@ def ssim_pipeline(original_frame):
     return potential_capillaries_non_max
 
 
+def capillary_density(image_to_calculate_density_from):
+    temp_gray = cv2.cvtColor(image_to_calculate_density_from, cv2.COLOR_BGR2GRAY)
+    height = temp_gray.shape[0]
+    width = temp_gray.shape[1]
+    density_count = cv2.countNonZero(temp_gray)
+
+    area = density_count * 2.2 * 2.2 / (width * height)
+    area = str(round(area, 2)) + " capillary/µm"
+
+    return area
+
+
 def combine_images(enhanced_hsv_image, capillary_coords):
     capillary_coords_compressed = non_max_suppression(capillary_coords, overlapThresh=0.1)
 
