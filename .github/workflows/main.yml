@@ -47,10 +47,10 @@ jobs:
 
       - name: Prepare images
         run: |
-          echo "WEB_IMAGE=$(echo ${{env.WEB_IMAGE}} )" >> $GITHUB_ENV
-          echo "WEB_IMAGE_BASE=$(echo ${{env.WEB_IMAGE_BASE}} )" >> $GITHUB_ENV
           echo "NGINX_IMAGE=$(echo ${{env.NGINX_IMAGE}} )" >> $GITHUB_ENV
           echo "NGINX_IMAGE_BASE=$(echo ${{env.NGINX_IMAGE_BASE}} )" >> $GITHUB_ENV
+          echo "WEB_IMAGE=$(echo ${{env.WEB_IMAGE}} )" >> $GITHUB_ENV
+          echo "WEB_IMAGE_BASE=$(echo ${{env.WEB_IMAGE_BASE}} )" >> $GITHUB_ENV
           echo "TENSORFLOW_IMAGE_HSV=$(echo ${{env.TENSORFLOW_IMAGE_hsv}} )" >> $GITHUB_ENV
           echo "TENSORFLOW_IMAGE_HSV_BASE=$(echo ${{env.TENSORFLOW_IMAGE_BASE}} )" >> $GITHUB_ENV
           echo "TENSORFLOW_IMAGE_SSIM=$(echo ${{env.TENSORFLOW_IMAGE_hsv}} )" >> $GITHUB_ENV
