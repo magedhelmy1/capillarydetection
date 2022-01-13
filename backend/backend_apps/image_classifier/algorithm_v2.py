@@ -114,6 +114,7 @@ def hsv_pipeline(input_frame):
     """
     Part 1: Blur image
     """
+    ssim_true_coords = []
 
     img = cv2.blur(input_frame, (5, 5))
     img = unsharp_mask(img)
@@ -139,13 +140,13 @@ def hsv_pipeline(input_frame):
     Part 3: Convert to HSV
     """
 
-    hsv = cv2.cvtColor(opencvImage_color, cv2.COLOR_BGR2HSV)
+    hsv = cv2.cvtColor(en_opencvImage_color, cv2.COLOR_BGR2HSV)
 
     """
     Part 4: Crop HSV colors in range
     """
     mask1 = cv2.inRange(hsv, (155, 60, 0), (180, 255, 255))
-    target = cv2.bitwise_and(opencvImage_color, opencvImage_color, mask=mask1)
+    target = cv2.bitwise_and(en_opencvImage_color, en_opencvImage_color, mask=mask1)
 
     """
     Part 5: Grab contours by using OTSU
@@ -199,11 +200,11 @@ def hsv_pipeline(input_frame):
         Part 7: Predict whether it is a capillary or not
         """
 
-        predict_with_deep_learning = True
+        predict_with_deep_learning = False
         if predict_with_deep_learning:
-            cv2.rectangle(opencvImage_color, (startX, startY), (endX, endY), (0, 255, 0), 2)
+            cv2.rectangle(en_opencvImage_color, (startX, startY), (endX, endY), (0, 255, 0), 2)
 
-            temp_image = cv2.resize(opencvImage_color[startY:endY, startX:endX], INPUT_SIZE)
+            temp_image = cv2.resize(en_opencvImage_color[startY:endY, startX:endX], INPUT_SIZE)
 
             reshaped_array = tf.expand_dims(temp_image, 0)
 
@@ -211,25 +212,29 @@ def hsv_pipeline(input_frame):
 
             if predictions[0][0] > accepted_accuracy:
                 # cv2.rectangle(input_frame, (startX, startY), (endX, endY), (0, 255, 0), 2)
-                true_coords.append([startX, startY, endX, endY])
+                ssim_true_coords.append([startX, startY, endX, endY])
+        else:
+            ssim_true_coords += overlapped_coords_HSV
 
-    potential_capillaries_temp_array = np.array(true_coords, dtype=np.float32)
+    potential_capillaries_temp_array = np.array(ssim_true_coords, dtype=np.float32)
     potential_capillaries_non_max = non_max_suppression(potential_capillaries_temp_array, overlapThresh=0.1)
 
-    return potential_capillaries_non_max, en_opencvImage_color
+    return potential_capillaries_non_max, opencvImage_color
 
 
 def ssim_pipeline(original_frame):
+    ssim_true_coords = []
+
     image1_gray = cv2.createBackgroundSubtractorMOG2().apply(original_frame)
     frame_gry = cv2.cvtColor(original_frame, cv2.COLOR_RGB2GRAY)
 
     # Compute SSIM between two images
-    (score, diff) = ssim(image1_gray, frame_gry, win_size=15, multichannel=False, full=True,
+    (score, diff) = ssim(image1_gray, frame_gry, win_size=15, channel_axis=False, full=True,
                          use_sample_covariance=True)
 
-    diff = (diff * 255).astype("uint8")
+    diff_255 = (diff * 255).astype("uint8")
 
-    _, segmented_image = cv2.threshold(diff, 127, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+    _, segmented_image = cv2.threshold(diff_255, 127, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
     coords = cv2.findContours(segmented_image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     coords = imutils.grab_contours(coords)
@@ -261,7 +266,7 @@ def ssim_pipeline(original_frame):
 
             overlapped_coords_SSIM.append([startX, startY, endX, endY])
 
-            predict_with_deep_learning = True
+            predict_with_deep_learning = False
             if predict_with_deep_learning:
 
                 cv2.rectangle(original_frame, (startX, startY), (endX, endY), (0, 255, 0), 2)
@@ -276,46 +281,77 @@ def ssim_pipeline(original_frame):
                 predictions = make_prediction_SSIM(reshaped_array)
 
                 if predictions[0][1] > accepted_accuracy:
-                    true_coords.append([startX, startY, endX, endY])
+                    ssim_true_coords.append([startX, startY, endX, endY])
                     # cv2.rectangle(original_frame, (startX, startY), (endX, endY), (0, 255, 0), 2)
+            else:
+                ssim_true_coords += overlapped_coords_SSIM
 
-    potential_capillaries_temp_array = np.array(true_coords, dtype=np.float32)
+    potential_capillaries_temp_array = np.array(ssim_true_coords, dtype=np.float32)
     potential_capillaries_non_max = non_max_suppression(potential_capillaries_temp_array, overlapThresh=0.1)
 
-    return potential_capillaries_non_max
+    return potential_capillaries_non_max, diff
 
 
-def capillary_density(image_to_calculate_density_from):
-    temp_gray = cv2.cvtColor(image_to_calculate_density_from, cv2.COLOR_BGR2GRAY)
-    height = temp_gray.shape[0]
-    width = temp_gray.shape[1]
-    density_count = cv2.countNonZero(temp_gray)
-
-    area = density_count * 2.2 * 2.2 / (width * height)
-    area = str(round(area, 2)) + " capillary/µm"
-
-    return area
-
-
-def combine_images(enhanced_hsv_image, capillary_coords):
-    capillary_coords_compressed = non_max_suppression(capillary_coords, overlapThresh=0.1)
+def combine_images(enhanced_hsv_image, cap_coords):
+    copy_enhanced_hsv_image = enhanced_hsv_image.copy()
+    capillary_coords_compressed = non_max_suppression(cap_coords, overlapThresh=0.1)
 
     for coords in capillary_coords_compressed:
         cv2.rectangle(enhanced_hsv_image, (coords[0], coords[1]), (coords[2], coords[3]), (0, 255, 0), 2)
 
-    return enhanced_hsv_image
+    return copy_enhanced_hsv_image, enhanced_hsv_image, capillary_coords_compressed
+
+
+def capillary_density(image_to_calculate_density_from, coords, original_image_enhanced=0):
+    redblood_capillary = 0
+    # Extract channel with highest blood and denoise it
+    b, g, r = cv2.split(image_to_calculate_density_from)
+    de_noised_image_gray = cv2.fastNlMeansDenoising(g, None, 11, 11, 21)
+    alpha = 0.85
+    for coord in coords:
+        # Extract corresponding image of coordinate
+        roi_gray = de_noised_image_gray[coord[1]:coord[3], coord[0]:coord[2]]
+
+        # Extract potential capillaries and black everything else
+        thresh1_white_and_black = cv2.adaptiveThreshold(roi_gray, 255, cv2.ADAPTIVE_THRESH_MEAN_C,
+                                                        cv2.THRESH_BINARY_INV, 21, 5)
+
+        redblood_capillary += np.sum(thresh1_white_and_black == 255)
+
+        # Extract countours from mask and plot them
+        contour_outline = cv2.findContours(thresh1_white_and_black, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        contour_outline = imutils.grab_contours(contour_outline)
+        cv2.drawContours(image_to_calculate_density_from[coord[1]:coord[3], coord[0]:coord[2]], contour_outline, -1,
+                         (0, 0, 5), 2)
+        cv2.rectangle(image_to_calculate_density_from, (coord[0], coord[1]), (coord[2], coord[3]), (0, 255, 0), 2)
+
+    temp_gray = cv2.cvtColor(image_to_calculate_density_from, cv2.COLOR_BGR2GRAY)
+    height = temp_gray.shape[0]
+    width = temp_gray.shape[1]
+    area = redblood_capillary * 2.2 * 2.2 / (width * height)
+    cap_density_value = str(round(area, 2)) #+ " capillary/µm"
+
+    return image_to_calculate_density_from, cap_density_value
 
 
 def classify_image_using_algorithm_v2(image_api):
-    start_time = timeit.default_timer()
     image_from_frontend = cv2.imread(image_api)
-    capillaries_hsv_coords, hsv_enhanced_image = hsv_pipeline(image_from_frontend)
-    capillaries_ssim_coords = ssim_pipeline(image_from_frontend)
-    final_image = combine_images(hsv_enhanced_image, np.concatenate((capillaries_hsv_coords, capillaries_ssim_coords)))
 
+    start_time = timeit.default_timer()
+    capillaries_hsv_coords, hsv_enhanced_image = hsv_pipeline(image_from_frontend)
+    capillaries_ssim_coords, ssim_image = ssim_pipeline(image_from_frontend)
     time_taken = str(round(timeit.default_timer() - start_time, 2)) + " seconds"
 
-    return time_taken, Image.fromarray(final_image)
+    coords = np.concatenate((capillaries_hsv_coords, capillaries_ssim_coords))
+    copy_enhanced_hsv_img, enhanced_hsv_img, capillary_coords_compresd = combine_images(hsv_enhanced_image, coords)
+
+    segmented_image_capillary, capillary_dens_value = capillary_density(copy_enhanced_hsv_img, capillary_coords_compresd)
+
+    enhanced_hsv_img= Image.fromarray(enhanced_hsv_img)
+    segmented_image_capillary = Image.fromarray(segmented_image_capillary)
+    capillary_dens_value = float(capillary_dens_value)
+
+    return time_taken, enhanced_hsv_img, segmented_image_capillary, capillary_dens_value
 
 
 """
@@ -326,9 +362,15 @@ if __name__ == "__main__":
     original_image = cv2.imread("testSample.png")
 
     hsv_coords, hsv_image = hsv_pipeline(original_image)
-    ssim_coords = ssim_pipeline(original_image)
-    final = combine_images(hsv_image, np.concatenate((hsv_coords, ssim_coords)))
+    ssim_coords, segmented_image = ssim_pipeline(original_image)
 
-    cv2.imshow("final_image", final)
+    coords = np.concatenate((hsv_coords, ssim_coords))
+
+    copy_hsv, bounding_box_image, capillary_coords = combine_images(hsv_image, coords)
+
+    segmented_image_capillary_density, capillary_density_value = capillary_density(copy_hsv, capillary_coords)
+
+    print(capillary_density_value)
+    cv2.imshow("segmented_image", segmented_image_capillary_density)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
