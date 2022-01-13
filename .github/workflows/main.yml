@@ -75,12 +75,6 @@ jobs:
           docker push ${{ env.TENSORFLOW_IMAGE_HSV_BASE }} -a
           docker tag ${{ env.TENSORFLOW_IMAGE_SSIM }} ${{ env.TENSORFLOW_IMAGE_SSIM_BASE }}:latest
           docker push ${{ env.TENSORFLOW_IMAGE_SSIM_BASE }} -a
-          docker tag ${{ env.WEB_IMAGE }}  ${{ env.WEB_IMAGE_BASE }}:latest
-          docker push ${{ env.WEB_IMAGE_BASE }} -a
-          docker tag ${{ env.NGINX_IMAGE }} ${{ env.NGINX_IMAGE_BASE }}:latest
-          docker push ${{ env.NGINX_IMAGE_BASE }} -a
-          docker tag ${{ env.FRONTEND_IMAGE }} ${{ env.FRONTEND_IMAGE_BASE }}:latest
-          docker push ${{ env.FRONTEND_IMAGE_BASE }} -a
   deploy_1:
     name: Deploy to DigitalOcean 1
     runs-on: ubuntu-latest
