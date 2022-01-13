@@ -53,10 +53,8 @@ jobs:
           echo "NGINX_IMAGE_BASE=$(echo ${{env.NGINX_IMAGE_BASE}} )" >> $GITHUB_ENV
           echo "TENSORFLOW_IMAGE_hsv=$(echo ${{env.TENSORFLOW_IMAGE_hsv}} )" >> $GITHUB_ENV
           echo "TENSORFLOW_IMAGE_BASE=$(echo ${{env.TENSORFLOW_IMAGE_BASE}} )" >> $GITHUB_ENV
-
           echo "TENSORFLOW_IMAGE_ssim=$(echo ${{env.TENSORFLOW_IMAGE_ssim}} )" >> $GITHUB_ENV
           echo "TENSORFLOW_IMAGE_BASE_2=$(echo ${{env.TENSORFLOW_IMAGE_BASE_2}} )" >> $GITHUB_ENV
-
           echo "FRONTEND_IMAGE=$(echo ${{env.FRONTEND_IMAGE}} )" >> $GITHUB_ENV
           echo "FRONTEND_IMAGE_BASE=$(echo ${{env.FRONTEND_IMAGE_BASE}} )" >> $GITHUB_ENV
 
