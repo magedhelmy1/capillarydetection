@@ -37,7 +37,7 @@ services:
     env_file:
       - backend/backend_apps/.env.dev
 
-  tensorflow-servings_HSV_Model:
+  tfserving_classifier_hsvl:
     container_name: tfserving_classifier_hsv
     image: tensorflow/serving:latest
     volumes:
@@ -48,7 +48,7 @@ services:
       - web
 
 
-  tensorflow-servings_SSIM:
+  tfserving_classifier_hsv:
     container_name: tfserving_classifier_ssim
     image: tensorflow/serving:latest
     volumes:
