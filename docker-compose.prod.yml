@@ -23,9 +23,16 @@ services:
     env_file:
       - .env
 
-  tensorflow-servings:
-    container_name: tensorflow_serving
-    image: "${TENSORFLOW_IMAGE}"
+  tfserving_classifier_hsv:
+    container_name: tfserving_classifier_hsv
+    image: "${TENSORFLOW_IMAGE_hsv}"
+    depends_on:
+      - web
+
+
+  tfserving_classifier_ssim:
+    container_name: tfserving_classifier_ssim
+    image: "${TENSORFLOW_IMAGE_ssim}"
     depends_on:
       - web
 
