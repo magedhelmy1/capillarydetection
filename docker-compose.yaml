@@ -37,29 +37,27 @@ services:
     env_file:
       - backend/backend_apps/.env.dev
 
-
   tensorflow-servings_HSV_Model:
-    build: algorithms_HSV
     container_name: tfserving_classifier_hsv
     image: tensorflow/serving:latest
     volumes:
-      - "./algorithms_HSV/HSV_Model:/models/HSV_Model"
+      - ./algorithms/HSV_Model:/models/model
     ports:
-      - "8502:8501"
+      - "8501:8501"
     depends_on:
       - web
 
 
   tensorflow-servings_SSIM:
-    build: algorithms_SSIM
     container_name: tfserving_classifier_ssim
     image: tensorflow/serving:latest
     volumes:
-      - "./algorithms_SSIM/SSIM_Model:/models/SSIM_Model"
+      - ./algorithms/SSIM_Model:/models/model
     ports:
-      - "8503:8501"
+      - "8502:8501"
     depends_on:
       - web
+
 
 
   nginx:
