@@ -67,7 +67,7 @@ jobs:
 
       - name: Build images
         run: |
-          docker-compose -f docker-compose.ci.yml tfserving_classifier_hsv tfserving_classifier_ssim
+          docker-compose -f docker-compose.ci.yml build tfserving_classifier_hsv tfserving_classifier_ssim
 
       - name: Push images
         run: |
