@@ -45,7 +45,9 @@ def analyze_image(request, **kwargs):
             for chunk in image_uploaded:
                 fp.write(chunk)
 
+        # result = algorithm_image(file_path, image_name, False)
         result = algorithm_image.delay(file_path, image_name, False)
+        print(result)
 
         return JsonResponse({"task_id": result.id,
                              "task_status": result.status},

@@ -293,10 +293,10 @@ def algorithm_image(serializer, image_name, test):
     model_instance = models.Image.objects.create(
         picture=uploaded_pictures,
         time_to_classify=time_taken,
-        # number_of_cap=int(number_of_capillaries),
-        # capillary_area=area_of_capillaries,
+        number_of_cap=int(1),
+        capillary_area=1,
         analyzed_picture=analyzed_file_object,
-        # segmented_image=segmented_file_object,
+        segmented_image=analyzed_file_object,
     )
 
     return {"picture": model_instance.picture.url,

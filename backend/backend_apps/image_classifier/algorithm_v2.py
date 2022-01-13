@@ -303,7 +303,7 @@ def classify_image_using_algorithm_v2(image_api):
 
     time_taken = str(round(timeit.default_timer() - start_time, 2)) + " seconds"
 
-    return time_taken, final_image
+    return time_taken, Image.fromarray(final_image)
 
 
 """
