@@ -36,6 +36,7 @@ services:
       - web
 
   tfserving_classifier_hsv:
+    build: ./algorithms_HSV
     container_name: tfserving_classifier_hsv
     image: tensorflow/serving:latest
     volumes:
@@ -47,6 +48,7 @@ services:
 
 
   tfserving_classifier_ssim:
+    build: ./algorithms_SSIM
     container_name: tfserving_classifier_ssim
     image: tensorflow/serving:latest
     volumes:
