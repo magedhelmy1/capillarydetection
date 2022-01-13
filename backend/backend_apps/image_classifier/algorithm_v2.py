@@ -71,11 +71,11 @@ def unsharp_mask(img, blur_size=(9, 9), imgWeight=1.5, gaussianWeight=-0.5):
 
 # docker run -t --rm -p 8502:8501 -v "C:\Users\maged\Desktop\Projects\PyCharm_Projects\21_Django_ML\algorithms
 # \HSV_Model\:/models/HSV_Model/" -e MODEL_NAME=HSV_Model tensorflow/serving &
-url_hsv = 'http://tensorflow-servings:8501/v1/models/model:predict'
+url_hsv = 'http://tfserving_classifier_hsv:8501/v1/models/model:predict'
 
 # docker run -t --rm -p 8503:8501 -v "C:\Users\maged\Desktop\Projects\PyCharm_Projects\21_Django_ML\algorithms
 # \SSIM_Model\:/models/SSIM_Model/" -e MODEL_NAME=SSIM_Model tensorflow/serving &
-url_ssim = 'http://tensorflow-servings:8502/v1/models/model:predict'
+url_ssim = 'http://tfserving_classifier_ssim:8502/v1/models/model:predict'
 
 
 def make_prediction_HSV(instances):
