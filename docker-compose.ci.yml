@@ -39,7 +39,7 @@ services:
     container_name: tfserving_classifier_hsv
     image: tensorflow/serving:latest
     volumes:
-      - ./algorithms/HSV_Model:/models/model
+      - ./algorithms_HSV/HSV_Model:/models/model
     ports:
       - "8501:8501"
     depends_on:
@@ -50,7 +50,7 @@ services:
     container_name: tfserving_classifier_ssim
     image: tensorflow/serving:latest
     volumes:
-      - ./algorithms/SSIM_Model:/models/model
+      - ./algorithms_SSIM/SSIM_Model:/models/model
     ports:
       - "8502:8501"
     depends_on:
