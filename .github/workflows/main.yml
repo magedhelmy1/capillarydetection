@@ -110,7 +110,7 @@ jobs:
           echo SQL_PORT=${{ secrets.SQL_PORT }} >> .env
           echo WEB_IMAGE=${{ env.WEB_IMAGE }} >> .env
           echo NGINX_IMAGE=${{ env.NGINX_IMAGE }} >> .env
-          echo TENSORFLOW_IMAGE_hsv=${{ env.TENSORFLOW_IMAGE_hsv }} >> .env
+          echo TENSORFLOW_IMAGE_HSV=${{ env.TENSORFLOW_IMAGE_HSV }} >> .env
           echo TENSORFLOW_IMAGE_SSIM=${{ env.TENSORFLOW_IMAGE_SSIM}} >> .env
           echo FRONTEND_IMAGE=${{ env.FRONTEND_IMAGE }} >> .env
           echo CELERY_IMAGE=${{ env.WEB_IMAGE }} >> .env
