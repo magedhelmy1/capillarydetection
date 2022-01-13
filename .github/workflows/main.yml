@@ -6,6 +6,10 @@ on:
       - master
 
 env:
+  TENSORFLOW_IMAGE_HSV_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_hsv
+  TENSORFLOW_IMAGE_HSV: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_hsv:$( echo $GITHUB_SHA )
+  TENSORFLOW_IMAGE_SSIM_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_ssim
+  TENSORFLOW_IMAGE_SSIM: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_ssim:$( echo $GITHUB_SHA )
   WEB_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/web
   WEB_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/web:$( echo $GITHUB_SHA )
   NGINX_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx
@@ -14,10 +18,7 @@ env:
   FRONTEND_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/frontend:$( echo $GITHUB_SHA )
   CELERY_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/celery
   CELERY_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/celery:$( echo $GITHUB_SHA )
-  TENSORFLOW_IMAGE_HSV_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_hsv
-  TENSORFLOW_IMAGE_HSV: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_hsv:$( echo $GITHUB_SHA )
-  TENSORFLOW_IMAGE_SSIM_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_ssim
-  TENSORFLOW_IMAGE_SSIM: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_ssim:$( echo $GITHUB_SHA )
+
 
 jobs:
   build:
