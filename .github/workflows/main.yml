@@ -10,14 +10,15 @@ env:
   WEB_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/web:$( echo $GITHUB_SHA )
   NGINX_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx
   NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx:$( echo $GITHUB_SHA )
-  TENSORFLOW_IMAGE_HSV_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_hsv
-  TENSORFLOW_IMAGE_HSV: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_hsv:$( echo $GITHUB_SHA )
-  TENSORFLOW_IMAGE_SSIM_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_ssim
-  TENSORFLOW_IMAGE_SSIM: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_ssim:$( echo $GITHUB_SHA )
   FRONTEND_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/frontend
   FRONTEND_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/frontend:$( echo $GITHUB_SHA )
   CELERY_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/celery
   CELERY_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/celery:$( echo $GITHUB_SHA )
+  TENSORFLOW_IMAGE_HSV_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_hsv
+  TENSORFLOW_IMAGE_HSV: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_hsv:$( echo $GITHUB_SHA )
+  TENSORFLOW_IMAGE_SSIM_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_ssim
+  TENSORFLOW_IMAGE_SSIM: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_ssim:$( echo $GITHUB_SHA )
+
 jobs:
   build:
     name: Build Docker Images
@@ -70,7 +71,7 @@ jobs:
           docker pull ${{ env.NGINX_IMAGE_BASE }}:latest
           docker pull ${{ env.WEB_IMAGE_BASE }}:latest
           docker pull ${{ env.FRONTEND_IMAGE_BASE }}:latest
-          docker-compose -f docker-compose.ci.yml build web react tfserving_classifier_hsv tfserving_classifier_ssim nginx
+          docker-compose -f docker-compose.ci.yml build web react nginx
 
       - name: Push images
         run: |
