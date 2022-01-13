@@ -65,10 +65,10 @@ jobs:
 
       - name: Build images
         run: |
-          docker pull ${{ env.NGINX_IMAGE_BASE }}:latest
-          docker pull ${{ env.WEB_IMAGE_BASE }}:latest
           docker pull ${{ env.TENSORFLOW_IMAGE_HSV_BASE }}:latest
           docker pull ${{ env.TENSORFLOW_IMAGE_SSIM_BASE }}:latest
+          docker pull ${{ env.NGINX_IMAGE_BASE }}:latest
+          docker pull ${{ env.WEB_IMAGE_BASE }}:latest
           docker pull ${{ env.FRONTEND_IMAGE_BASE }}:latest
           docker-compose -f docker-compose.ci.yml build web react tfserving_classifier_hsv tfserving_classifier_ssim nginx
 
