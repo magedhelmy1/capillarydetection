@@ -10,8 +10,10 @@ env:
   WEB_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/web:$( echo $GITHUB_SHA )
   NGINX_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx
   NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx:$( echo $GITHUB_SHA )
-  TENSORFLOW_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_hsv
-  TENSORFLOW_IMAGE_hsv: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_hsv:$( echo $GITHUB_SHA )
+  TENSORFLOW_IMAGE_HSV_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_hsv
+  TENSORFLOW_IMAGE_HSV: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_hsv:$( echo $GITHUB_SHA )
+  TENSORFLOW_IMAGE_SSIM_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_ssim
+  TENSORFLOW_IMAGE_SSIM: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_ssim:$( echo $GITHUB_SHA )
   FRONTEND_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/frontend
   FRONTEND_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/frontend:$( echo $GITHUB_SHA )
   CELERY_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/celery
@@ -49,8 +51,10 @@ jobs:
           echo "WEB_IMAGE_BASE=$(echo ${{env.WEB_IMAGE_BASE}} )" >> $GITHUB_ENV
           echo "NGINX_IMAGE=$(echo ${{env.NGINX_IMAGE}} )" >> $GITHUB_ENV
           echo "NGINX_IMAGE_BASE=$(echo ${{env.NGINX_IMAGE_BASE}} )" >> $GITHUB_ENV
-          echo "TENSORFLOW_IMAGE_hsv=$(echo ${{env.TENSORFLOW_IMAGE_hsv}} )" >> $GITHUB_ENV
-          echo "TENSORFLOW_IMAGE_BASE=$(echo ${{env.TENSORFLOW_IMAGE_BASE}} )" >> $GITHUB_ENV
+          echo "TENSORFLOW_IMAGE_HSV=$(echo ${{env.TENSORFLOW_IMAGE_hsv}} )" >> $GITHUB_ENV
+          echo "TENSORFLOW_IMAGE_HSV_BASE=$(echo ${{env.TENSORFLOW_IMAGE_BASE}} )" >> $GITHUB_ENV
+          echo "TENSORFLOW_IMAGE_SSIM=$(echo ${{env.TENSORFLOW_IMAGE_hsv}} )" >> $GITHUB_ENV
+          echo "TENSORFLOW_IMAGE_SSIM_BASE=$(echo ${{env.TENSORFLOW_IMAGE_BASE}} )" >> $GITHUB_ENV
           echo "FRONTEND_IMAGE=$(echo ${{env.FRONTEND_IMAGE}} )" >> $GITHUB_ENV
           echo "FRONTEND_IMAGE_BASE=$(echo ${{env.FRONTEND_IMAGE_BASE}} )" >> $GITHUB_ENV
 
@@ -63,10 +67,10 @@ jobs:
         run: |
           docker pull ${{ env.WEB_IMAGE_BASE }}:latest
           docker pull ${{ env.NGINX_IMAGE_BASE }}:latest
-          docker pull ${{ env.NGINX_IMAGE_BASE }}:latest
-          docker pull ${{ env.TENSORFLOW_IMAGE_BASE }}:latest
+          docker pull ${{ env.TENSORFLOW_IMAGE_HSV_BASE }}:latest
+          docker pull ${{ env.TENSORFLOW_IMAGE_SSIM_BASE }}:latest
           docker pull ${{ env.FRONTEND_IMAGE_BASE }}:latest
-          docker-compose -f docker-compose.ci.yml build web react tensorflow-servings nginx
+          docker-compose -f docker-compose.ci.yml build web react tfserving_classifier_hsv tfserving_classifier_ssim nginx
 
       - name: Push images
         run: |
@@ -74,8 +78,10 @@ jobs:
           docker push ${{ env.WEB_IMAGE_BASE }} -a
           docker tag ${{ env.NGINX_IMAGE }} ${{ env.NGINX_IMAGE_BASE }}:latest
           docker push ${{ env.NGINX_IMAGE_BASE }} -a
-          docker tag ${{ env.TENSORFLOW_IMAGE_hsv }} ${{ env.TENSORFLOW_IMAGE_BASE }}:latest
-          docker push ${{ env.TENSORFLOW_IMAGE_BASE }} -a
+          docker tag ${{ env.TENSORFLOW_IMAGE_HSV }} ${{ env.TENSORFLOW_IMAGE_HSV_BASE }}:latest
+          docker push ${{ env.TENSORFLOW_IMAGE_HSV_BASE }} -a
+          docker tag ${{ env.TENSORFLOW_IMAGE_SSIM }} ${{ env.TENSORFLOW_IMAGE_SSIM_BASE }}:latest
+          docker push ${{ env.TENSORFLOW_IMAGE_SSIM_BASE }} -a
           docker tag ${{ env.FRONTEND_IMAGE }} ${{ env.FRONTEND_IMAGE_BASE }}:latest
           docker push ${{ env.FRONTEND_IMAGE_BASE }} -a
   deploy_1:
@@ -105,6 +111,7 @@ jobs:
           echo WEB_IMAGE=${{ env.WEB_IMAGE }} >> .env
           echo NGINX_IMAGE=${{ env.NGINX_IMAGE }} >> .env
           echo TENSORFLOW_IMAGE_hsv=${{ env.TENSORFLOW_IMAGE_hsv }} >> .env
+          echo TENSORFLOW_IMAGE_SSIM=${{ env.TENSORFLOW_IMAGE_SSIM}} >> .env
           echo FRONTEND_IMAGE=${{ env.FRONTEND_IMAGE }} >> .env
           echo CELERY_IMAGE=${{ env.WEB_IMAGE }} >> .env
           echo NAMESPACE=${{ secrets.NAMESPACE }} >> .env

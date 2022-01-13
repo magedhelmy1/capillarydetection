@@ -304,6 +304,7 @@ def combine_images(enhanced_hsv_image, cap_coords):
 
 def capillary_density(image_to_calculate_density_from, coords, original_image_enhanced=0):
     redblood_capillary = 0
+    capillary_count = 0
     # Extract channel with highest blood and denoise it
     b, g, r = cv2.split(image_to_calculate_density_from)
     de_noised_image_gray = cv2.fastNlMeansDenoising(g, None, 11, 11, 21)
@@ -324,6 +325,7 @@ def capillary_density(image_to_calculate_density_from, coords, original_image_en
         cv2.drawContours(image_to_calculate_density_from[coord[1]:coord[3], coord[0]:coord[2]], contour_outline, -1,
                          (0, 0, 5), 2)
         cv2.rectangle(image_to_calculate_density_from, (coord[0], coord[1]), (coord[2], coord[3]), (0, 255, 0), 2)
+        capillary_count += 1
 
     temp_gray = cv2.cvtColor(image_to_calculate_density_from, cv2.COLOR_BGR2GRAY)
     height = temp_gray.shape[0]
@@ -331,7 +333,7 @@ def capillary_density(image_to_calculate_density_from, coords, original_image_en
     area = redblood_capillary * 2.2 * 2.2 / (width * height)
     cap_density_value = str(round(area, 2)) #+ " capillary/µm"
 
-    return image_to_calculate_density_from, cap_density_value
+    return image_to_calculate_density_from, cap_density_value, capillary_count
 
 
 def classify_image_using_algorithm_v2(image_api):
@@ -345,13 +347,13 @@ def classify_image_using_algorithm_v2(image_api):
     coords = np.concatenate((capillaries_hsv_coords, capillaries_ssim_coords))
     copy_enhanced_hsv_img, enhanced_hsv_img, capillary_coords_compresd = combine_images(hsv_enhanced_image, coords)
 
-    segmented_image_capillary, capillary_dens_value = capillary_density(copy_enhanced_hsv_img, capillary_coords_compresd)
+    segmented_image_capillary, capillary_dens_value, capillary_count = capillary_density(copy_enhanced_hsv_img, capillary_coords_compresd)
 
     enhanced_hsv_img= Image.fromarray(enhanced_hsv_img)
     segmented_image_capillary = Image.fromarray(segmented_image_capillary)
     capillary_dens_value = float(capillary_dens_value)
 
-    return time_taken, enhanced_hsv_img, segmented_image_capillary, capillary_dens_value
+    return time_taken, enhanced_hsv_img, segmented_image_capillary, capillary_dens_value, capillary_count
 
 
 """
@@ -368,7 +370,7 @@ if __name__ == "__main__":
 
     copy_hsv, bounding_box_image, capillary_coords = combine_images(hsv_image, coords)
 
-    segmented_image_capillary_density, capillary_density_value = capillary_density(copy_hsv, capillary_coords)
+    segmented_image_capillary_density, capillary_density_value, capillary_count = capillary_density(copy_hsv, capillary_coords)
 
     print(capillary_density_value)
     cv2.imshow("segmented_image", segmented_image_capillary_density)
