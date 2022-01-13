@@ -25,14 +25,14 @@ services:
 
   tfserving_classifier_hsv:
     container_name: tfserving_classifier_hsv
-    image: "${TENSORFLOW_IMAGE_hsv}"
+    image: "${TENSORFLOW_IMAGE_HSV}"
     depends_on:
       - web
 
 
   tfserving_classifier_ssim:
     container_name: tfserving_classifier_ssim
-    image: "${TENSORFLOW_IMAGE_ssim}"
+    image: "${TENSORFLOW_IMAGE_SSIM}"
     depends_on:
       - web
 
