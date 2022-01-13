@@ -10,8 +10,8 @@ env:
   WEB_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/web:$( echo $GITHUB_SHA )
   NGINX_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx
   NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx:$( echo $GITHUB_SHA )
-  TENSORFLOW_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tensorflowserving
-  TENSORFLOW_IMAGE_hsv: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tensorflowserving:$( echo $GITHUB_SHA )
+  TENSORFLOW_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_hsv
+  TENSORFLOW_IMAGE_hsv: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tfserving_classifier_hsv:$( echo $GITHUB_SHA )
   FRONTEND_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/frontend
   FRONTEND_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/frontend:$( echo $GITHUB_SHA )
   CELERY_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/celery
