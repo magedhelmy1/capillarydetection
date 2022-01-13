@@ -11,7 +11,7 @@ env:
   NGINX_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx
   NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx:$( echo $GITHUB_SHA )
   TENSORFLOW_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tensorflowserving
-  TENSORFLOW_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tensorflowserving:$( echo $GITHUB_SHA )
+  TENSORFLOW_IMAGE_hsv: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/tensorflowserving:$( echo $GITHUB_SHA )
   FRONTEND_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/frontend
   FRONTEND_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/frontend:$( echo $GITHUB_SHA )
   CELERY_IMAGE_BASE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/celery
@@ -49,7 +49,7 @@ jobs:
           echo "WEB_IMAGE_BASE=$(echo ${{env.WEB_IMAGE_BASE}} )" >> $GITHUB_ENV
           echo "NGINX_IMAGE=$(echo ${{env.NGINX_IMAGE}} )" >> $GITHUB_ENV
           echo "NGINX_IMAGE_BASE=$(echo ${{env.NGINX_IMAGE_BASE}} )" >> $GITHUB_ENV
-          echo "TENSORFLOW_IMAGE=$(echo ${{env.TENSORFLOW_IMAGE}} )" >> $GITHUB_ENV
+          echo "TENSORFLOW_IMAGE_hsv=$(echo ${{env.TENSORFLOW_IMAGE_hsv}} )" >> $GITHUB_ENV
           echo "TENSORFLOW_IMAGE_BASE=$(echo ${{env.TENSORFLOW_IMAGE_BASE}} )" >> $GITHUB_ENV
           echo "FRONTEND_IMAGE=$(echo ${{env.FRONTEND_IMAGE}} )" >> $GITHUB_ENV
           echo "FRONTEND_IMAGE_BASE=$(echo ${{env.FRONTEND_IMAGE_BASE}} )" >> $GITHUB_ENV
@@ -74,7 +74,7 @@ jobs:
           docker push ${{ env.WEB_IMAGE_BASE }} -a
           docker tag ${{ env.NGINX_IMAGE }} ${{ env.NGINX_IMAGE_BASE }}:latest
           docker push ${{ env.NGINX_IMAGE_BASE }} -a
-          docker tag ${{ env.TENSORFLOW_IMAGE }} ${{ env.TENSORFLOW_IMAGE_BASE }}:latest
+          docker tag ${{ env.TENSORFLOW_IMAGE_hsv }} ${{ env.TENSORFLOW_IMAGE_BASE }}:latest
           docker push ${{ env.TENSORFLOW_IMAGE_BASE }} -a
           docker tag ${{ env.FRONTEND_IMAGE }} ${{ env.FRONTEND_IMAGE_BASE }}:latest
           docker push ${{ env.FRONTEND_IMAGE_BASE }} -a
@@ -104,7 +104,7 @@ jobs:
           echo SQL_PORT=${{ secrets.SQL_PORT }} >> .env
           echo WEB_IMAGE=${{ env.WEB_IMAGE }} >> .env
           echo NGINX_IMAGE=${{ env.NGINX_IMAGE }} >> .env
-          echo TENSORFLOW_IMAGE=${{ env.TENSORFLOW_IMAGE }} >> .env
+          echo TENSORFLOW_IMAGE_hsv=${{ env.TENSORFLOW_IMAGE_hsv }} >> .env
           echo FRONTEND_IMAGE=${{ env.FRONTEND_IMAGE }} >> .env
           echo CELERY_IMAGE=${{ env.WEB_IMAGE }} >> .env
           echo NAMESPACE=${{ secrets.NAMESPACE }} >> .env
