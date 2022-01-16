@@ -45,6 +45,8 @@ def analyze_image(request, **kwargs):
             for chunk in image_uploaded:
                 fp.write(chunk)
 
+        print(f" This is the response  - {file_path}")
+
         # result = algorithm_image(file_path, image_name, False)
         result = algorithm_image.delay(file_path, image_name, False)
         print(result)

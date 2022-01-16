@@ -34,6 +34,10 @@ CORS_ALLOW_HEADERS = default_headers + (
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800 # 5 MB0
+
+
 # Application definition
 
 INSTALLED_APPS = [

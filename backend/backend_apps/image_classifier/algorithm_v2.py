@@ -292,7 +292,20 @@ def ssim_pipeline(original_frame):
     return potential_capillaries_non_max, diff
 
 
-def combine_images(enhanced_hsv_image, cap_coords):
+def combine_images(enhanced_hsv_image, coord_a, coord_b):
+    if coord_a != [] and coord_b != []:
+
+        cap_coords = np.concatenate((coord_a, coord_b))
+
+    elif not coord_a:
+
+        cap_coords = coord_b
+
+    elif not coord_b:
+        cap_coords = coord_a
+
+    else:
+        print("DID NOT DETECT COORDS")
     copy_enhanced_hsv_image = enhanced_hsv_image.copy()
     capillary_coords_compressed = non_max_suppression(cap_coords, overlapThresh=0.1)
 
@@ -311,6 +324,7 @@ def capillary_density(image_to_calculate_density_from, coords, original_image_en
     alpha = 0.85
     for coord in coords:
         # Extract corresponding image of coordinate
+
         roi_gray = de_noised_image_gray[coord[1]:coord[3], coord[0]:coord[2]]
 
         # Extract potential capillaries and black everything else
@@ -331,7 +345,7 @@ def capillary_density(image_to_calculate_density_from, coords, original_image_en
     height = temp_gray.shape[0]
     width = temp_gray.shape[1]
     area = redblood_capillary * 2.2 * 2.2 / (width * height)
-    cap_density_value = str(round(area, 2)) #+ " capillary/µm"
+    cap_density_value = str(round(area, 2))  # + " capillary/µm"
 
     return image_to_calculate_density_from, cap_density_value, capillary_count
 
@@ -344,12 +358,14 @@ def classify_image_using_algorithm_v2(image_api):
     capillaries_ssim_coords, ssim_image = ssim_pipeline(image_from_frontend)
     time_taken = str(round(timeit.default_timer() - start_time, 2)) + " seconds"
 
-    coords = np.concatenate((capillaries_hsv_coords, capillaries_ssim_coords))
-    copy_enhanced_hsv_img, enhanced_hsv_img, capillary_coords_compresd = combine_images(hsv_enhanced_image, coords)
+    copy_enhanced_hsv_img, enhanced_hsv_img, capillary_coords_compresd = combine_images(hsv_enhanced_image,
+                                                                                        capillaries_hsv_coords,
+                                                                                        capillaries_ssim_coords)
 
-    segmented_image_capillary, capillary_dens_value, capillary_count = capillary_density(copy_enhanced_hsv_img, capillary_coords_compresd)
+    segmented_image_capillary, capillary_dens_value, capillary_count = capillary_density(copy_enhanced_hsv_img,
+                                                                                         capillary_coords_compresd)
 
-    enhanced_hsv_img= Image.fromarray(enhanced_hsv_img)
+    enhanced_hsv_img = Image.fromarray(enhanced_hsv_img)
     segmented_image_capillary = Image.fromarray(segmented_image_capillary)
     capillary_dens_value = float(capillary_dens_value)
 
@@ -361,18 +377,16 @@ Part 8: Display results
 """
 
 if __name__ == "__main__":
-    original_image = cv2.imread("testSample.png")
+    original_image = cv2.imread("i.jpg")
 
     hsv_coords, hsv_image = hsv_pipeline(original_image)
     ssim_coords, segmented_image = ssim_pipeline(original_image)
 
-    coords = np.concatenate((hsv_coords, ssim_coords))
+    copy_hsv, bounding_box_image, capillary_coords = combine_images(hsv_image, hsv_coords, ssim_coords)
 
-    copy_hsv, bounding_box_image, capillary_coords = combine_images(hsv_image, coords)
+    segmented_image_capillary_density, capillary_density_value, capillary_count = capillary_density(copy_hsv,
+                                                                                                    capillary_coords)
 
-    segmented_image_capillary_density, capillary_density_value, capillary_count = capillary_density(copy_hsv, capillary_coords)
-
-    print(capillary_density_value)
-    cv2.imshow("segmented_image", segmented_image_capillary_density)
+    cv2.imshow("segmented_image",cv2.resize(bounding_box_image,(960,420)))
     cv2.waitKey(0)
     cv2.destroyAllWindows()

@@ -158,6 +158,9 @@ class Classifier extends Component {
             })
             .catch(err => {
                 console.log(err.response)
+                this.setState({
+                    isLoading: false,
+                })
             })
     }
 
@@ -176,6 +179,9 @@ class Classifier extends Component {
         })
             .catch(err => {
                 console.log(err.response)
+                this.setState({
+                    isLoading: false,
+                })
             })
 
     }
