@@ -23,7 +23,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = list(filter(bool, os.environ.get('ALLOWED_HOSTS', default='').split(','))) or ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = list(filter(bool, os.environ.get('ALLOWED_HOSTS', default='').split(','))) or ['localhost', '127.0.0.1',
+                                                                                               '139.59.206.141',
+                                                                                               'www.analysecapillary.space']
 
 CORS_ALLOW_HEADERS = default_headers + (
     'Access-Control-Allow-Origin',
