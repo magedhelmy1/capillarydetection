@@ -15,18 +15,18 @@ besides other diseases.
 Thus, it is highly relevant and of paramount importance to 
 current society, even from a practical perspective.
 
-## Project Structure:
+## Build Project Locally
 
-The structure is demonstrated below from the Docker-files, you also have access via Gi To build locally:
+Clone repo and run the following command or navigate to URL http://www.analysecapillary.space/
 
      docker-compose up -d –-build
 
-To rebuild locally:
+## To rebuild locally:
 
       docker-compose down --volume --rmi all
       docker-compose down &&  docker-compose up -d --build
 
-## To do performance testing:
+## Performance testing:
 
     locust -f performanceTesting\load_testing.py --master
 
