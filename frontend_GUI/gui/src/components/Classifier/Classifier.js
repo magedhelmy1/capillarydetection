@@ -530,7 +530,7 @@ class Classifier extends Component {
 
                         {this.state.error === true &&
                               <h3 className="error">
-                                  Error Detected: - 
+                                  Error Detected: -
                                   "{ this.state.errorMessage }" -
                                   Please report this error to the admin of the system by sending an email to magedaa@uio.no
                                   or try again in couple of minutes
