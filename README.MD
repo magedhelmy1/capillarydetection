@@ -1,48 +1,48 @@
-## To clean docker images and volumes from OS
+## Scope:
+The contents of this project are at the interface between deep learning, 
+image processing, early detection of diseases, 
+and clinical practice.
 
-    docker-compose down
-    yes | docker image prune -a
-    docker volume rm $(docker volume ls -q)
+## Novelty:
+The proposed method is unique as it combines traditional image 
+processing methods with neural network-based ones, 
+striking a balance between speed of processing and accuracy.
 
-## To do performance testing:
+## Clinical Use:
+The methodology of the paper bears direct clinical significance 
+and has already been applied to patients suffering from Covid-19, 
+besides other diseases. 
+Thus, it is highly relevant and of paramount importance to 
+current society, even from a practical perspective.
 
-    locust -f performanceTesting\load_testing.py
-    go to -> http://localhost:8089/
-
-## To check celery queuing:
-
-    go to -> http://localhost:5556/dashboard
-
-## Purpose:
-
-- This is a simple program where the user has a frontend with 21 samples of capillary images, or the user can upload
-  their own image.
-- The image is taken to the backend, analyzed with deep learning and the analyzed image is back along with the segmented
-  image and the original image.
-
-## Structure:
+## Project Structure:
 
 The structure is demonstrated below from the Docker-files, you also have access via Gi To build locally:
 
-- docker-compose up -d –-build
-- Open in browser at http://localhost
-- Change the code and see code updating
-- To add new backend migrations:
+     docker-compose up -d –-build
 
 To rebuild locally:
 
-- docker-compose down --volume --rmi all
-- docker-compose up -d –build
+      docker-compose down --volume --rmi all
+      docker-compose down &&  docker-compose up -d --build
 
-## Deployment:
+## To do performance testing:
 
-The server is deployed on Digital Ocean for no special reason, should be deployable anywhere. The website accessible
-on http://64.227.106.224/
+    locust -f performanceTesting\load_testing.py --master
+
+Usually a worker can support up to 100-300 RPS.
+The more workers are spawned, the more RPS can be created.
+
+    locust -f performanceTesting\load_testing.py --worker 
+    http://localhost:8089/
+
+## To check celery queuing:
+
+    http://localhost:5556/dashboard
 
 ## CI/CD:
 
-- pushing to the repo main automatically triggers a deploy to  http://64.227.106.224/, so if you will push, please push
-  to a branch you have created locally.
+- On merge, a deploy is triggered to http://139.59.206.141/ which is redirects to URL http://www.analysecapillary.space/
 
 ## Development setup
 
@@ -56,12 +56,12 @@ Django:
 - Docker image only installs dependencies
 - Code is mounted into the container from the host machine
 - Sample env file for development is provided
-- To add new migrations use `docker-compose run --rm web python manage.py makemigrations --no-input`
+- To add new migrations use
+
+      docker-compose run --rm web python manage.py makemigrations --no-input
 
 React:
 
 - Docker image only installs system dependencies
 - Code and node_modules are mounted directly in to the container
 - When container starts it installs dependencies to be able to save time during development when adding extra packages
-
-The website is accessbile on http://www.analysecapillary.space/
