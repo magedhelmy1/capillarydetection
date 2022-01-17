@@ -64,3 +64,4 @@ React:
 - Code and node_modules are mounted directly in to the container
 - When container starts it installs dependencies to be able to save time during development when adding extra packages
 
+The website is accessbile on http://www.analysecapillary.space/
