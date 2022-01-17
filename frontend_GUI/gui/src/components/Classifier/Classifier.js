@@ -25,8 +25,8 @@ import image_19 from "../../static_media/19.png"
 import image_20 from "../../static_media/20.png"
 import image_21 from "../../static_media/21.png"
 
-console.log(process.env.REACT_APP_AXIOS_URL)
-console.log("ALO: 11012022-1640")
+// console.log(process.env.REACT_APP_AXIOS_URL)
+// console.log("ALO: 11012022-1640")
 // axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 // axios.defaults.xsrfCookieName = "csrftoken";
 // axios.defaults.withCredentials = true
@@ -48,6 +48,8 @@ class Classifier extends Component {
         showSegmented: false,
         showOriginal: false,
         showUploaded: true,
+        error: false,
+        errorMessage: [],
     }
 
     show_original = () => {
@@ -123,7 +125,7 @@ class Classifier extends Component {
                 showUploaded: true,
                 isLoading: false
             }, () => {
-                console.log(this.state.files)
+                // console.log(this.state.files)
             })
         }, 1000);
     }
@@ -153,13 +155,17 @@ class Classifier extends Component {
             },
         })
             .then(resp => {
-                console.log(resp)
                 this.getStatus(resp)
             })
             .catch(err => {
-                console.log(err.response)
+                this.deactivateSpinner()
                 this.setState({
                     isLoading: false,
+                    showOriginal: false,
+                    showAnalyzed: false,
+                    showSegmented: false,
+                    error: true,
+                    errorMessage: err.message
                 })
             })
     }
@@ -174,13 +180,19 @@ class Classifier extends Component {
             },
         ).then(resp => {
             (resp.data.task_status === 'PENDING') ? this.getStatus(resp) : this.getImageClass(resp)
-            console.log(resp.data.task_status)
+            // console.log(resp.data.task_status)
 
         })
             .catch(err => {
-                console.log(err.response)
+                this.deactivateSpinner()
+
                 this.setState({
                     isLoading: false,
+                    showOriginal: false,
+                    showAnalyzed: false,
+                    showSegmented: false,
+                    error: true,
+                    errorMessage: err.message
                 })
             })
 
@@ -466,7 +478,7 @@ class Classifier extends Component {
                 <Row>
                     <Col sm>
                         <div className="img-fluid">
-                            {this.state.sample != null && this.state.showUploaded === true &&
+                            {this.state.sample != null && this.state.showUploaded === true && this.state.error !== true &&
                             <Image
                                 src={this.state.files?.image}
                                 height='400' rounded/>
@@ -477,7 +489,7 @@ class Classifier extends Component {
 
                 <Row>
                     <Col sm>
-                        {this.state.recentImage && this.state.showAnalyzed &&
+                        {this.state.recentImage && this.state.showAnalyzed && this.state.error != null && this.state.error !== true &&
                         <Image className='justify-content-center'
 
 
@@ -486,14 +498,14 @@ class Classifier extends Component {
 
                         }
 
-                        {this.state.recentImage && this.state.showOriginal &&
+                        {this.state.recentImage && this.state.showOriginal && this.state.error != null && this.state.error !== true &&
                         <Image className='justify-content-center'
                                src={this.state.files?.image}
                                height='400' rounded/>
 
                         }
 
-                        {this.state.recentImage && this.state.showSegmented &&
+                        {this.state.recentImage && this.state.showSegmented && this.state.error != null && this.state.error !== true &&
                         <Image className='justify-content-center'
                                src={this.state.recentImage.data.segmented_image}
                                height='400' rounded/>
@@ -506,18 +518,28 @@ class Classifier extends Component {
 
                 <Row>
                     <Col sm>
-                        {this.state.dropzone != null && this.state.isLoading === false &&
+                        {this.state.dropzone != null && this.state.isLoading === false && this.state.error !== true &&
                         <Button variant='info' size='lg' className='mt-3' onClick={this.sendImage}>
                             Analyze Image
                         </Button>}
 
-                        {this.state.sample != null && this.state.isLoading === false &&
+                        {this.state.sample != null && this.state.isLoading === false && this.state.error !== true &&
                         <Button variant='info' size='lg' className='mt-3' onClick={this.sendImage}>
                             Analyze Sample Image
                         </Button>}
 
+                        {this.state.error === true &&
+                              <h3 className="error">
+                                  Error Detected: - 
+                                  "{ this.state.errorMessage }" -
+                                  Please report this error to the admin of the system by sending an email to magedaa@uio.no
+                                  or try again in couple of minutes
+
+                              </h3> }
+
+
                         {
-                            this.state.recentImage &&
+                            this.state.recentImage && this.state.error !== true &&
                             <div className="mt-2">
                                 <Alert variant='primary'>
                                     <p> Time Taken: {this.state.recentImage.data.time_to_classify} </p>

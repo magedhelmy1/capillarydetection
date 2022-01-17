@@ -7,7 +7,7 @@ const Navigation = () => {
             <Navbar.Brand href="#home">CapillaryWeb Demo</Navbar.Brand>
             <Nav className="mr-auto">
                 <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/">Github Repo</Nav.Link>
+                <Nav.Link href="/info">Github Repo</Nav.Link>
             </Nav>
         </Navbar>
     );
