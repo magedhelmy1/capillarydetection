@@ -30,11 +30,13 @@ Clone repo and run the following command or navigate to URL http://www.analyseca
 
     locust -f performanceTesting\load_testing.py --master
 
-Usually a worker can support up to 100-300 RPS.
+Usually a performance server can support up to 500 RPS.
 The more workers are spawned, the more RPS can be created.
 
     locust -f performanceTesting\load_testing.py --worker 
     http://localhost:8089/
+
+Our server can process up to 3000 RPS per second
 
 ## To check celery queuing:
 
