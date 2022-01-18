@@ -1,5 +1,5 @@
 ---
-title: 'HDI: High Demand Image Analysis using Deep Learning for Microcirculation Image Analysis'
+title: 'HDMIA: An Architect for High Demand Medical Image Analysis using Deep Learning'
 tags:
   - Python
   - Django
