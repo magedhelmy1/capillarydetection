@@ -16,7 +16,7 @@ Thus, it is highly relevant and of paramount importance to
 current society, even from a practical perspective.
 
 ## Research Papers:
--> Details of the capillary algorithm can be found by the same authors in a paper titled -> _CapillaryNet: An Automated System to Quantify Skin Capillary Density and Red Blood Cell Velocity from Handheld Vital Microscopy_
+Details of the capillary algorithm can be found by the same authors in a paper titled -> _CapillaryNet: An Automated System to Quantify Skin Capillary Density and Red Blood Cell Velocity from Handheld Vital Microscopy_
 
 
 ## Build Project Locally
