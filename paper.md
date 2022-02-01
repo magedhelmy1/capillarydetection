@@ -6,7 +6,7 @@ tags:
   - React
   - Tensorflow
 authors:
-  - name: Maged Abdalla Helmy^[co-first author]
+  - name: Maged Abdalla Helmy
     affiliation: 1
   - name: Eric Jul
     affiliation: 1
@@ -19,7 +19,7 @@ affiliations:
    index: 1
  - name: Department of Mathematics - University of Oslo
    index: 2
-date: 13 August 2017
+date: 01 Feb 2022
 bibliography: paper.bib
 ---
 
@@ -63,7 +63,7 @@ The system design and interaction between these blocks are highlighted in \autor
 \autoref{fig:container} shows the system containers within the system context and shows the high-level technical blocks within the containers.
 \autoref{fig:component} is a detailed view of the system containers and breaks down each container identifying the responsible functions that execute a set of specific actions.
 
-The main components of the technology stack included Tensorflow library [@abadi2016tensorflow], React library [@gackenheimer2015introduction], Django server-side web framework [@forcier2008python], Nginx reverse proxy [@nedelcu2010nginx], Gunicorn HTTP server [@gunicorn2017http], Celery [@mcleod2015framework], Redis [@carlson2013redis], Postgres [@conrad2021database] and Django REST framework toolkit [@hillar2018django].
+The main components of the technology stack included Tensorflow library [@abadi2016tensorflow], React library [@gackenheimer2015introduction], Django server-side web framework [@David20python], Nginx reverse proxy [@Rahul2016nginx], Gunicorn HTTP server [@gunicorn2009http], Celery [@Nikhil2017framework], Redis [@Felipe2017redis], Postgres [@conrad2021database] and Django REST framework toolkit [@Art020jango].
 Our current systems run on an Ubuntu server served by DigitalOcean cloud. However, the system is containerized. Therefore, it can run in any other cloud service provider like AWS, Azure, GCP or locally on computer.
 
 
