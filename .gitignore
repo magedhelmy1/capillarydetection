@@ -1039,4 +1039,5 @@ backend/frontend/.env
 backend/frontend/static/main.js
 backend/profiles/**
 performanceTesting/load_testing.py
-original_drawings/*
+original_drawings/**
+original_drawings/paper2_drawing.drawio
