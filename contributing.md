@@ -27,6 +27,7 @@ In addition, please use the following labels in the pull request so it is easy t
 ### Files that can be changed by contributors vs. files that are auto-generated
 
 All the contents of the files in the project can be changed.
+The docker build command will then auto-generate the server, API, database and frontend based on the code.
 Changing the structure of folders is possible but might raise warnings and errors.
 The project structure is highlighted [here](https://github.com/magedhelmy1/capillarydetection#project-structure)
 
