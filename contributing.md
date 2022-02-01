@@ -17,7 +17,6 @@ Click "New Issue" and Select either a "Bug Report" or "Feature Request".
 
 In addition, please use the following labels in the pull request so it is easy to filter it amongst other issues.
 
-
 * Bug: Something is not working
 * Enhancement: New feature or request
 * Dependencies: Pull requests that update a dependency file
@@ -25,15 +24,24 @@ In addition, please use the following labels in the pull request so it is easy t
 * Help wanted: Need help understanding a part of the code of the GUI
 * Question: Further information is requested
 
+### Files that can be changed by contributors vs files that are auto-generated
 
+INSERT TEXT
+
+### How to test changes with an example file.
+
+INSERT TEXT
 
 ### Discussions
-If you would like to discuss a feature or other related topics not covered above, 
-please feel free to post it in the [discussion area of the repo found here](https://github.com/magedhelmy1/capillarydetection/discussions/41).
+
+If you would like to discuss a feature or other related topics not covered above, please feel free to post it in
+the [discussion area of the repo found here](https://github.com/magedhelmy1/capillarydetection/discussions/41).
 
 ## Becoming a maintainer
+
 You want to maintain the code, this is fanastic!
-Please send an email to magedaa@uio.no to discuss the discuss your availability and if we can support you in anyway to help maintain the repo.
+Please send an email to magedaa@uio.no to discuss the discuss your availability and if we can support you in anyway to
+help maintain the repo.
 
 ## License
 By contributing, you agree that your contributions will be licensed under its Attribution-NonCommercial 4.0 International.
