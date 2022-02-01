@@ -20,17 +20,36 @@ In addition, please use the following labels in the pull request so it is easy t
 * Bug: Something is not working
 * Enhancement: New feature or request
 * Dependencies: Pull requests that update a dependency file
-* Documentation: Improvements or additions to documentation
+* Documentation: Improvements or additions to the documentation
 * Help wanted: Need help understanding a part of the code of the GUI
 * Question: Further information is requested
 
-### Files that can be changed by contributors vs files that are auto-generated
+### Files that can be changed by contributors vs. files that are auto-generated
 
-INSERT TEXT
+All the contents of the files in the project can be changed.
+Changing the structure of folders is possible but might raise warnings and errors.
+The project structure is highlighted [here](https://github.com/magedhelmy1/capillarydetection#project-structure)
 
 ### How to test changes with an example file.
 
-INSERT TEXT
+When changes are made to the code, there are two consoles the user can inspect to ensure it works correctly.
+
+The following command builds the whole project, so they will show up here if there are errors.
+This command also creates the sample files for the GUI, so the developer can check if the system can process the image successfully.
+
+` docker-compose up -d –-build
+`
+When a code change is pushed to the repo, the following is triggered automatically, and the console output can be monitored from the Github action.
+This is the pre-build stage before deploying to production and emulates an environment similar to production.
+
+
+` docker-compose -f docker-compose.ci.yml build web react nginx tfserving_classifier_hsv tfserving_classifier_ssim
+`
+
+If the above is successful, a repo maintainer is notified to make the final pull request into main after checking the code.
+
+To test with a sample file, navigate to the GUI, select any samples, and click "Analyze Sample Image". The GUI, after some seconds, should display three images. The original image, the analyzed image, and the segmented image with the number of capillaries and
+capillary density under the image.
 
 ### Discussions
 
@@ -39,9 +58,8 @@ the [discussion area of the repo found here](https://github.com/magedhelmy1/capi
 
 ## Becoming a maintainer
 
-You want to maintain the code, this is fanastic!
-Please send an email to magedaa@uio.no to discuss the discuss your availability and if we can support you in anyway to
-help maintain the repo.
+You want to maintain the code; this is fantastic!
+Please send an email to magedaa@uio.no to discuss your availability and support you in any way to help maintain the repo.
 
 ## License
 By contributing, you agree that your contributions will be licensed under its Attribution-NonCommercial 4.0 International.
