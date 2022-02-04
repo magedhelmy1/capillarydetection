@@ -68,22 +68,19 @@ Our current systems run on an Ubuntu server served by DigitalOcean cloud. Howeve
 
 
 
-![This figure shows the System Context View Diagram.\
-It highlights how the presented system, its components, and the users interact with each other.\
-This diagram allows the user to step back and see the full picture of the system presented.\
+![This figure shows the System Context View Diagram. It highlights how the presented system, its components, and the users interact with each other.
+This diagram allows the user to step back and see the full picture of the system presented.
 \label{fig:context}](paper4-SystemContext.png)
 
 
-![This figure shows the System Container View. This zooms in to each software component presented in the System Context View Diagram.\
-This diagram shows the software architecture and how responsibilities are distributed across it.\
-It also shows the technology chosen to implement each software architecture and how they communicate with one another.\
-\label{fig:container}](paper4-SystemContainers.png)
+![This figure shows the System Container View. This zooms in to each software component presented in the System Context View Diagram.
+This diagram shows the software architecture and how responsibilities are distributed across it.
+It also shows the technology chosen to implement each software architecture and how they communicate with one another.\label{fig:container}](paper4-SystemContainers.png)
 
 
-![This figure shows the System Component View.\
-This zooms into each container presented in the System Container View Diagram.\
-It decomposes each container into its respective components and highlights the responsbilities and details of each component. \
-It identifies the main structural building blocks of the proposed system and their interactions within the component.\
+![This figure shows the System Component View. This zooms into each container presented in the System Container View Diagram.
+It decomposes each container into its respective components and highlights the responsbilities and details of each component.
+It identifies the main structural building blocks of the proposed system and their interactions within the component.
 \label{fig:component}](paper4-SystemComponents.png)
 
 
