@@ -68,14 +68,13 @@ Our current systems run on an Ubuntu server served by DigitalOcean cloud. Howeve
 
 
 
-![This figure shows the System Context View Diagram. \
+![This figure shows the System Context View Diagram.\
 It highlights how the presented system, its components, and the users interact with each other.\
-This diagram allows the user to step back and see the full picture of the system presented, CapillaryWeb.\
+This diagram allows the user to step back and see the full picture of the system presented.\
 \label{fig:context}](paper4-SystemContext.png)
 
 
-![This figure shows the System Container View.\
-This zooms in to each software component presented in the System Context View Diagram.\
+![This figure shows the System Container View. This zooms in to each software component presented in the System Context View Diagram.\
 This diagram shows the software architecture and how responsibilities are distributed across it.\
 It also shows the technology chosen to implement each software architecture and how they communicate with one another.\
 label{fig:container}](paper4-SystemContainers.png)
