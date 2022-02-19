@@ -10,10 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
-from pathlib import Path
-
 import sentry_sdk
 from corsheaders.defaults import default_headers
+from pathlib import Path
 from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,9 +22,17 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = list(filter(bool, os.environ.get('ALLOWED_HOSTS', default='').split(','))) or ['localhost', '127.0.0.1',
-                                                                                               '139.59.206.141',
-                                                                                               'www.analysecapillary.space']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1',
+                 '139.59.206.141',
+                 '164.90.191.198',
+                 'analysecapillary.space',
+                 'www.analysecapillary.space']
+
+# ALLOWED_HOSTS = list(filter(bool, os.environ.get('ALLOWED_HOSTS', default='').split(','))) or ['localhost', '127.0.0.1',
+#                                                                                                '139.59.206.141',
+#                                                                                                '164.90.191.198',
+#                                                                                                'analysecapillary.space',
+#                                                                                                'www.analysecapillary.space']
 
 CORS_ALLOW_HEADERS = default_headers + (
     'Access-Control-Allow-Origin',
@@ -34,8 +41,7 @@ CORS_ALLOW_HEADERS = default_headers + (
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800 # 5 MB0
+DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800  # 5 MB0
 
 
 # Application definition
