@@ -141,4 +141,3 @@ We love your input! You can contribute to the project the following way:
 
 Read more in our [contributing.md](https://github.com/magedhelmy1/capillarydetection/blob/master/contributing.md) file
 
-
