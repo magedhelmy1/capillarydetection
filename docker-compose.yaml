@@ -10,7 +10,7 @@ services:
       - ./backend/backend_apps:/usr/src/app
       - media:/usr/src/app/media
     env_file:
-      - ./backend/backend_apps/.env.dev
+      - ./backend/backend_apps/.env.sample
     # command: uvicorn server.asgi:application --workers 4
     command: python ./manage.py runserver 0.0.0.0:8000
     depends_on:
@@ -35,7 +35,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - backend/backend_apps/.env.dev
+      - backend/backend_apps/.env.sample
 
   tfserving_classifier_hsv:
     container_name: tfserving_classifier_hsv
@@ -84,7 +84,7 @@ services:
       - media:/usr/src/app/media
       - ./backend/backend_apps:/usr/src/app
     env_file:
-      - backend/backend_apps/.env.dev
+      - backend/backend_apps/.env.sample
     depends_on:
       - redis
 
@@ -101,7 +101,7 @@ services:
     volumes:
       - ./backend/backend_apps:/usr/src/app
     env_file:
-      - backend/backend_apps/.env.dev
+      - backend/backend_apps/.env.sample
     depends_on:
       - celery
       - web

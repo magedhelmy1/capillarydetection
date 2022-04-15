@@ -12,7 +12,6 @@ services:
       - media:/usr/src/app/media
     env_file: .env
 
-
   react:
     container_name: frontend
     image: "${FRONTEND_IMAGE}"
@@ -29,14 +28,11 @@ services:
     depends_on:
       - web
 
-
   tfserving_classifier_ssim:
     container_name: tfserving_classifier_ssim
     image: "${TENSORFLOW_IMAGE_SSIM}"
     depends_on:
       - web
-
-
 
   celery:
     container_name: celery

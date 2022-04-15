@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$DATABASE" = "postgres" ]; then
+if ["$DATABASE" = "postgres"]; then
   echo "Waiting for postgres..."
 
   while ! nc -z $SQL_HOST $SQL_PORT; do
@@ -11,6 +11,5 @@ if [ "$DATABASE" = "postgres" ]; then
 fi
 
 python manage.py makemigrations --no-input
-python manage.py migrate
-
+python manage.py migrate 
 exec "$@"

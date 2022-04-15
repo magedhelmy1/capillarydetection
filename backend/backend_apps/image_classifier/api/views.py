@@ -21,7 +21,7 @@ class ImageViewSet(viewsets.ModelViewSet):
 def analyze_image(request, **kwargs):
     serializer = ImageSerializer(data=request.data)
 
-    test = False
+    test = True
     if not serializer.is_valid():
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

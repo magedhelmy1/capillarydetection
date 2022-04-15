@@ -23,5 +23,6 @@ RUN pip install -r requirements.txt
 COPY entrypoint.sh /usr/src/entrypoint.sh
 
 # run entrypoint.sh
-ENTRYPOINT ["/usr/src/entrypoint.sh"]
+ENTRYPOINT ["sh","/usr/src/entrypoint.sh"]
+
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
