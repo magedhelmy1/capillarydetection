@@ -219,6 +219,8 @@ CACHES = {
         "LOCATION": os.environ.get("CELERY_BROKER"),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "PASSWORD": os.environ.get('REDIS_PASSWORD'),
+            "REDIS_CLIENT_KWARGS": {"ssl_cert_reqs": True},
         }
     }
 }

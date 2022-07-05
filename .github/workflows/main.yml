@@ -45,6 +45,7 @@ jobs:
           echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} >> .env
           echo AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} >> .env
           echo AWS_S3_REGION_NAME=${{ secrets.AWS_S3_REGION_NAME }} >> .env
+          echo REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} >> .env
 
 
       - name: Prepare images
@@ -123,6 +124,8 @@ jobs:
           echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} >> .env
           echo AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} >> .env
           echo AWS_S3_REGION_NAME=${{ secrets.AWS_S3_REGION_NAME }} >> .env
+          echo REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} >> .env
+
       - name: SSH key to ssh-agent
         shell: bash
         env:
