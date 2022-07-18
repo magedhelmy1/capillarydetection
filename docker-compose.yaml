@@ -1,112 +1,108 @@
 version: "3.9"
 
 services:
-  web:
-    container_name: backend
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    volumes:
-      - ./backend/backend_apps:/usr/src/app
-      - media:/usr/src/app/media
-    env_file:
-      - ./backend/backend_apps/.env.sample
-    # command: uvicorn server.asgi:application --workers 4
-    command: python ./manage.py runserver 0.0.0.0:8000
-    depends_on:
-      - db
+    web:
+        container_name: backend
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        volumes:
+            - ./backend/backend_apps:/usr/src/app
+            - media:/usr/src/app/media
+        env_file:
+            - ./backend/backend_apps/.env.sample
+        # command: uvicorn server.asgi:application --workers 4
+        depends_on:
+            - db
 
-  react:
-    container_name: frontend
-    build:
-      context: ./frontend_GUI
-    volumes:
-      - ./frontend_GUI/gui:/usr/src/app
-    expose:
-      - 3000
-    environment:
-      - REACT_APP_AXIOS_URL=http://127.0.0.1
-    depends_on:
-      - web
+    react:
+        container_name: frontend
+        build:
+            context: ./frontend_GUI
+        volumes:
+            - ./frontend_GUI/gui:/usr/src/app
+        expose:
+            - 3000
+        environment:
+            - REACT_APP_AXIOS_URL=http://127.0.0.1
+        depends_on:
+            - web
 
-  db:
-    container_name: database
-    image: postgres:14.1-alpine
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    env_file:
-      - backend/backend_apps/.env.sample
+    db:
+        container_name: database
+        image: arm64v8/postgres
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+        env_file:
+            - backend/backend_apps/.env.sample
 
-  tfserving_classifier_hsv:
-    container_name: tfserving_classifier_hsv
-    image: tensorflow/serving:latest
-    volumes:
-      - ./algorithms_HSV/HSV_Model:/models/model
-    ports:
-      - "8501:8501"
-    depends_on:
-      - web
+    tfserving_classifier_hsv:
+        container_name: tfserving_classifier_hsv
+        image: emacski/tensorflow-serving:2.5.1
+        volumes:
+            - ./algorithms_HSV/HSV_Model:/models/model
+        ports:
+            - "8501:8501"
+        depends_on:
+            - web
 
+    tfserving_classifier_ssim:
+        container_name: tfserving_classifier_ssim
+        image: emacski/tensorflow-serving:2.5.1
+        volumes:
+            - ./algorithms_SSIM/SSIM_Model:/models/model
+        ports:
+            - "8502:8501"
+        depends_on:
+            - web
 
-  tfserving_classifier_ssim:
-    container_name: tfserving_classifier_ssim
-    image: tensorflow/serving:latest
-    volumes:
-      - ./algorithms_SSIM/SSIM_Model:/models/model
-    ports:
-      - "8502:8501"
-    depends_on:
-      - web
+    nginx:
+        container_name: nginx
+        restart: always
+        build: ./nginx
+        volumes:
+            - media:/usr/src/app/media
+        ports:
+            - "80:80"
+        depends_on:
+            - react
 
+    redis:
+        container_name: redis
+        image: "redis:6.2.6-alpine"
 
+    celery:
+        container_name: celery
+        build:
+            context: ./backend
+        command: celery -A server worker --without-heartbeat --without-gossip --without-mingle
+        volumes:
+            - media:/usr/src/app/media
+            - ./backend/backend_apps:/usr/src/app
+        env_file:
+            - backend/backend_apps/.env.sample
+        depends_on:
+            - redis
 
-  nginx:
-    container_name: nginx
-    restart: always
-    build: ./nginx
-    volumes:
-      - media:/usr/src/app/media
-    ports:
-      - "80:80"
-    depends_on:
-      - react
-
-  redis:
-    container_name: redis
-    image: "redis:6.2.6-alpine"
-
-  celery:
-    container_name: celery
-    build:
-      context: ./backend
-    command: celery -A server worker --without-heartbeat --without-gossip --without-mingle
-    volumes:
-      - media:/usr/src/app/media
-      - ./backend/backend_apps:/usr/src/app
-    env_file:
-      - backend/backend_apps/.env.sample
-    depends_on:
-      - redis
-
-  flower:
-    container_name: flower
-    build: ./backend
-    command: celery -A server flower -l INFO
-    ports:
-      - "5556:5555"
-    environment:
-      - FLASK_DEBUG=1
-      - CELERY_BROKER_URL=redis://redis:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis:6379/0
-    volumes:
-      - ./backend/backend_apps:/usr/src/app
-    env_file:
-      - backend/backend_apps/.env.sample
-    depends_on:
-      - celery
-      - web
-      - react
+    flower:
+        container_name: flower
+        build: ./backend
+        command: celery -A server flower -l INFO
+        ports:
+            - "5556:5555"
+        environment:
+            - FLASK_DEBUG=1
+            - CELERY_BROKER_URL=redis://redis:6379/0
+            - CELERY_RESULT_BACKEND=redis://redis:6379/0
+        volumes:
+            - ./backend/backend_apps:/usr/src/app
+        env_file:
+            - backend/backend_apps/.env.sample
+        depends_on:
+            - celery
+            - web
+            - react
 
 volumes:
-  postgres_data:
-  media:
+    postgres_data:
+    media:

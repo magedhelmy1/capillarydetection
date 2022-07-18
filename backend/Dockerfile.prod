@@ -12,7 +12,7 @@ WORKDIR /usr/src/app
 COPY ./entrypoint.prod.sh /usr/src/app/entrypoint.prod.sh
 
 # Copy dependencies file
-COPY requirements.txt .
+COPY requirementsProd.txt .
 
 # installing netcat (nc) since we are using that to listen to postgres server in entrypoint.sh
 RUN apt-get update && apt-get install -y --no-install-recommends netcat && \

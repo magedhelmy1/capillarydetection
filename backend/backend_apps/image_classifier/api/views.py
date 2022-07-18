@@ -21,7 +21,7 @@ class ImageViewSet(viewsets.ModelViewSet):
 def analyze_image(request, **kwargs):
     serializer = ImageSerializer(data=request.data)
 
-    test = True
+    test = False
     if not serializer.is_valid():
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -40,7 +40,7 @@ def analyze_image(request, **kwargs):
         image_uploaded = serializer.validated_data['picture']
         image_name = str(serializer.validated_data['picture'])
         file_path = os.path.join(settings.IMAGES_DIR, image_name, )
-
+        print("HERE")
         with open(file_path, 'wb+') as fp:
             for chunk in image_uploaded:
                 fp.write(chunk)
