@@ -10,9 +10,9 @@ if [ "$DATABASE" = "postgres" ]; then
     echo "PostgreSQL started"
 fi
 echo >&2 "PostgreSQL is ready!"
-echo exec('pwd'), "\n";
-echo exec('ls'), "\n";
+
 python manage.py collectstatic --no-input
+python manage.py makemigrations
 python manage.py migrate
 
 exec "$@"
